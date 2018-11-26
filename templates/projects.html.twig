@@ -5,5 +5,32 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-        <h1>Projects</h1>
+        <div class="container">
+            <div class="row">
+                <a class="project-container project-container-std col-sm-12 col-md-6 col-lg-4" href="/projects/test1">
+                    <div class="project-headline">
+                        <h2>test1</h2>
+                    </div>
+                    One of three columns
+                    </a>
+                <a class="project-container project-container-std col-sm-12 col-md-6 col-lg-4" href="/projects/test2">
+                    <div class="project-headline">
+                        <h2>test2</h2>
+                    </div>
+                    One of three columns
+                </a>
+                <a class="project-container project-container-std col-sm-12 col-md-6 col-lg-4" href="/projects/test3">
+                    <div class="project-headline">
+                        <h2>test3</h2>
+                    </div>
+                    One of three columns
+                </a>
+                <a class="project-container project-container-new col-sm-12 col-md-6 col-lg-4" href="/projects/new">
+                    <div class="project-headline">
+                        <h2>New</h2>
+                    </div>
+                    Create a New Project.
+                </a>
+            </div>
+        </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 
 #content {
-    margin: 8px;
+    margin: 40px;
 }
 .text-container {
     display: flex; 
@@ -32,6 +32,32 @@
 .new-label {
     background: lightgray;
     border: 4px solid lightgray;
+}
+.project-container {
+    border-radius: 8px;
+    padding: 5px;
+    margin: 10px;
+    height: 250px;
+    text-decoration: none;
+    color: black;
+    opacity: 0.8; 
+}
+.project-container-std {
+    background: lightblue;
+    border: 4px solid lightblue;
+}
+.project-container-new {
+    background: lightgray;
+    border: 4px solid lightgray;
+}
+
+.project-container:hover {
+    opacity: 1; 
+    text-decoration: none;
+    color: black;
+}
+.project-headline {
+    border-bottom: 2px solid  black;
 }
 #mobil-menu {
     display: none;
