@@ -1,3 +1,30 @@
-body {
-    background-color: lightgray;
+
+#content {
+    margin: 8px;
+}
+.text-container {
+    display: flex; 
+    flex-wrap: wrap;
+    height: 20vw;
+    border: 4px solid lightblue;
+    border-radius: 8px;
+    margin: 1px;
+    padding: 10px;
+}
+.text-button {
+    border-radius: 8px;
+    margin: 5px;
+    padding: 5px;
+    height: 40px;
+}
+.text-label {
+    background: lightcoral;
+    border: 4px solid lightcoral;
+}
+.new-label {
+    background: lightgray;
+    border: 4px solid lightgray;
+}
+#mobil-menu {
+    display: none;
 }

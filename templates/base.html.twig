@@ -11,7 +11,7 @@
             <title>PiProjectPlanner - {% block title %}{% endblock %}</title>
         {% endblock %}
         {% block navbar %}
-            <nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
+            <nav id="desktop-menu" class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
             <a class="navbar-brand" href="/">Dashboard</a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -28,6 +28,9 @@
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
+            </nav>
+            <nav id='mobil-menu'>
+            <!-- https://stackoverflow.com/questions/44568854/bootstrap-mobile-menu-100 -->
             </nav>
         {% endblock %}
     </head>
