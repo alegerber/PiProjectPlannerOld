@@ -59,6 +59,12 @@
 .project-headline {
     border-bottom: 2px solid  black;
 }
+.view-container {
+    border-radius: 8px;
+    padding: 5px;
+    margin: 10px;
+    height: 8000px;
+}
 #mobil-menu {
     display: none;
 }
