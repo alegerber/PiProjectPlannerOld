@@ -16,6 +16,14 @@
     margin: 5px;
     padding: 5px;
     height: 40px;
+    text-decoration: none;
+    color: black;
+    opacity: 0.8; 
+}
+.text-button:hover {
+    opacity: 1; 
+    text-decoration: none;
+    color: black;
 }
 .text-label {
     background: lightcoral;
