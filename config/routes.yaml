@@ -1,3 +1,9 @@
 index:
     path: /
     controller: App\Controller\DashboardController::index
+database:
+    path: /database
+    controller: App\Controller\DatabaseController::index
+projects:
+    path: /projects
+    controller: App\Controller\ProjectsController::index
