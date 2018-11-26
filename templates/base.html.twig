@@ -2,11 +2,18 @@
 <html>
     <head>
         {% block head %}
-            <link rel="stylesheet" href="style.css" />
             <title>PiProjectPlanner - {% block title %}{% endblock %}</title>
         {% endblock %}
     </head>
     <body>
         <div id="content">{% block content %}{% endblock %}</div>
     </body>
+    <footer>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}" />
+    {% endblock %}
+    {% block javascripts %}
+    <script src="{{ asset('build/js/app.js') }}"></script>
+    {% endblock %}
+    </footer>
 </html>
