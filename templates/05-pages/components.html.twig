@@ -1,0 +1,8 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block title %}Components{% endblock %}
+{% block content %}
+    {% for container in containers %}
+        {% include '03-organisms/text-container.html.twig' with {'title': container.title, 'buttons': container.content } %}
+    {% endfor %}
+{% endblock %}

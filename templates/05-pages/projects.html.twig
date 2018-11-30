@@ -1,0 +1,18 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block title %}Projects{% endblock %}
+{% block content %}
+        <div class="container">
+            <div class="row">
+                {% for project in projects %}
+                    {% include '03-organisms/project-container.html.twig' with {'project': project } %}
+                {% endfor %}
+                <a class="project-container project-container-new col-sm-12 col-md-6 col-lg-4" href="/projects/new">
+                    <div class="project-headline">
+                        <h2>New</h2>
+                    </div>
+                    Create a New Project.
+                </a>
+            </div>
+        </div>
+{% endblock %}

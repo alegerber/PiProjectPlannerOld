@@ -10,6 +10,6 @@ class ProjectViewController extends AbstractController
     public function index()
     {
 
-        return $this->render('project-view.html.twig');
+        return $this->render('05-pages/project-view.html.twig');
     }
 }
