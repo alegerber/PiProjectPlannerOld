@@ -48,7 +48,7 @@ class Category
         return $this->project;
     }
 
-    public function setproject($project): self
+    public function setProject($project): self
     {
         $this->project = $project;
 
