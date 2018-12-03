@@ -30,6 +30,11 @@ class Project
      * @ORM\Column(type="integer", nullable=true)
      */
     private $picture;
+    
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $category;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -78,6 +83,18 @@ class Project
     public function setPicture(?int $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+        
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setCategory($category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
