@@ -2,8 +2,8 @@ index:
     path: /
     controller: App\Controller\DashboardController::index
 database:
-    path: /components
+    path: /components/{link}
     controller: App\Controller\ComponentsController::index
 projects:
-    path: /projects
-    controller: App\Controller\ProjectsController::index
+    path: /projects/{link}
+    controller: App\Controller\ProjectViewController::index

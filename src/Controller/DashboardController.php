@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DashboardController extends AbstractController
 {
+    /**
+     * @Route("/", name="dashboard")
+     */
     public function index()
     {
 

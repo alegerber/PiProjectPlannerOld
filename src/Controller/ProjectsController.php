@@ -30,7 +30,9 @@ class ProjectsController extends AbstractController
         $this->projectRepository = $projectRepository;
         $this->projects = (array) $this->projectRepository->findAll();
     }
-
+    /**
+     * @Route("/project", name="project")
+     */
     public function index()
     {
     

@@ -19,7 +19,10 @@ class ComponentsController extends AbstractController
         $containers[1]['content'][0]['text'] = 'test-cat';
         $containers[1]['content'][0]['link'] = 'components/test-cat';
         $containers[1]['title'] = 'Tags';
-
+        
+        /**
+         * @Route("/component", name="component")
+         */
         return $this->render('05-pages/components.html.twig',
         array('containers' => $containers)
         );
