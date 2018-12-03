@@ -42,8 +42,8 @@ class ProjectViewController extends AbstractController
             'link' => $slug 
         ]);
 
-        $html = $this->renderView('05-pages/project-view.html.twig',
-        array('project' => $this->project)
+        $html = $this->twig->render('05-pages/project-view.html.twig',
+            array('project' => $this->project)
         );
         
         return new Response($html);

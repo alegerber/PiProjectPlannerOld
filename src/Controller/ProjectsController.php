@@ -11,7 +11,7 @@ use App\Repository\ProjectRepository;
 class ProjectsController extends AbstractController
 {
     /**
-     * @var $projects[][]
+     * @var Project[]
      */
     private  $projects;
 
@@ -41,7 +41,7 @@ class ProjectsController extends AbstractController
     {
     
         $html = $this->twig->render('05-pages/projects.html.twig',
-        array('projects' => (array) $this->projects)
+            array('projects' => $this->projects)
         );
         return new Response($html);
     }

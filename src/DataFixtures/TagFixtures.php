@@ -25,10 +25,11 @@ class TagFixtures extends ParentFixtures
     {
         for ($i = 0; $i <= $this->entrys; $i++){
             $tag = new Tag();
-            $tag->setName('tag ' .rand(0, $this->entrys));
-            
+            $tag->setName('tag ' . rand(0, $this->entrys));
+            $tag->setComponentLink('tag' . rand(0, $this->entrys));
 
             $tag->setProject($this->getJson(7));
+            $tag->setComponent($this->getJson(7));
     
             $this->manager->persist($tag);
         }

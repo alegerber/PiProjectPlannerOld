@@ -22,9 +22,19 @@ class Tag
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $componentLink;
+
+    /**
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $project;
+
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $component;
 
     public function getId(): ?int
     {
@@ -43,6 +53,18 @@ class Tag
         return $this;
     }
 
+    public function getComponentLink(): ?string
+    {
+        return $this->componentLink;
+    }
+
+    public function setComponentLink(string $componentLink): self
+    {
+        $this->componentLink = $componentLink;
+
+        return $this;
+    }
+
     public function getProject()
     {
         return $this->project;
@@ -51,6 +73,18 @@ class Tag
     public function setproject($project): self
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    public function getComponent()
+    {
+        return $this->component;
+    }
+
+    public function setComponent($component): self
+    {
+        $this->component = $component;
 
         return $this;
     }
