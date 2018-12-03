@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagsRepository")
  */
-class Tags
+class Tag
 {
     /**
      * @ORM\Id()
@@ -19,7 +19,7 @@ class Tags
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $tag;
+    private $name;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -31,14 +31,14 @@ class Tags
         return $this->id;
     }
 
-    public function getTag(): ?string
+    public function getName(): ?string
     {
-        return $this->tag;
+        return $this->name;
     }
 
-    public function setTag(string $tag): self
+    public function setName(string $name): self
     {
-        $this->tag = $tag;
+        $this->name = $name;
 
         return $this;
     }

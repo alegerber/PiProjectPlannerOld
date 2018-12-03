@@ -19,7 +19,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $category;
+    private $name;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -31,14 +31,14 @@ class Category
         return $this->id;
     }
 
-    public function getCategory(): ?string
+    public function getName(): ?string
     {
-        return $this->category;
+        return $this->name;
     }
 
-    public function setCategory(string $category): self
+    public function setName(string $name): self
     {
-        $this->category = $category;
+        $this->name = $name;
 
         return $this;
     }
