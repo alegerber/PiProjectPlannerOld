@@ -11,7 +11,7 @@ use App\Entity\Category;
 use App\Repository\TagRepository;
 use App\Entity\Tag;
 
-class ComponentsController extends AbstractController
+class ComponentController extends AbstractController
 {
     /**
      * @var $containers[][][]

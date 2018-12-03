@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProjectRepository;
 
-class ProjectsController extends AbstractController
+class ProjectController extends AbstractController
 {
     /**
      * @var Project[]

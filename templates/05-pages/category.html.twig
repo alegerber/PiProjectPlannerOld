@@ -1,0 +1,9 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block title %}Category {{ category.name }}{% endblock %}
+{% block content %}
+    <h1>Category {{ category.name }}</h1>
+    {% for component in components %}
+        {% include '03-organisms/component-container.html.twig' with { 'component': component } %}
+    {% endfor %}
+{% endblock %}

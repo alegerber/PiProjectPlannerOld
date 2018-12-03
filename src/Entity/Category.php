@@ -25,7 +25,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $componentLink;
+    private $component_link;
     
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -56,12 +56,12 @@ class Category
 
     public function getComponentLink(): ?string
     {
-        return $this->componentLink;
+        return $this->component_link;
     }
 
-    public function setComponentLink(string $componentLink): self
+    public function setComponentLink(string $component_link): self
     {
-        $this->componentLink = $componentLink;
+        $this->component_link = $component_link;
 
         return $this;
     }
