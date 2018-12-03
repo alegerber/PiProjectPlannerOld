@@ -1,9 +1,3 @@
-index:
-    path: /
-    controller: App\Controller\DashboardController::index
-database:
-    path: /components/{link}
-    controller: App\Controller\ComponentsController::index
-projects:
-    path: /projects/{link}
-    controller: App\Controller\ProjectViewController::index
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
