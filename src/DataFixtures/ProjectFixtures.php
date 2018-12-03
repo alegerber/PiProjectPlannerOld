@@ -28,7 +28,7 @@ class ProjectFixtures extends ParentFixtures
 
             $project = new Project();
             $project->setCategory(rand(0, $this->entrys));
-            $project->setLink('/project/project' . rand(0, $this->entrys));
+            $project->setLink('project' . rand(0, $this->entrys));
             $project->setTitle('project ' . rand(0, $this->entrys));
             $project->setDescription('Some Random Text ' . rand(0, $this->entrys));
             $project->setPicture(rand(0, $this->entrys));

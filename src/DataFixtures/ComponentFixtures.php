@@ -25,7 +25,7 @@ class ComponentFixtures extends ParentFixtures
 
             $component = new Component();
             $component->setCategory(rand(0, $this->entrys));
-            $component->setLink('/component/component' . rand(0, $this->entrys));
+            $component->setLink('component' . rand(0, $this->entrys));
             $component->setTitle('component ' . rand(0, $this->entrys));
             $component->setDescription('Some Random Text ' . rand(0, $this->entrys));
             $component->setPicture(rand(0, $this->entrys));
