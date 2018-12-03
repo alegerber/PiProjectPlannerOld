@@ -19,7 +19,12 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Category;
+    private $category;
+
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $project;
 
     public function getId(): ?int
     {
@@ -28,12 +33,24 @@ class Category
 
     public function getCategory(): ?string
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(string $Category): self
+    public function setCategory(string $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    public function setproject($project): self
+    {
+        $this->project = $project;
 
         return $this;
     }

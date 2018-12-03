@@ -21,6 +21,11 @@ class Tags
      */
     private $tag;
 
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $project;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class Tags
     public function setTag(string $tag): self
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    public function setproject($project): self
+    {
+        $this->project = $project;
 
         return $this;
     }

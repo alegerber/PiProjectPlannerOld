@@ -32,7 +32,7 @@ class Project
     private $picture;
     
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $category;
 
