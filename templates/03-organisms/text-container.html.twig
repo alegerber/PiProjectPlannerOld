@@ -1,6 +1,6 @@
     <h2>{{ title }}</h2>
     <div class="text-container">
         {% for button in buttons %}
-            <a class="text-button text-label" href="{{ prefix }}/{{ button.componentLink }}">{{ button.name }}</a>
+            <a class="text-label" href="{{ prefix }}/{{ button.componentLink }}">{{ button.name }}</a>
         {% endfor %}
     </div>
