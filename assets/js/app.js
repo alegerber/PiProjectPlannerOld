@@ -7,5 +7,10 @@
 
 require('./../css/app.css');
 
+require('./../css/app.scss');
+window.$ = require('jquery');
+window.Popper = require('popper.js');
+require('bootstrap');
+
 console.log('test');
 

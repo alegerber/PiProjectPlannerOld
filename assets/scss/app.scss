@@ -1,4 +1,9 @@
 
+$fa-font-path: '~font-awesome/fonts';
+
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/scss/font-awesome.scss";
+
 #content {
     margin: 40px;
 }
