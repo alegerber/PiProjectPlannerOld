@@ -1,7 +1,9 @@
 
-<a class="project-container-std col-sm-12 col-md-6 col-lg-4" href="/project/{{ project.link }}">
-    <div class="project-headline">
-        <h2>{{ project.title }}</h2>
+<div class="card bg-light">
+    <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
+    <div class="card-body">
+        <h2 class="card-title">{{ project.title }}</h2>
+        <p class="card-text">{{ project.description }}</p>
+        <a href="/project/{{ project.link }}" class="btn btn-primary">Read More</a>
     </div>
-    {{ project.description }}
-</a>
+</div>

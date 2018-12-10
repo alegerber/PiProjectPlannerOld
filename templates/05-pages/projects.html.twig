@@ -2,17 +2,17 @@
 
 {% block title %}Projects{% endblock %}
 {% block content %}
-        <div class="container">
-            <div class="row justify-content-center">
-                {% for project in projects %}
-                    {% include '03-organisms/project-container.html.twig' with {'project': project } %}
-                {% endfor %}
-                <a class="project-container-new col-sm-12 col-md-6 col-lg-4" href="/projects/new">
-                    <div class="project-headline">
-                        <h2>New</h2>
-                    </div>
-                    Create a New Project.
-                </a>
+    <div class="card-columns">
+        {% for project in projects %}
+            {% include '03-organisms/project-container.html.twig' with {'project': project } %}
+        {% endfor %}
+        <div class="card bg-info">
+            <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
+            <div class="card-body">
+                <h2 class="card-title">New</h2>
+                <p class="card-text">Create a New Project.</p>
+                <a href="/projects/new" class="btn btn-primary">Read More</a>
             </div>
         </div>
+    </div>
 {% endblock %}
