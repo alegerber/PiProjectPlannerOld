@@ -2,10 +2,12 @@
 
 {% block title %}Components{% endblock %}
 {% block content %}
-    <p>Create A New Component ?
-    <a class="new-label" href="/components/new">New Component</a>
+    <p><span>Create A New Component ?</span>
+    <a class="btn btn-info" href="/components/new">New Component</a>
     </p>
+    <div class="row">
     {% for container in containers %}
         {% include '03-organisms/text-container.html.twig' with {'title': container.title, 'prefix': container.prefix, 'buttons': container.content } %}
     {% endfor %}
+    </div>
 {% endblock %}

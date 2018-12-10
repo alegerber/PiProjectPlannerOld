@@ -1,6 +1,8 @@
+<div class="col-sm-12 col-md-6">   
     <h2>{{ title }}</h2>
-    <div class="text-container">
+    <div class="list-group">
         {% for button in buttons %}
-            <a class="text-label" href="{{ prefix }}/{{ button.componentLink }}">{{ button.name }}</a>
+            <a class="list-group-item list-group-item-action list-group-item-light" href="{{ prefix }}/{{ button.componentLink }}">{{ button.name }}</a>
         {% endfor %}
     </div>
+</div>
