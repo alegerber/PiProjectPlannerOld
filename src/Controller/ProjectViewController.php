@@ -6,7 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProjectRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use App\Entity\Project;
+use App\Entity\Category;
+use App\Entity\Tag;
 
 class ProjectViewController extends AbstractController
 {
@@ -41,6 +45,7 @@ class ProjectViewController extends AbstractController
         $this->project = $this->projectRepository->findOneBy([
             'link' => $slug 
         ]);
+
 
         $html = $this->twig->render('05-pages/project-view.html.twig',
             array('project' => $this->project)

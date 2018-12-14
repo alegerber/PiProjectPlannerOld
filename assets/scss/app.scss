@@ -7,3 +7,9 @@ $fa-font-path: '~font-awesome/fonts';
 #content {
     margin: 40px;
 }
+
+.view-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
