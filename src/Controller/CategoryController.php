@@ -54,7 +54,7 @@ class CategoryController extends AbstractController
             'component_link' => $slug 
         ]);
 
-        $components = json_decode($this->category->getComponent());
+        $components = json_decode($this->category->getComponents());
         foreach($components as $key => $component){
             $this->components[$key] = $this->componentRepository->find($component);
         }

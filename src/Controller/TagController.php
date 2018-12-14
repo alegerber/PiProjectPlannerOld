@@ -54,9 +54,9 @@ class TagController extends AbstractController
             'component_link' => $slug 
         ]);
 
-        $tags = json_decode($this->tag->getComponent());
-        foreach($tags as $key => $tag){
-            $this->components[$key] = $this->componentRepository->find($tag);
+        $components = json_decode($this->tag->getComponents());
+        foreach($components as $key => $id){
+            $this->components[$key] = $this->componentRepository->find($id);
         }
 
         return $this->render('05-pages/tag.html.twig',

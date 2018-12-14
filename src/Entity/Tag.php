@@ -29,12 +29,12 @@ class Tag
     /**
      * @ORM\Column(type="json_array", nullable=true)
      */
-    private $project;
+    private $projects;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
      */
-    private $component;
+    private $components;
 
     public function getId(): ?int
     {
@@ -65,26 +65,26 @@ class Tag
         return $this;
     }
 
-    public function getProject()
+    public function getProjects()
     {
-        return $this->project;
+        return $this->projects;
     }
 
-    public function setproject($project): self
+    public function setProjects($projects): self
     {
-        $this->project = $project;
+        $this->projects = $projects;
 
         return $this;
     }
 
-    public function getComponent()
+    public function getComponents()
     {
-        return $this->component;
+        return $this->components;
     }
 
-    public function setComponent($component): self
+    public function setComponents($components): self
     {
-        $this->component = $component;
+        $this->components = $components;
 
         return $this;
     }

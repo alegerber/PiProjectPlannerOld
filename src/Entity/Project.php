@@ -39,7 +39,7 @@ class Project
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $category;
+    private $categories;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -104,14 +104,14 @@ class Project
         return $this;
     }
         
-    public function getCategory()
+    public function getCategories()
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function setCategory($category): self
+    public function setCategories($categories): self
     {
-        $this->category = $category;
+        $this->categories = $categories;
 
         return $this;
     }

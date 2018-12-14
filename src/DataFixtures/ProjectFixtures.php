@@ -14,7 +14,7 @@ class ProjectFixtures extends ParentFixtures
     {
         $this->manager = $manager;
 
-        $this->entrys = 10;
+        $this->entrys = 100;
         
         $this->project();
         $this->manager->flush();
@@ -27,7 +27,7 @@ class ProjectFixtures extends ParentFixtures
         for ($i = 0; $i <= $this->entrys; $i++){
 
             $project = new Project();
-            $project->setCategory(rand(0, $this->entrys));
+            $project->setCategories(rand(0, $this->entrys));
             $project->setLink('project' . rand(0, $this->entrys));
             $project->setTitle('project ' . rand(0, $this->entrys));
             $project->setDescription('Some Random Text ' . rand(0, $this->entrys));

@@ -13,7 +13,7 @@ class TagFixtures extends ParentFixtures
     {
         $this->manager = $manager;
 
-        $this->entrys = 50;
+        $this->entrys = 100;
         
         $this->tag();
         $this->manager->flush();
@@ -28,8 +28,8 @@ class TagFixtures extends ParentFixtures
             $tag->setName('tag ' . rand(0, $this->entrys));
             $tag->setComponentLink('tag' . rand(0, $this->entrys));
 
-            $tag->setProject($this->getJson(7));
-            $tag->setComponent($this->getJson(7));
+            $tag->setProjects($this->getJson(7));
+            $tag->setComponents($this->getJson(7));
     
             $this->manager->persist($tag);
         }

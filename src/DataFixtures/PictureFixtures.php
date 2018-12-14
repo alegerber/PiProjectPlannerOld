@@ -13,7 +13,7 @@ class PictureFixtures extends ParentFixtures
     {
         $this->manager = $manager;
 
-        $this->entrys = 30;
+        $this->entrys = 100;
         
         $this->picture();
         $this->manager->flush();
