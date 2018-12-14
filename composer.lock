@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4f21b33576acba4fa54ff55a825aa32",
+    "content-hash": "12c4c13375284937f5d941677298ee50",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3625,16 +3625,16 @@
         },
         {
             "name": "symfony/property-access",
-            "version": "v4.1.7",
+            "version": "v4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-access.git",
-                "reference": "ae5620fb79729bc8b5dd83b75507cbcae24f83ee"
+                "reference": "724fddc4937139980d6a91da4fd8d7f9d7cb9f52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-access/zipball/ae5620fb79729bc8b5dd83b75507cbcae24f83ee",
-                "reference": "ae5620fb79729bc8b5dd83b75507cbcae24f83ee",
+                "url": "https://api.github.com/repos/symfony/property-access/zipball/724fddc4937139980d6a91da4fd8d7f9d7cb9f52",
+                "reference": "724fddc4937139980d6a91da4fd8d7f9d7cb9f52",
                 "shasum": ""
             },
             "require": {
@@ -3688,7 +3688,7 @@
                 "property path",
                 "reflection"
             ],
-            "time": "2018-10-02T12:40:59+00:00"
+            "time": "2018-11-29T14:23:48+00:00"
         },
         {
             "name": "symfony/property-info",
@@ -4005,16 +4005,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.1.7",
+            "version": "v4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "93a1967333cdd4f66c4a00f30895d124326f145b"
+                "reference": "3cd321eb0bb01c4541babf0a9393d96a70010eed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/93a1967333cdd4f66c4a00f30895d124326f145b",
-                "reference": "93a1967333cdd4f66c4a00f30895d124326f145b",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/3cd321eb0bb01c4541babf0a9393d96a70010eed",
+                "reference": "3cd321eb0bb01c4541babf0a9393d96a70010eed",
                 "shasum": ""
             },
             "require": {
@@ -4081,7 +4081,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-28T18:38:52+00:00"
+            "time": "2018-12-02T13:22:14+00:00"
         },
         {
             "name": "symfony/serializer-pack",

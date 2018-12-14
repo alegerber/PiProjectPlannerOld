@@ -19,9 +19,13 @@
                         <h4>Beschreibung</h4>
                         <p>{{ project.description }}<p>
                         <h4>Category</h4>
-                        <p>{{ project.categories }}<p>
+                        <p>{{ project.categories.name }}<p>
                         <h4>Tags</h4>
-                        <p>{{ project.tags }}<p>
+                        <p>
+                            {% for tag in project.tags %}
+                                {{ tag.name }}
+                            {% endfor %}
+                        <p>
                     </div>
                     <div>
                         <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded"> 
