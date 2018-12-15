@@ -2,11 +2,9 @@
 
 namespace App\Traits;
 
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 trait JsonArrayToArrayClasses {
+
     /*
     * @return array|int
     */
@@ -14,10 +12,7 @@ trait JsonArrayToArrayClasses {
 
         $arrayClasses = null;
 
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $array = $serializer->decode($jsonArray, 'json');
+        $array = json_decode($jsonArray);
 
         if(is_array($array)){
             foreach($array as $key => $id){

@@ -27,11 +27,6 @@ class ProjectViewController extends AbstractController implements JsonDatafields
     private $project;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
-    /**
      * @var ProjectRepository
      */
     private $projectRepository;
@@ -54,11 +49,10 @@ class ProjectViewController extends AbstractController implements JsonDatafields
 
 
     public function __construct(
-        \Twig_Environment $twig, ProjectRepository $projectRepository, 
+        ProjectRepository $projectRepository, 
         CategoryRepository $categoryRepository, TagRepository $tagRepository,
         ComponentRepository $componentRepository
     ) {
-        $this->twig = $twig;
         $this->projectRepository = $projectRepository;
         $this->categoryRepository = $categoryRepository;
         $this->tagRepository = $tagRepository;
@@ -89,10 +83,8 @@ class ProjectViewController extends AbstractController implements JsonDatafields
             'components' => $components,
         ];
 
-        $html = $this->twig->render('05-pages/project-view.html.twig',
-            array('project' => $project)
-        );
-        
-        return new Response($html);
+        return $this->render('05-pages/project-view.html.twig',[
+            'project' => $project
+        ]);
     }
 }

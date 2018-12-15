@@ -29,11 +29,6 @@ class ComponentController extends AbstractController
     private  $tags;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
-    /**
      * @var CategoryRepository
      */
     private $categoryRepository;
@@ -45,9 +40,8 @@ class ComponentController extends AbstractController
 
     
     public function __construct(
-        \Twig_Environment $twig, CategoryRepository $categoryRepository, TagRepository $tagRepository
+        CategoryRepository $categoryRepository, TagRepository $tagRepository
     ) {
-        $this->twig = $twig;
         $this->categoryRepository = $categoryRepository;
         $this->categories = $this->categoryRepository->findAll();
         $this->tagRepository = $tagRepository;
@@ -68,8 +62,8 @@ class ComponentController extends AbstractController
         $containers[1]['prefix'] = '/tag';
 
 
-        return $this->render('05-pages/components.html.twig',
-        array('containers' => $containers)
-        );
+        return $this->render('05-pages/components.html.twig',[
+            'containers' => $containers
+        ]);
     }
 }

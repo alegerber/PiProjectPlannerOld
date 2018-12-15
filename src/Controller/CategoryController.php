@@ -23,11 +23,6 @@ class CategoryController extends AbstractController
     private  $category;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
-    /**
      * @var ComponentRepository
      */
     private $componentRepository;
@@ -38,9 +33,8 @@ class CategoryController extends AbstractController
     private  $categoryRepository;
     
     public function __construct(
-        \Twig_Environment $twig, CategoryRepository $categoryRepository, ComponentRepository $componentRepository
+        CategoryRepository $categoryRepository, ComponentRepository $componentRepository
     ) {
-        $this->twig = $twig;
         $this->categoryRepository = $categoryRepository;
         $this->componentRepository = $componentRepository;
     }
@@ -59,8 +53,9 @@ class CategoryController extends AbstractController
             $this->components[$key] = $this->componentRepository->find($component);
         }
 
-        return $this->render('05-pages/category.html.twig',
-            array('category' => $this->category, 'components' => $this->components)
-        );
+        return $this->render('05-pages/category.html.twig',[
+            'category' => $this->category,
+            'components' => $this->components
+        ]);
     }
 }

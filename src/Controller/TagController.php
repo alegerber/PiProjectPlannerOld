@@ -9,9 +9,13 @@ use App\Repository\ComponentRepository;
 use App\Entity\Component;
 use App\Repository\TagRepository;
 use App\Entity\Tag;
+use App\Interfaces\JsonDatafields;
+use App\Traits\JsonArrayToArrayClasses;
 
-class TagController extends AbstractController
+class TagController extends AbstractController implements JsonDatafields
 {
+    use JsonArrayToArrayClasses;
+
     /**
      * @var Component[]
      */
@@ -21,11 +25,6 @@ class TagController extends AbstractController
      * @var Tag
      */
     private  $tags;
-
-    /**
-     * @var \Twig_Environment
-     */
-    private $twig;
 
     /**
      * @var ComponentRepository
@@ -38,9 +37,8 @@ class TagController extends AbstractController
     private  $tagRepository;
     
     public function __construct(
-        \Twig_Environment $twig, TagRepository $tagRepository, ComponentRepository $componentRepository
+        TagRepository $tagRepository, ComponentRepository $componentRepository
     ) {
-        $this->twig = $twig;
         $this->tagRepository = $tagRepository;
         $this->componentRepository = $componentRepository;
     }
@@ -54,13 +52,14 @@ class TagController extends AbstractController
             'component_link' => $slug 
         ]);
 
-        $components = json_decode($this->tag->getComponents());
+        $components = $this->getArrayClasses($this->tag->getComponents(), $this->componentRepository);
         foreach($components as $key => $id){
             $this->components[$key] = $this->componentRepository->find($id);
         }
 
-        return $this->render('05-pages/tag.html.twig',
-            array('tag' => $this->tag, 'components' => $this->components)
-        );
+        return $this->twig->render('05-pages/tag.html.twig',[
+            'tag' => $this->tag,
+            'components' => $this->components
+        ]);
     }
 }

@@ -16,20 +16,14 @@ class ComponentViewController extends AbstractController
     private $component;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
-    /**
      * @var ComponentRepository
      */
     private $componentRepository;
 
 
     public function __construct(
-        \Twig_Environment $twig, ComponentRepository $componentRepository
+        ComponentRepository $componentRepository
     ) {
-        $this->twig = $twig;
         $this->componentRepository = $componentRepository;
     }
 
@@ -42,10 +36,9 @@ class ComponentViewController extends AbstractController
             'link' => $slug 
         ]);
 
-        $html = $this->twig->render('05-pages/component-view.html.twig',
-            array('component' => $this->component)
-        );
-        
-        return new Response($html);
+        return $this->render('05-pages/component-view.html.twig',[
+            'component' => $this->component
+        ]);
+    
     }
 }

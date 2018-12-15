@@ -16,20 +16,14 @@ class ProjectController extends AbstractController
     private  $projects;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
-    /**
      * @var ProjectRepository
      */
     private $projectRepository;
 
     
     public function __construct(
-        \Twig_Environment $twig, ProjectRepository $projectRepository
+        ProjectRepository $projectRepository
     ) {
-        $this->twig = $twig;
         $this->projectRepository = $projectRepository;
         $this->projects = $this->projectRepository->findAll();
     }
@@ -40,9 +34,8 @@ class ProjectController extends AbstractController
     public function index()
     {
     
-        $html = $this->twig->render('05-pages/projects.html.twig',
-            array('projects' => $this->projects)
+        return $this->render('05-pages/projects.html.twig',
+            ['projects' => $this->projects]
         );
-        return new Response($html);
     }
 }
