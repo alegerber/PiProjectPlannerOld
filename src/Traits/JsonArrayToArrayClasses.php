@@ -10,7 +10,7 @@ trait JsonArrayToArrayClasses {
     /*
     * @return array|int
     */
-    public function getArrayClasses($jsonArray, $repository) {
+    function getArrayClasses($jsonArray, $repository) {
 
         $arrayClasses = null;
 

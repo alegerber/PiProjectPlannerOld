@@ -22,16 +22,6 @@ class Component
     private $link;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $category;
-
-    /**
-     * @ORM\Column(type="json_array", nullable=true)
-     */
-    private $tags;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -46,6 +36,17 @@ class Component
      */
     private $picture;
 
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $categories;
+
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $tags;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,30 +60,6 @@ class Component
     public function setLink(string $link): self
     {
         $this->link = $link;
-
-        return $this;
-    }
-
-    public function getCategory(): ?int
-    {
-        return $this->category;
-    }
-
-    public function setCategory(int $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    public function setTags($tags): self
-    {
-        $this->tags = $tags;
 
         return $this;
     }
@@ -119,6 +96,30 @@ class Component
     public function setPicture(?int $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    public function setCategories($categories): self
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function setTags($tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

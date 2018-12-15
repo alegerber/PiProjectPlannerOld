@@ -20,6 +20,7 @@ class ProjectViewController extends AbstractController implements JsonDatafields
 {
 
     use JsonArrayToArrayClasses;
+    
     /**
      * @var Project
      */

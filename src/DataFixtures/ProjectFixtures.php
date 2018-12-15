@@ -5,8 +5,10 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Project;
+use App\Interfaces\JsonFixture;
+use App\Traits\JsonGenerator;
 
-class ProjectFixtures extends ParentFixtures
+class ProjectFixtures extends Fixtures implements JsonFixture
 {
 
 
@@ -27,13 +29,13 @@ class ProjectFixtures extends ParentFixtures
         for ($i = 0; $i <= $this->entrys; $i++){
 
             $project = new Project();
-            $project->setCategories(rand(0, $this->entrys));
             $project->setLink('project' . rand(0, $this->entrys));
             $project->setTitle('project ' . rand(0, $this->entrys));
             $project->setDescription('Some Random Text ' . rand(0, $this->entrys));
             $project->setPicture(rand(0, $this->entrys));
-            $project->setTags($this->getJson(7));
-            $project->setComponents($this->getJson(7));
+            $project->setCategories($this->getJson(7, $this->entrys));
+            $project->setTags($this->getJson(7, $this->entrys));
+            $project->setComponents($this->getJson(7, $this->entrys));
     
             $this->manager->persist($project);
         }
