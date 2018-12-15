@@ -8,7 +8,7 @@ use App\Entity\Picture;
 use App\Interfaces\JsonFixture;
 use App\Traits\JsonGenerator;
 
-class PictureFixtures extends Fixtures implements JsonFixture
+class PictureFixtures extends Fixture implements JsonFixture
 {
 
     public function load(ObjectManager $manager)

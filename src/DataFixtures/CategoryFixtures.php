@@ -8,7 +8,7 @@ use App\Entity\Category;
 use App\Interfaces\JsonFixture;
 use App\Traits\JsonGenerator;
 
-class CategoryFixtures extends Fixtures implements JsonFixture
+class CategoryFixtures extends Fixture implements JsonFixture
 {
     
     /**

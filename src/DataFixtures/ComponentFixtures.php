@@ -8,7 +8,7 @@ use App\Entity\Component;
 use App\Interfaces\JsonFixture;
 use App\Traits\JsonGenerator;
 
-class ComponentFixtures extends Fixtures implements JsonFixture
+class ComponentFixtures extends Fixture implements JsonFixture
 {
 
     public function load(ObjectManager $manager)
