@@ -10,6 +10,7 @@ use App\Traits\JsonGenerator;
 
 class PictureFixtures extends Fixture implements JsonFixture
 {
+    use JsonGenerator;
 
     public function load(ObjectManager $manager)
     {

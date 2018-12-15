@@ -10,7 +10,7 @@ use App\Traits\JsonGenerator;
 
 class ProjectFixtures extends Fixture implements JsonFixture
 {
-
+    use JsonGenerator;
 
     public function load(ObjectManager $manager)
     {

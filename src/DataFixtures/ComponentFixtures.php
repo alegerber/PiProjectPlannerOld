@@ -10,6 +10,7 @@ use App\Traits\JsonGenerator;
 
 class ComponentFixtures extends Fixture implements JsonFixture
 {
+    use JsonGenerator;
 
     public function load(ObjectManager $manager)
     {
@@ -30,7 +31,7 @@ class ComponentFixtures extends Fixture implements JsonFixture
             $component->setTitle('component ' . rand(0, $this->entrys));
             $component->setDescription('Some Random Text ' . rand(0, $this->entrys));
             $component->setPicture(rand(0, $this->entrys));
-            $component->setCategory($this->getJson(7, $this->entrys));
+            $component->setCategories($this->getJson(7, $this->entrys));
             $component->setTags($this->getJson(7, $this->entrys));
     
             $this->manager->persist($component);

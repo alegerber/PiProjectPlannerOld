@@ -10,7 +10,8 @@ use App\Traits\JsonGenerator;
 
 class CategoryFixtures extends Fixture implements JsonFixture
 {
-    
+    use JsonGenerator;
+
     /**
      * @var ObjectManager
      */

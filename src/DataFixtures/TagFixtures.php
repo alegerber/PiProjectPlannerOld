@@ -10,6 +10,7 @@ use App\Entity\Tag;
 
 class TagFixtures extends Fixture implements JsonFixture
 {
+    use JsonGenerator;
 
     public function load(ObjectManager $manager)
     {
