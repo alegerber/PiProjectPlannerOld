@@ -52,12 +52,9 @@ class TagController extends AbstractController implements JsonDatafields
             'component_link' => $slug 
         ]);
 
-        $components = $this->getArrayClasses($this->tag->getComponents(), $this->componentRepository);
-        foreach($components as $key => $id){
-            $this->components[$key] = $this->componentRepository->find($id);
-        }
+        $this->components = $this->getArrayClasses($this->tag->getComponents(), $this->componentRepository);
 
-        return $this->twig->render('05-pages/tag.html.twig',[
+        return $this->render('05-pages/tag.html.twig',[
             'tag' => $this->tag,
             'components' => $this->components
         ]);
