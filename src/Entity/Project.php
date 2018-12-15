@@ -37,7 +37,7 @@ class Project
     private $picture;
     
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      */
     private $categories;
 

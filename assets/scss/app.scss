@@ -13,3 +13,12 @@ $fa-font-path: '~font-awesome/fonts';
     justify-content: space-between;
     width: 100%;
 }
+
+.text-view {
+    display: flex;
+    width: 100%;
+}
+
+.text-view > div {
+    margin: 0px 5px;
+}

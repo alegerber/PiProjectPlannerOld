@@ -17,15 +17,23 @@
                 <div class="view-container">
                     <div>
                         <h4>Beschreibung</h4>
-                        <p>{{ project.description }}<p>
+                        <div>{{ project.description }}</div>
                         <h4>Category</h4>
-                        <p>{{ project.categories.name }}<p>
-                        <h4>Tags</h4>
-                        <p>
-                            {% for tag in project.tags %}
-                                {{ tag.name }}
+                        <div class="text-view">
+                            {% for category in project.categories %}
+                                <div>
+                                    {{ category.name }}
+                                </div>
                             {% endfor %}
-                        <p>
+                        </div>
+                        <h4>Tags</h4>
+                        <div class="text-view">
+                            {% for tag in project.tags %}
+                                <div>
+                                    {{ tag.name }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                     <div>
                         <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded"> 
