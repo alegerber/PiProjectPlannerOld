@@ -3,7 +3,9 @@
 {% block title %}Category {{ category.name }}{% endblock %}
 {% block content %}
     <h1>Category {{ category.name }}</h1>
-    {% for component in components %}
-        {% include '03-organisms/component-container.html.twig' with { 'component': component } %}
-    {% endfor %}
+    <div class="card-columns">
+        {% for component in components %}
+            {% include '03-organisms/component-card.html.twig' with { 'component': component } %}
+        {% endfor %}
+    </div>
 {% endblock %}

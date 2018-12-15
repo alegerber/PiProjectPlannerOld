@@ -3,7 +3,9 @@
 {% block title %}Tag {{ tag.name }}{% endblock %}
 {% block content %}
     <h1>Tag {{ tag.name }}</h1>
-    {% for component in components %}
-        {% include '03-organisms/component-container.html.twig' with { 'component': component } %}
-    {% endfor %}
+    <div class="card-columns">
+        {% for component in components %}
+            {% include '03-organisms/component-card.html.twig' with { 'component': component } %}
+        {% endfor %}
+    </div>
 {% endblock %}
