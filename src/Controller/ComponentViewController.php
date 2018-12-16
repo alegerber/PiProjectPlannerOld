@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ComponentRepository;
@@ -14,7 +13,6 @@ use App\Traits\JsonArrayToArrayClasses;
 
 class ComponentViewController extends AbstractController implements JsonDatafields
 {
-
     use JsonArrayToArrayClasses;
 
     /**
@@ -31,7 +29,7 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
      * @var CategoryRepository
      */
     private $categoryRepository;
-    
+
     /**
      * @var TagRepository
      */
@@ -52,11 +50,18 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
     public function index($slug)
     {
         $this->component = $this->componentRepository->findOneBy([
-            'link' => $slug 
+            'link' => $slug,
         ]);
 
-        $categories = $this->getArrayClasses($this->component->getCategories(), $this->categoryRepository);
-        $tags = $this->getArrayClasses($this->component->getTags(), $this->tagRepository);
+        $categories = $this->getArrayClasses(
+            $this->component->getCategories(),
+            $this->categoryRepository
+        );
+
+        $tags = $this->getArrayClasses(
+            $this->component->getTags(),
+            $this->tagRepository
+        );
 
         $component = [
             'id' => $this->component->getId(),
@@ -68,9 +73,8 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
             'tags' => $tags,
         ];
 
-        return $this->render('05-pages/component-view.html.twig',[
-            'component' => $component
+        return $this->render('05-pages/component-view.html.twig', [
+            'component' => $component,
         ]);
-    
     }
 }

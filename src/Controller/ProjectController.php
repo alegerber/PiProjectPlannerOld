@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProjectRepository;
@@ -13,14 +11,13 @@ class ProjectController extends AbstractController
     /**
      * @var Project[]
      */
-    private  $projects;
+    private $projects;
 
     /**
      * @var ProjectRepository
      */
     private $projectRepository;
 
-    
     public function __construct(
         ProjectRepository $projectRepository
     ) {
@@ -33,7 +30,6 @@ class ProjectController extends AbstractController
      */
     public function index()
     {
-    
         return $this->render('05-pages/projects.html.twig',
             ['projects' => $this->projects]
         );

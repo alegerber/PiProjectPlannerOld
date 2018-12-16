@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -35,7 +35,7 @@ class Project
      * @ORM\Column(type="integer", nullable=true)
      */
     private $picture;
-    
+
     /**
      * @ORM\Column(type="json_array", nullable=true)
      */
@@ -103,7 +103,7 @@ class Project
 
         return $this;
     }
-        
+
     public function getCategories()
     {
         return $this->categories;
@@ -115,7 +115,7 @@ class Project
 
         return $this;
     }
-    
+
     public function getTags()
     {
         return $this->tags;

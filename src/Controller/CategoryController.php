@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ComponentRepository;
@@ -15,12 +14,12 @@ class CategoryController extends AbstractController
     /**
      * @var Component[]
      */
-    private  $components;
+    private $components;
 
     /**
      * @var Category
      */
-    private  $category;
+    private $category;
 
     /**
      * @var ComponentRepository
@@ -30,32 +29,34 @@ class CategoryController extends AbstractController
     /**
      * @var CategoryRepository
      */
-    private  $categoryRepository;
-    
+    private $categoryRepository;
+
     public function __construct(
-        CategoryRepository $categoryRepository, ComponentRepository $componentRepository
+        CategoryRepository $categoryRepository,
+        ComponentRepository $componentRepository
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->componentRepository = $componentRepository;
     }
-        
+
     /**
      * @Route("/category/{slug}", name="category")
      */
     public function index($slug)
     {
         $this->category = $this->categoryRepository->findOneBy([
-            'component_link' => $slug 
+            'component_link' => $slug,
         ]);
 
         $components = json_decode($this->category->getComponents());
-        foreach($components as $key => $component){
+
+        foreach ($components as $key => $component) {
             $this->components[$key] = $this->componentRepository->find($component);
         }
 
-        return $this->render('05-pages/category.html.twig',[
+        return $this->render('05-pages/category.html.twig', [
             'category' => $this->category,
-            'components' => $this->components
+            'components' => $this->components,
         ]);
     }
 }

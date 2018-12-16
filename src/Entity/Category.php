@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Category
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -21,12 +21,11 @@ class Category
      */
     private $name;
 
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $component_link;
-    
+
     /**
      * @ORM\Column(type="json_array", nullable=true)
      */

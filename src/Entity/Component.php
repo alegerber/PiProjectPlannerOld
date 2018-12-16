@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Component
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -45,7 +45,6 @@ class Component
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $tags;
-
 
     public function getId(): ?int
     {

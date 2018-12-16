@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ComponentRepository;
@@ -19,12 +18,12 @@ class TagController extends AbstractController implements JsonDatafields
     /**
      * @var Component[]
      */
-    private  $components;
+    private $components;
 
     /**
      * @var Tag
      */
-    private  $tags;
+    private $tags;
 
     /**
      * @var ComponentRepository
@@ -34,29 +33,33 @@ class TagController extends AbstractController implements JsonDatafields
     /**
      * @var TagRepository
      */
-    private  $tagRepository;
-    
+    private $tagRepository;
+
     public function __construct(
-        TagRepository $tagRepository, ComponentRepository $componentRepository
+        TagRepository $tagRepository,
+        ComponentRepository $componentRepository
     ) {
         $this->tagRepository = $tagRepository;
         $this->componentRepository = $componentRepository;
     }
-        
+
     /**
      * @Route("/tag/{slug}", name="tag")
      */
     public function index($slug)
     {
         $this->tag = $this->tagRepository->findOneBy([
-            'component_link' => $slug 
+            'component_link' => $slug,
         ]);
 
-        $this->components = $this->getArrayClasses($this->tag->getComponents(), $this->componentRepository);
+        $this->components = $this->getArrayClasses(
+            $this->tag->getComponents(),
+            $this->componentRepository
+        );
 
-        return $this->render('05-pages/tag.html.twig',[
+        return $this->render('05-pages/tag.html.twig', [
             'tag' => $this->tag,
-            'components' => $this->components
+            'components' => $this->components,
         ]);
     }
 }

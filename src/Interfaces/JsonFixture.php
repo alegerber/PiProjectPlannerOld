@@ -4,7 +4,5 @@ namespace App\Interfaces;
 
 interface JsonFixture
 {
-
-    function getJson($number, $entrys);
-
+    public function getJson($number, $entrys);
 }

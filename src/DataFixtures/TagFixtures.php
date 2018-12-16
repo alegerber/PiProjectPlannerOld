@@ -17,22 +17,21 @@ class TagFixtures extends Fixture implements JsonFixture
         $this->manager = $manager;
 
         $this->entrys = 100;
-        
-        $this->tag();
-        $this->manager->flush();
-        
 
+        $this->tag();
+
+        $this->manager->flush();
     }
 
     private function tag()
     {
-        for ($i = 0; $i <= $this->entrys; $i++){
+        for ($i = 0; $i <= $this->entrys; ++$i) {
             $tag = new Tag();
-            $tag->setName('tag ' . rand(0, $this->entrys));
-            $tag->setComponentLink('tag' . rand(0, $this->entrys));
+            $tag->setName('tag '.rand(0, $this->entrys));
+            $tag->setComponentLink('tag'.rand(0, $this->entrys));
             $tag->setProjects($this->getJson(7, $this->entrys));
             $tag->setComponents($this->getJson(7, $this->entrys));
-    
+
             $this->manager->persist($tag);
         }
     }

@@ -2,9 +2,7 @@
 
 namespace App\Interfaces;
 
-interface JsonDatafields {
-
-    
+interface JsonDatafields
+{
     public function getArrayClasses($jsonArray, $repository);
-    
 }

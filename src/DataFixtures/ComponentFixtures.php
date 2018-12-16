@@ -17,25 +17,24 @@ class ComponentFixtures extends Fixture implements JsonFixture
         $this->manager = $manager;
 
         $this->entrys = 100;
-        
+
         $this->component();
+
         $this->manager->flush();
     }
-   
+
     private function component()
     {
-        for ($i = 0; $i <= $this->entrys; $i++){
-
+        for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
-            $component->setLink('component' . rand(0, $this->entrys));
-            $component->setTitle('component ' . rand(0, $this->entrys));
-            $component->setDescription('Some Random Text ' . rand(0, $this->entrys));
+            $component->setLink('component'.rand(0, $this->entrys));
+            $component->setTitle('component '.rand(0, $this->entrys));
+            $component->setDescription('Some Random Text '.rand(0, $this->entrys));
             $component->setPicture(rand(0, $this->entrys));
             $component->setCategories($this->getJson(7, $this->entrys));
             $component->setTags($this->getJson(7, $this->entrys));
-    
+
             $this->manager->persist($component);
         }
     }
-
 }

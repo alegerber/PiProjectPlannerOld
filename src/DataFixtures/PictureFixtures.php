@@ -17,22 +17,21 @@ class PictureFixtures extends Fixture implements JsonFixture
         $this->manager = $manager;
 
         $this->entrys = 100;
-        
-        $this->picture();
-        $this->manager->flush();
-        
 
+        $this->picture();
+
+        $this->manager->flush();
     }
 
     private function picture()
     {
-        for ($i = 0; $i <= $this->entrys; $i++){
+        for ($i = 0; $i <= $this->entrys; ++$i) {
             $picture = new Picture();
-            $picture->setUrl('/files/pictures/pic' . rand(0, $this->entrys) . '.jpg');
-            $picture->setTitle('picture ' . rand(0, $this->entrys));
-            $picture->setDescription('Some Random Text ' . rand(0, $this->entrys));
+            $picture->setUrl('/files/pictures/pic'.rand(0, $this->entrys).'.jpg');
+            $picture->setTitle('picture '.rand(0, $this->entrys));
+            $picture->setDescription('Some Random Text '.rand(0, $this->entrys));
             $picture->setTags($this->getJson(7, $this->entrys));
-    
+
             $this->manager->persist($picture);
         }
     }

@@ -2,26 +2,25 @@
 
 namespace App\Traits;
 
-
-trait JsonArrayToArrayClasses {
-
+trait JsonArrayToArrayClasses
+{
     /*
     * @return array|int
     */
-    function getArrayClasses($jsonArray, $repository) {
-
+    public function getArrayClasses($jsonArray, $repository)
+    {
         $arrayClasses = null;
 
         $array = json_decode($jsonArray);
 
-        if(is_array($array)){
-            foreach($array as $key => $id){
+        if (is_array($array)) {
+            foreach ($array as $key => $id) {
                 $arrayClasses[$key] = $repository->find($id);
             }
         } else {
             $arrayClasses = $repository->find($array);
         }
-        
+
         return $arrayClasses;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProjectRepository;
@@ -15,9 +14,8 @@ use App\Traits\JsonArrayToArrayClasses;
 
 class ProjectViewController extends AbstractController implements JsonDatafields
 {
-
     use JsonArrayToArrayClasses;
-    
+
     /**
      * @var Project
      */
@@ -32,7 +30,7 @@ class ProjectViewController extends AbstractController implements JsonDatafields
      * @var CategoryRepository
      */
     private $categoryRepository;
-    
+
     /**
      * @var TagRepository
      */
@@ -42,12 +40,11 @@ class ProjectViewController extends AbstractController implements JsonDatafields
      * @var ComponentRepository
      */
     private $componentRepository;
-    
-
 
     public function __construct(
-        ProjectRepository $projectRepository, 
-        CategoryRepository $categoryRepository, TagRepository $tagRepository,
+        ProjectRepository $projectRepository,
+        CategoryRepository $categoryRepository,
+        TagRepository $tagRepository,
         ComponentRepository $componentRepository
     ) {
         $this->projectRepository = $projectRepository;
@@ -62,13 +59,23 @@ class ProjectViewController extends AbstractController implements JsonDatafields
     public function index($slug)
     {
         $this->project = $this->projectRepository->findOneBy([
-            'link' => $slug 
+            'link' => $slug,
         ]);
 
-        $categories = $this->getArrayClasses($this->project->getCategories(), $this->categoryRepository);
-        $tags = $this->getArrayClasses($this->project->getTags(), $this->tagRepository);
-        $components = $this->getArrayClasses($this->project->getComponents(), $this->componentRepository);
-        
+        $categories = $this->getArrayClasses(
+            $this->project->getCategories(),
+            $this->categoryRepository
+        );
+
+        $tags = $this->getArrayClasses(
+            $this->project->getTags(),
+            $this->tagRepository);
+
+        $components = $this->getArrayClasses(
+            $this->project->getComponents(),
+            $this->componentRepository
+        );
+
         $project = [
             'id' => $this->project->getId(),
             'link' => $this->project->getLink(),
@@ -80,8 +87,8 @@ class ProjectViewController extends AbstractController implements JsonDatafields
             'components' => $components,
         ];
 
-        return $this->render('05-pages/project-view.html.twig',[
-            'project' => $project
+        return $this->render('05-pages/project-view.html.twig', [
+            'project' => $project,
         ]);
     }
 }

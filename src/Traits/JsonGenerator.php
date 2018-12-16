@@ -2,20 +2,18 @@
 
 namespace App\Traits;
 
-trait JsonGenerator {
-
+trait JsonGenerator
+{
     /*
     * @return json
-    */    
-    function getJson($number, $entrys)
+    */
+    public function getJson($number, $entrys)
     {
         $array[] = null;
-        for ($i = 0; $i <= $number; $i++){
+        for ($i = 0; $i <= $number; ++$i) {
             $array[$i] = rand(0, $entrys);
         }
 
         return json_encode($array);
-
     }
-
 }
