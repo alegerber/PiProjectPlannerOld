@@ -12,6 +12,9 @@ class ProjectFixtures extends Fixture implements JsonFixture
 {
     use JsonGenerator;
 
+    /**
+     * @param ObjectManager
+     */
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;

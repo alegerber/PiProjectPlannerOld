@@ -36,6 +36,10 @@ class ComponentController extends AbstractController
      */
     private $tagRepository;
 
+    /**
+     * @param CategoryRepository
+     * @param TagRepository
+     */
     public function __construct(
         CategoryRepository $categoryRepository,
         TagRepository $tagRepository

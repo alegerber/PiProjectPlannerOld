@@ -35,6 +35,11 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
      */
     private $tagRepository;
 
+    /**
+     * @param ComponentRepository
+     * @param CategoryRepository
+     * @param TagRepository
+     */
     public function __construct(
         ComponentRepository $componentRepository,
         CategoryRepository $categoryRepository,

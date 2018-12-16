@@ -18,6 +18,9 @@ class ProjectController extends AbstractController
      */
     private $projectRepository;
 
+    /**
+     * @param ProjectRepository
+     */
     public function __construct(
         ProjectRepository $projectRepository
     ) {
@@ -30,8 +33,8 @@ class ProjectController extends AbstractController
      */
     public function index()
     {
-        return $this->render('05-pages/projects.html.twig',
-            ['projects' => $this->projects]
-        );
+        return $this->render('05-pages/projects.html.twig', [
+            'projects' => $this->projects,
+        ]);
     }
 }

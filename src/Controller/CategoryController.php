@@ -31,6 +31,10 @@ class CategoryController extends AbstractController
      */
     private $categoryRepository;
 
+    /**
+     * @param CategoryRepository
+     * @param ComponentRepository
+     */
     public function __construct(
         CategoryRepository $categoryRepository,
         ComponentRepository $componentRepository

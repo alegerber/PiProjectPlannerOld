@@ -41,6 +41,12 @@ class ProjectViewController extends AbstractController implements JsonDatafields
      */
     private $componentRepository;
 
+    /**
+     * @param ProjectRepository
+     * @param CategoryRepository
+     * @param TagRepository
+     * @param ComponentRepository
+     */
     public function __construct(
         ProjectRepository $projectRepository,
         CategoryRepository $categoryRepository,
@@ -69,7 +75,8 @@ class ProjectViewController extends AbstractController implements JsonDatafields
 
         $tags = $this->getArrayClasses(
             $this->project->getTags(),
-            $this->tagRepository);
+            $this->tagRepository
+        );
 
         $components = $this->getArrayClasses(
             $this->project->getComponents(),

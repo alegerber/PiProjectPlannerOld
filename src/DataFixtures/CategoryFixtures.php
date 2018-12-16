@@ -22,6 +22,9 @@ class CategoryFixtures extends Fixture implements JsonFixture
      */
     private $entrys;
 
+    /**
+     * @param ObjectManager
+     */
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;

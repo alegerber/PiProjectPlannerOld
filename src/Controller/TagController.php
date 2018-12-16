@@ -35,6 +35,10 @@ class TagController extends AbstractController implements JsonDatafields
      */
     private $tagRepository;
 
+    /**
+     * @param TagRepository
+     * @param ComponentRepository
+     */
     public function __construct(
         TagRepository $tagRepository,
         ComponentRepository $componentRepository
