@@ -85,7 +85,7 @@ class Project
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -104,36 +104,36 @@ class Project
         return $this;
     }
 
-    public function getCategories()
+    public function getCategories(): ?string
     {
         return $this->categories;
     }
 
-    public function setCategories($categories): self
+    public function setCategories(?string $categories): self
     {
         $this->categories = $categories;
 
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?string $tags): self
     {
         $this->tags = $tags;
 
         return $this;
     }
 
-    public function getComponents()
+    public function getComponents(): ?string
     {
         return $this->components;
     }
 
-    public function setComponents($components): self
+    public function setComponents(?string $components): self
     {
         $this->components = $components;
 

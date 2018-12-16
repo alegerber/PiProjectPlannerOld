@@ -27,7 +27,7 @@ class Picture
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -65,24 +65,24 @@ class Picture
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?string $tags): self
     {
         $this->tags = $tags;
 

@@ -27,7 +27,7 @@ class Component
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -80,7 +80,7 @@ class Component
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -99,24 +99,24 @@ class Component
         return $this;
     }
 
-    public function getCategories()
+    public function getCategories(): ?string
     {
         return $this->categories;
     }
 
-    public function setCategories($categories): self
+    public function setCategories(?string $categories): self
     {
         $this->categories = $categories;
 
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?string $tags): self
     {
         $this->tags = $tags;
 

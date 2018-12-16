@@ -65,24 +65,24 @@ class Tag
         return $this;
     }
 
-    public function getProjects()
+    public function getProjects(): ?string
     {
         return $this->projects;
     }
 
-    public function setProjects($projects): self
+    public function setProjects(?string  $projects): self
     {
         $this->projects = $projects;
 
         return $this;
     }
 
-    public function getComponents()
+    public function getComponents(): ?string
     {
         return $this->components;
     }
 
-    public function setComponents($components): self
+    public function setComponents(?string $components): self
     {
         $this->components = $components;
 
