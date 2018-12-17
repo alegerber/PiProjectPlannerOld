@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface JsonDatafields
 {
-    public function getArrayClasses(string $jsonArray, $repository): mixed;
+    public function getArrayClasses(string $jsonArray, $repository);
 }

@@ -13,7 +13,7 @@ trait JsonArrayToArrayClasses
     *
     * @return array|int
     */
-    public function getArrayClasses(string $jsonArray, $repository): mixed
+    public function getArrayClasses(string $jsonArray, $repository)
     {
         $arrayClasses = null;
 
