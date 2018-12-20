@@ -4,10 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ComponentRepository;
 use App\Entity\Component;
-use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
+use App\Entity\Category;
+use App\Entity\Tag;
 use App\Interfaces\JsonDatafields;
 use App\Traits\JsonArrayToArrayClasses;
 
@@ -21,52 +20,23 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
     private $component;
 
     /**
-     * @var ComponentRepository
-     */
-    private $componentRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @param ComponentRepository
-     * @param CategoryRepository
-     * @param TagRepository
-     */
-    public function __construct(
-        ComponentRepository $componentRepository,
-        CategoryRepository $categoryRepository,
-        TagRepository $tagRepository
-    ) {
-        $this->componentRepository = $componentRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
-    }
-
-    /**
      * @Route("/component/{slug}", name="component_view")
      */
     public function index($slug)
     {
-        $this->component = $this->componentRepository->findOneBy([
+        $this->component = $this->getDoctrine()
+        ->getRepository(Component::class)->findOneBy([
             'link' => $slug,
         ]);
 
         $categories = $this->getArrayClasses(
             $this->component->getCategories(),
-            $this->categoryRepository
+            $this->getDoctrine()->getRepository(Category::class)
         );
 
         $tags = $this->getArrayClasses(
             $this->component->getTags(),
-            $this->tagRepository
+            $this->getDoctrine()->getRepository(Tag::class)
         );
 
         $component = [

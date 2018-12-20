@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ProjectRepository;
+use App\Entity\Project;
 
 class ProjectController extends AbstractController
 {
@@ -14,25 +14,13 @@ class ProjectController extends AbstractController
     private $projects;
 
     /**
-     * @var ProjectRepository
-     */
-    private $projectRepository;
-
-    /**
-     * @param ProjectRepository
-     */
-    public function __construct(
-        ProjectRepository $projectRepository
-    ) {
-        $this->projectRepository = $projectRepository;
-        $this->projects = $this->projectRepository->findAll();
-    }
-
-    /**
      * @Route("/project", name="project")
      */
     public function index()
     {
+        $this->projects = $this->getDoctrine()
+        ->getRepository(Project::class)->findAll();
+
         return $this->render('05-pages/projects.html.twig', [
             'projects' => $this->projects,
         ]);

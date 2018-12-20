@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ComponentRepository;
 use App\Entity\Component;
-use App\Repository\CategoryRepository;
 use App\Entity\Category;
 
 class CategoryController extends AbstractController
@@ -27,32 +25,19 @@ class CategoryController extends AbstractController
     private $componentRepository;
 
     /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @param CategoryRepository
-     * @param ComponentRepository
-     */
-    public function __construct(
-        CategoryRepository $categoryRepository,
-        ComponentRepository $componentRepository
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->componentRepository = $componentRepository;
-    }
-
-    /**
      * @Route("/category/{slug}", name="category")
      */
     public function index($slug)
     {
-        $this->category = $this->categoryRepository->findOneBy([
+        $this->category = $this->getDoctrine()
+        ->getRepository(Category::class)->findOneBy([
             'component_link' => $slug,
         ]);
 
-        $components = json_decode($this->category->getComponents());
+        $components = \json_decode($this->category->getComponents());
+
+        $this->componentRepository = $this->getDoctrine()
+        ->getRepository(Component::class);
 
         foreach ($components as $key => $component) {
             $this->components[$key] = $this->componentRepository->find($component);

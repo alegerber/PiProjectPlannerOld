@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ProjectRepository;
-use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
-use App\Repository\ComponentRepository;
 use App\Entity\Project;
+use App\Entity\Category;
+use App\Entity\Tag;
+use App\Entity\Component;
 use App\Interfaces\JsonDatafields;
 use App\Traits\JsonArrayToArrayClasses;
 
@@ -22,65 +21,29 @@ class ProjectViewController extends AbstractController implements JsonDatafields
     private $project;
 
     /**
-     * @var ProjectRepository
-     */
-    private $projectRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @var ComponentRepository
-     */
-    private $componentRepository;
-
-    /**
-     * @param ProjectRepository
-     * @param CategoryRepository
-     * @param TagRepository
-     * @param ComponentRepository
-     */
-    public function __construct(
-        ProjectRepository $projectRepository,
-        CategoryRepository $categoryRepository,
-        TagRepository $tagRepository,
-        ComponentRepository $componentRepository
-    ) {
-        $this->projectRepository = $projectRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
-        $this->componentRepository = $componentRepository;
-    }
-
-    /**
      * @Route("/project/{slug}", name="project_view")
      */
     public function index($slug)
     {
-        $this->project = $this->projectRepository->findOneBy([
-            'link' => $slug,
-        ]);
+        $this->project = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->findOneBy([
+                'link' => $slug,
+            ]);
 
         $categories = $this->getArrayClasses(
             $this->project->getCategories(),
-            $this->categoryRepository
+            $this->getDoctrine()->getRepository(Category::class)
         );
 
         $tags = $this->getArrayClasses(
             $this->project->getTags(),
-            $this->tagRepository
+            $this->getDoctrine()->getRepository(Tag::class)
         );
 
         $components = $this->getArrayClasses(
             $this->project->getComponents(),
-            $this->componentRepository
+            $this->getDoctrine()->getRepository(Component::class)
         );
 
         $project = [
