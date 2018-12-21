@@ -7,7 +7,7 @@
     </div>
     <div class="form-group">
         <label>Description:</label>
-        <textarea rows="4" cols="50">{{ project.description }}</textarea>
+        <textarea class="form-control rounded" rows="4" cols="50">{{ project.description }}</textarea>
     </div>
     <h4>Category</h4>
     <div class="edit-container">
@@ -37,7 +37,7 @@
     </div>
     <div>
         <div>
-            <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded">
+            <img class="image-edit" src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded">
         </div>
         <div class="edit-container">
             <div>
@@ -45,7 +45,7 @@
                     <label>Delete the old Image</label>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-danger">delete</button>
+                    <button type="submit" class="btn btn-danger delete-image">delete</button>
                 </div>
             </div>
         </div>
@@ -54,11 +54,14 @@
                 <div>
                     <label>Upload a new Image</label>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-success">Upload</button>
+                <div class="image-file-upload">
+                    <label for="file-upload" class="image-file-upload">
+                        <div class="btn btn-success">upload</div>
+                    </label>
+                    <input id="file-upload" type="file"/>
                 </div>
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary save-data">Save</button>
 </form> 

@@ -11,3 +11,7 @@
         {% include '04-templates/project-view-tab.html.twig' with {'project': project } %}
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/tab-form-edit') }}
+{% endblock %}

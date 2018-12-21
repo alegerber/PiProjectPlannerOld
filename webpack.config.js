@@ -23,6 +23,9 @@ Encore
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './assets/js/app.js'
     ])
+    .addEntry('js/tab-form-edit', [
+        './assets/js/tab-form-edit.js'
+    ])
     .addStyleEntry('css/app', [
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './assets/scss/app.scss',

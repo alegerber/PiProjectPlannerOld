@@ -11,3 +11,7 @@
         {% include '04-templates/component-view-tab.html.twig' with {'component': component } %}
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/tab-form-edit') }}
+{% endblock %}
