@@ -49,15 +49,6 @@ class CategoryController extends AbstractController
             'component_link' => $slug,
         ]);
 
-        // $components = \json_decode($this->category->getComponents());
-
-        // $this->componentRepository = $this->getDoctrine()
-        // ->getRepository(Component::class);
-
-        // foreach ($components as $key => $component) {
-        //     $this->components[$key] = $this->componentRepository->find($component);
-        // }
-
         $this->components = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->category->getComponents(),
             $this->getDoctrine()->getRepository(Component::class)

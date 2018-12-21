@@ -10,7 +10,7 @@ use App\Entity\Tag;
 class ComponentController extends AbstractController
 {
     /**
-     * @var[][][]
+     * @var mixed[][]
      */
     private $containers;
 
