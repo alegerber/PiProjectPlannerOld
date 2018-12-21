@@ -6,13 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Tag;
 use App\Entity\Component;
-use App\Interfaces\JsonDatafields;
-use App\Traits\JsonArrayToArrayClasses;
+use App\Services\JsonArrayToArrayClasses;
 
-class TagController extends AbstractController implements JsonDatafields
+class TagController extends AbstractController
 {
-    use JsonArrayToArrayClasses;
-
     /**
      * @var Component[]
      */
@@ -22,6 +19,20 @@ class TagController extends AbstractController implements JsonDatafields
      * @var Tag
      */
     private $tags;
+
+    /**
+     * @var JsonArrayToArrayClasses
+     */
+    private $jsonArrayToArrayClasses;
+
+    /**
+     * @param JsonArrayToArrayClasses
+     */
+    public function __construct(
+        JsonArrayToArrayClasses $jsonArrayToArrayClasses
+    ) {
+        $this->jsonArrayToArrayClasses = $jsonArrayToArrayClasses;
+    }
 
     /**
      * @Route("/tag/{slug}", name="tag")
@@ -34,7 +45,7 @@ class TagController extends AbstractController implements JsonDatafields
                 'component_link' => $slug,
             ]);
 
-        $this->components = $this->getArrayClasses(
+        $this->components = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->tag->getComponents(),
             $this->getDoctrine()->getRepository(Component::class)
         );

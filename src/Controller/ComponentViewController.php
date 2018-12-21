@@ -7,17 +7,28 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
 use App\Entity\Category;
 use App\Entity\Tag;
-use App\Interfaces\JsonDatafields;
-use App\Traits\JsonArrayToArrayClasses;
+use App\Services\JsonArrayToArrayClasses;
 
-class ComponentViewController extends AbstractController implements JsonDatafields
+class ComponentViewController extends AbstractController
 {
-    use JsonArrayToArrayClasses;
-
     /**
      * @var Component
      */
     private $component;
+
+    /**
+     * @var JsonArrayToArrayClasses
+     */
+    private $jsonArrayToArrayClasses;
+
+    /**
+     * @param JsonArrayToArrayClasses
+     */
+    public function __construct(
+        JsonArrayToArrayClasses $jsonArrayToArrayClasses
+    ) {
+        $this->jsonArrayToArrayClasses = $jsonArrayToArrayClasses;
+    }
 
     /**
      * @Route("/component/{slug}", name="component_view")
@@ -29,12 +40,12 @@ class ComponentViewController extends AbstractController implements JsonDatafiel
             'link' => $slug,
         ]);
 
-        $categories = $this->getArrayClasses(
+        $categories = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->component->getCategories(),
             $this->getDoctrine()->getRepository(Category::class)
         );
 
-        $tags = $this->getArrayClasses(
+        $tags = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->component->getTags(),
             $this->getDoctrine()->getRepository(Tag::class)
         );

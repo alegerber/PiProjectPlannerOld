@@ -8,17 +8,28 @@ use App\Entity\Project;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\Component;
-use App\Interfaces\JsonDatafields;
-use App\Traits\JsonArrayToArrayClasses;
+use App\Services\JsonArrayToArrayClasses;
 
-class ProjectViewController extends AbstractController implements JsonDatafields
+class ProjectViewController extends AbstractController
 {
-    use JsonArrayToArrayClasses;
-
     /**
      * @var Project
      */
     private $project;
+
+    /**
+     * @var JsonArrayToArrayClasses
+     */
+    private $jsonArrayToArrayClasses;
+
+    /**
+     * @param JsonArrayToArrayClasses
+     */
+    public function __construct(
+        JsonArrayToArrayClasses $jsonArrayToArrayClasses
+    ) {
+        $this->jsonArrayToArrayClasses = $jsonArrayToArrayClasses;
+    }
 
     /**
      * @Route("/project/{slug}", name="project_view")
@@ -31,17 +42,17 @@ class ProjectViewController extends AbstractController implements JsonDatafields
                 'link' => $slug,
             ]);
 
-        $categories = $this->getArrayClasses(
+        $categories = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->project->getCategories(),
             $this->getDoctrine()->getRepository(Category::class)
         );
 
-        $tags = $this->getArrayClasses(
+        $tags = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->project->getTags(),
             $this->getDoctrine()->getRepository(Tag::class)
         );
 
-        $components = $this->getArrayClasses(
+        $components = $this->jsonArrayToArrayClasses->getArrayClasses(
             $this->project->getComponents(),
             $this->getDoctrine()->getRepository(Component::class)
         );

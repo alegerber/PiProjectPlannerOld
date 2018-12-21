@@ -1,9 +1,25 @@
 <?php
 
-namespace App\Traits;
+namespace App\Services;
 
-trait JsonArrayToArrayClasses
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
+class JsonArrayToArrayClasses
 {
+    /**
+     * @var Serializer
+     */
+    private $serializer;
+
+    public function __construct()
+    {
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
+
     /*
     * Convert a json which contain id of objects to an array with these objects.
     * The object are saved in the database.
@@ -17,7 +33,7 @@ trait JsonArrayToArrayClasses
     {
         $arrayClasses = null;
 
-        $array = json_decode($jsonArray);
+        $array = $this->serializer->decode($jsonArray, 'json');
 
         if (is_array($array)) {
             foreach ($array as $key => $id) {
