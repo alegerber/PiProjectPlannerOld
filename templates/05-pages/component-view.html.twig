@@ -1,48 +1,13 @@
 {% extends "04-templates/base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('css/tab-view') }}
+{% endblock %}
 {% block title %}Component{% endblock %}
 {% block content %}
     <div class="container mt-3">
         <h1>{{ component.title }}</h1>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="#view">Ansicht</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#edit">Bearbeiten</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div id="view" class="container tab-pane active"><br>
-                <div class="view-container">
-                    <div>
-                        <h4>Beschreibung</h4>
-                        <div>{{ component.description }}</div>
-                        <h4>Category</h4>
-                        <div class="text-view">
-                            {% for category in component.categories %}
-                                <div>
-                                    {{ category.name }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <h4>Tags</h4>
-                        <div class="text-view">
-                            {% for tag in component.tags %}
-                                <div>
-                                    {{ tag.name }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div>
-                        <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded"> 
-                    </div>
-                </div>     
-            </div>
-            <div id="edit" class="container tab-pane fade edit-container"><br>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-        </div>
+        {% include '04-templates/component-view-tab.html.twig' with {'component': component } %}
     </div>
 {% endblock %}

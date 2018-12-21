@@ -27,8 +27,8 @@ Encore
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './assets/scss/app.scss',
     ])
-    .addStyleEntry('css/component', [
-        './assets/scss/component.scss'
+    .addStyleEntry('css/tab-view', [
+        './assets/scss/tab-view.scss'
     ])
 
     // will require an extra script tag for runtime.js
