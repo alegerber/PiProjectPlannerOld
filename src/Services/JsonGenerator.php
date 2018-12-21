@@ -17,10 +17,8 @@ class JsonGenerator
      * @param JsonEncoder
      * @param ObjectNormalizer
      */
-    public function __construct(
-        JsonEncoder $encoders,
-        ObjectNormalizer $normalizers
-    ) {
+    public function __construct()
+    {
         $encoders = [new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $this->serializer = new Serializer($normalizers, $encoders);

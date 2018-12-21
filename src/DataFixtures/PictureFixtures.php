@@ -5,12 +5,33 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Picture;
-use App\Interfaces\JsonFixture;
-use App\Traits\JsonGenerator;
+use App\Services\JsonGenerator;
 
-class PictureFixtures extends Fixture implements JsonFixture
+class PictureFixtures extends Fixture
 {
-    use JsonGenerator;
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
+    /**
+     * @var int
+     */
+    private $entrys;
+
+    /**
+     * @var JsonGenerator
+     */
+    private $jsonGenerator;
+
+    /**
+     * @param JsonArrayToArrayClasses
+     */
+    public function __construct(
+        JsonGenerator $jsonGenerator
+    ) {
+        $this->jsonGenerator = $jsonGenerator;
+    }
 
     /**
      * @param ObjectManager
@@ -33,7 +54,7 @@ class PictureFixtures extends Fixture implements JsonFixture
             $picture->setUrl('/files/pictures/pic'.rand(0, $this->entrys).'.jpg');
             $picture->setTitle('picture '.rand(0, $this->entrys));
             $picture->setDescription('Some Random Text '.rand(0, $this->entrys));
-            $picture->setTags($this->getJson(7, $this->entrys));
+            $picture->setTags($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($picture);
         }
