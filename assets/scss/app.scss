@@ -4,24 +4,12 @@ $fa-font-path: '~font-awesome/fonts';
 @import "~bootstrap/scss/bootstrap";
 @import "~font-awesome/scss/font-awesome.scss";
 
+// main
 #content {
     margin: 40px;
 }
+
+// cards
 .view-cards {
     width: 600px;
-}
-
-.view-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.text-view {
-    display: flex;
-    width: 100%;
-}
-
-.text-view > div {
-    margin: 0px 5px;
 }

@@ -7,7 +7,7 @@
     </p>
     <div class="row">
     {% for container in containers %}
-        {% include '03-organisms/text-container.html.twig' with {'title': container.title, 'prefix': container.prefix, 'buttons': container.content } %}
+        {% include '02-molecules/text-container.html.twig' with {'title': container.title, 'prefix': container.prefix, 'buttons': container.content } %}
     {% endfor %}
     </div>
 {% endblock %}

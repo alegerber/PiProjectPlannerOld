@@ -1,0 +1,26 @@
+// Project/Component view
+.view-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.text-view {
+    display: flex;
+    width: 100%;
+}
+
+.text-view > div {
+    margin: 0px 5px;
+}
+
+// Project/Component edit
+.edit-container {
+    display: block;
+}
+.edit-container > div  {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin: 5px 5px;
+}

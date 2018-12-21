@@ -4,7 +4,7 @@
 {% block content %}
     <div class="card-columns ">
         {% for project in projects %}
-            {% include '03-organisms/project-card.html.twig' with {'project': project } %}
+            {% include '02-molecules/project-card.html.twig' with {'project': project } %}
         {% endfor %}
         <div class="card bg-info">
             <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">

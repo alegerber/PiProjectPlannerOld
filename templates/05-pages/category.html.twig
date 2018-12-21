@@ -5,7 +5,7 @@
     <h1>Category {{ category.name }}</h1>
     <div class="card-columns">
         {% for component in components %}
-            {% include '03-organisms/component-card.html.twig' with { 'component': component } %}
+            {% include '02-molecules/component-card.html.twig' with { 'component': component } %}
         {% endfor %}
     </div>
 {% endblock %}

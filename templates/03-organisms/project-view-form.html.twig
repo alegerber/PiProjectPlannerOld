@@ -1,0 +1,25 @@
+<div class="view-container">
+    <div>
+        <h4>Description:</h4>
+        <div>{{ project.description }}</div>
+        <h4>Category</h4>
+        <div class="text-view">
+            {% for category in project.categories %}
+                <div>
+                    {{ category.name }}
+                </div>
+            {% endfor %}
+        </div>
+        <h4>Tags</h4>
+        <div class="text-view">
+            {% for tag in project.tags %}
+                <div>
+                    {{ tag.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded"> 
+    </div>
+</div> 

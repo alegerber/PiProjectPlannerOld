@@ -25,7 +25,10 @@ Encore
     ])
     .addStyleEntry('css/app', [
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
-        './assets/scss/app.scss'
+        './assets/scss/app.scss',
+    ])
+    .addStyleEntry('css/component', [
+        './assets/scss/component.scss'
     ])
 
     // will require an extra script tag for runtime.js
