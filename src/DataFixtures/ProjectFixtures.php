@@ -51,8 +51,9 @@ class ProjectFixtures extends Fixture
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $project = new Project();
-            $project->setLink('project'.rand(0, $this->entrys));
-            $project->setTitle('project '.rand(0, $this->entrys));
+            $projectNumber = rand(0, $this->entrys);
+            $project->setLink('project-'.$projectNumber);
+            $project->setTitle('project '.$projectNumber);
             $project->setDescription('Some Random Text '.rand(0, $this->entrys));
             $project->setPicture(rand(0, $this->entrys));
             $project->setCategories($this->jsonGenerator->getJson(7, $this->entrys));

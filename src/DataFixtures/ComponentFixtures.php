@@ -51,8 +51,9 @@ class ComponentFixtures extends Fixture
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
-            $component->setLink('component'.rand(0, $this->entrys));
-            $component->setTitle('component '.rand(0, $this->entrys));
+            $componentNumber = rand(0, $this->entrys);
+            $component->setLink('component'.$componentNumber);
+            $component->setTitle('component '.$componentNumber);
             $component->setDescription('Some Random Text '.rand(0, $this->entrys));
             $component->setPicture(rand(0, $this->entrys));
             $component->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
