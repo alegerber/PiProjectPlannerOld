@@ -21,11 +21,6 @@ class CategoryController extends AbstractController
     private $category;
 
     /**
-     * @var ComponentRepository
-     */
-    private $componentRepository;
-
-    /**
      * @var JsonArrayToArrayClasses
      */
     private $jsonArrayToArrayClasses;
