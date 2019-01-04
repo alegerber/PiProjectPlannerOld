@@ -80,12 +80,12 @@ class Project
         $this->components = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -97,7 +97,7 @@ class Project
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -109,24 +109,24 @@ class Project
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImage(): Image
     {
         return $this->image;
     }
 
-    public function setImage(?Image $image): self
+    public function setImage(Image $image): self
     {
         $this->image = $image;
 

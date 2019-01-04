@@ -78,12 +78,12 @@ class Component
         $this->tags = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -95,7 +95,7 @@ class Component
         return $this;
     }
     
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -107,7 +107,7 @@ class Component
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -119,7 +119,7 @@ class Component
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }

@@ -29,12 +29,12 @@ class Category
      */
     private $component_link;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -46,7 +46,7 @@ class Category
         return $this;
     }
 
-    public function getComponentLink(): ?string
+    public function getComponentLink(): string
     {
         return $this->component_link;
     }
