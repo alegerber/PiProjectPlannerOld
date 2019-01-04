@@ -29,7 +29,15 @@ class TagController extends AbstractController
             ->findOneBy([
                 'component_link' => $slug,
             ]);
+        
+        $components = $this->getDoctrine()
+            ->getRepository(Component::class)->findAll();
 
+        foreach ($components as $component) {
+            if ($component->getTags()->contains($this->tag)) {
+                $this->components[] = $component;
+            }
+        }
         return $this->render('05-pages/tag.html.twig', [
             'tag' => $this->tag,
             'components' => $this->components,

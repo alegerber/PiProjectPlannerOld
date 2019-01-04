@@ -25,7 +25,7 @@ class FixtureController extends AbstractController
     private $tags;
 
     /**
-     * @Route("/dev/{slug}", name="category")
+     * @Route("/dev/{slug}", name="dev")
      */
     public function index($slug)
     {

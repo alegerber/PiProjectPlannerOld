@@ -29,6 +29,15 @@ class CategoryController extends AbstractController
             'component_link' => $slug,
         ]);
 
+        $components = $this->getDoctrine()
+            ->getRepository(Component::class)->findAll();
+
+        foreach ($components as $component) {
+            if ($component->getCategories()->contains($this->category)) {
+                $this->components[] = $component;
+            }
+        }
+
         return $this->render('05-pages/category.html.twig', [
             'category' => $this->category,
             'components' => $this->components,

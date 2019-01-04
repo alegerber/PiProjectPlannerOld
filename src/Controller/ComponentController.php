@@ -65,7 +65,7 @@ class ComponentController extends AbstractController
         ]);
 
         return $this->render('05-pages/component-view.html.twig', [
-            'component' => $component,
+            'component' => $this->component,
         ]);
     }
 }
