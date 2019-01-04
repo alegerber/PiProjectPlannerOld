@@ -38,7 +38,7 @@ class ComponentFixtures extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['third'];
+        return ['run'];
     }
 
     private function component(): void

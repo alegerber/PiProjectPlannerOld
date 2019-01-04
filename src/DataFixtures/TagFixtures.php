@@ -35,7 +35,7 @@ class TagFixtures extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['first'];
+        return ['run'];
     }
 
     private function tag(): void
