@@ -32,6 +32,13 @@ class Component
      *
      * @ORM\Column(type="string", length=255)
      */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
     private $title;
 
     /**
@@ -84,6 +91,18 @@ class Component
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+    
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

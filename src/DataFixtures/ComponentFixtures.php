@@ -51,6 +51,7 @@ class ComponentFixtures extends Fixture implements FixtureGroupInterface
             $componentNumber = \rand(0, $this->entrys);
             $component->setLink('component'.$componentNumber);
             $component->setTitle('component '.$componentNumber);
+            $component->setName('component '.$componentNumber);
             $component->setDescription('Some Random Text '.\rand(0, $this->entrys));
             //$component->setImage(\rand(0, $this->entrys));
 

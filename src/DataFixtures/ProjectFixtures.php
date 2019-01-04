@@ -45,7 +45,7 @@ class ProjectFixtures extends Fixture implements FixtureGroupInterface
             $projectNumber = rand(0, $this->entrys);
             $project->setLink('project-'.$projectNumber);
             $project->setTitle('project '.$projectNumber);
-            $project->setDescription('Some Random Text '.rand(0, $this->entrys));
+            $project->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
             //$project->setImage(rand(0, $this->entrys));
             //$project->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
             //$project->setTags($this->jsonGenerator->getJson(7, $this->entrys));
