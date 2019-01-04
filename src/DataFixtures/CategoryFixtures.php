@@ -7,7 +7,7 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Category;
 
-class CategoryFixtures extends Fixture implements FixtureGroupInterface
+class CategoryFixtures extends Fixture
 {
     /**
      * @var ObjectManager
@@ -31,11 +31,6 @@ class CategoryFixtures extends Fixture implements FixtureGroupInterface
         $this->category();
 
         $this->manager->flush();
-    }
-
-    public static function getGroups(): array
-    {
-        return ['run'];
     }
 
     private function category(): void

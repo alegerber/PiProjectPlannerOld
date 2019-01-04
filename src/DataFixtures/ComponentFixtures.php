@@ -10,7 +10,7 @@ use App\Entity\Category;
 use App\Entity\Tag;
 use App\Services\GenerateArrayCollection;
 
-class ComponentFixtures extends Fixture implements FixtureGroupInterface
+class ComponentFixtures extends Fixture
 {
     /**
      * @var ObjectManager
@@ -34,11 +34,6 @@ class ComponentFixtures extends Fixture implements FixtureGroupInterface
         $this->component();
 
         $this->manager->flush();
-    }
-
-    public static function getGroups(): array
-    {
-        return ['run'];
     }
 
     private function component(): void

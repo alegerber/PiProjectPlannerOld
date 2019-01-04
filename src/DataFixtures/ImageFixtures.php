@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Image;
 
-class ImageFixtures extends Fixture implements FixtureGroupInterface
+class ImageFixtures extends Fixture
 {
     /**
      * @var ObjectManager
@@ -32,11 +32,6 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
         $this->image();
 
         $this->manager->flush();
-    }
-
-    public static function getGroups(): array
-    {
-        return ['run'];
     }
 
     private function image(): void

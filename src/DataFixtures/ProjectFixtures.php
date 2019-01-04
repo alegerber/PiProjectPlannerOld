@@ -7,7 +7,7 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Project;
 
-class ProjectFixtures extends Fixture implements FixtureGroupInterface
+class ProjectFixtures extends Fixture
 {
     /**
      * @var ObjectManager
@@ -31,11 +31,6 @@ class ProjectFixtures extends Fixture implements FixtureGroupInterface
         $this->project();
 
         $this->manager->flush();
-    }
-
-    public static function getGroups(): array
-    {
-        return ['run'];
     }
 
     private function project(): void

@@ -7,7 +7,7 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Tag;
 
-class TagFixtures extends Fixture implements FixtureGroupInterface
+class TagFixtures extends Fixture
 {
     /**
      * @var ObjectManager
@@ -31,11 +31,6 @@ class TagFixtures extends Fixture implements FixtureGroupInterface
         $this->tag();
 
         $this->manager->flush();
-    }
-
-    public static function getGroups(): array
-    {
-        return ['run'];
     }
 
     private function tag(): void
