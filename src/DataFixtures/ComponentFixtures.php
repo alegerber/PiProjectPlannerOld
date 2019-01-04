@@ -25,7 +25,7 @@ class ComponentFixtures extends Fixture implements FixtureGroupInterface
     /**
      * @param ObjectManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
 
@@ -41,7 +41,7 @@ class ComponentFixtures extends Fixture implements FixtureGroupInterface
         return ['third'];
     }
 
-    private function component()
+    private function component(): void
     {
         $generateArrayCollection = new GenerateArrayCollection();
 

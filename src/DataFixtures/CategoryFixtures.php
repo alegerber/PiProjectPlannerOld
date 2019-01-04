@@ -22,7 +22,7 @@ class CategoryFixtures extends Fixture implements FixtureGroupInterface
     /**
      * @param ObjectManager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
 
@@ -38,7 +38,7 @@ class CategoryFixtures extends Fixture implements FixtureGroupInterface
         return ['first'];
     }
 
-    private function category()
+    private function category(): void
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
