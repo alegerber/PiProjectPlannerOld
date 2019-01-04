@@ -41,20 +41,9 @@ class ProjectController extends AbstractController
             ->findOneBy([
                 'link' => $slug,
             ]);
-
-        $project = [
-            'id' => $this->project->getId(),
-            'link' => $this->project->getLink(),
-            'title' => $this->project->getTitle(),
-            'description' => $this->project->getDescription(),
-            'image' => $this->project->getImage(),
-            'categories' => $categories,
-            'tags' => $tags,
-            'components' => $components,
-        ];
-
+            
         return $this->render('05-pages/project-view.html.twig', [
-            'project' => $project,
+            'project' => $this->project,
         ]);
     }
 }

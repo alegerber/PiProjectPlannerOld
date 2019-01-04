@@ -64,16 +64,6 @@ class ComponentController extends AbstractController
             'link' => $slug,
         ]);
 
-        $component = [
-            'id' => $this->component->getId(),
-            'link' => $this->component->getLink(),
-            'title' => $this->component->getTitle(),
-            'description' => $this->component->getDescription(),
-            'image' => $this->component->getImage(),
-            'categories' => $categories,
-            'tags' => $tags,
-        ];
-
         return $this->render('05-pages/component-view.html.twig', [
             'component' => $component,
         ]);
