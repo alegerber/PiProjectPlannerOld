@@ -3,11 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Category;
-use App\Services\JsonGenerator;
 
-class CategoryFixtures extends Fixture
+class CategoryFixtures extends Fixture implements FixtureGroupInterface
 {
     /**
      * @var ObjectManager
@@ -18,20 +18,6 @@ class CategoryFixtures extends Fixture
      * @var int
      */
     private $entrys;
-
-    /**
-     * @var JsonGenerator
-     */
-    private $jsonGenerator;
-
-    /**
-     * @param JsonArrayToArrayClasses
-     */
-    public function __construct(
-        JsonGenerator $jsonGenerator
-    ) {
-        $this->jsonGenerator = $jsonGenerator;
-    }
 
     /**
      * @param ObjectManager
@@ -47,14 +33,17 @@ class CategoryFixtures extends Fixture
         $this->manager->flush();
     }
 
+    public static function getGroups(): array
+    {
+        return ['first'];
+    }
+
     private function category()
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
             $category->setName('category '.rand(0, $this->entrys));
             $category->setComponentLink('category'.rand(0, $this->entrys));
-            $category->setProjects($this->jsonGenerator->getJson(7, $this->entrys));
-            $category->setComponents($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($category);
         }

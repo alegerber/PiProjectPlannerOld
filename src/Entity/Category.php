@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -27,14 +29,26 @@ class Category
     private $component_link;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @var Project[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $projects;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @var Component[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $components;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+        $this->components = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -65,27 +79,41 @@ class Category
         return $this;
     }
 
-    public function getProjects(): string
+    public function addProject(?Project ...$Projects): void
+    {
+        foreach ($Projects as $Project) {
+            if (!$this->projects->contains($Project)) {
+                $this->projects->add($Project);
+            }
+        }
+    }
+
+    public function removeProject(Project $Project): void
+    {
+        $this->projects->removeElement($Project);
+    }
+
+    public function getProjects(): Collection
     {
         return $this->projects;
     }
 
-    public function setProjects(?string $projects): self
+    public function addComponent(?Component ...$components): void
     {
-        $this->projects = $projects;
-
-        return $this;
+        foreach ($components as $component) {
+            if (!$this->components->contains($component)) {
+                $this->components->add($component);
+            }
+        }
     }
 
-    public function getComponents(): string
+    public function removeComponent(Component $component): void
+    {
+        $this->components->removeElement($component);
+    }
+
+    public function getComponents(): Collection
     {
         return $this->components;
-    }
-
-    public function setComponents(?string $components): self
-    {
-        $this->components = $components;
-
-        return $this;
     }
 }

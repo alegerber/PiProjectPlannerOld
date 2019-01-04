@@ -3,11 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Project;
-use App\Services\JsonGenerator;
 
-class ProjectFixtures extends Fixture
+class ProjectFixtures extends Fixture implements FixtureGroupInterface
 {
     /**
      * @var ObjectManager
@@ -18,20 +18,6 @@ class ProjectFixtures extends Fixture
      * @var int
      */
     private $entrys;
-
-    /**
-     * @var JsonGenerator
-     */
-    private $jsonGenerator;
-
-    /**
-     * @param JsonArrayToArrayClasses
-     */
-    public function __construct(
-        JsonGenerator $jsonGenerator
-    ) {
-        $this->jsonGenerator = $jsonGenerator;
-    }
 
     /**
      * @param ObjectManager
@@ -47,6 +33,11 @@ class ProjectFixtures extends Fixture
         $this->manager->flush();
     }
 
+    public static function getGroups(): array
+    {
+        return ['last'];
+    }
+
     private function project()
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
@@ -55,10 +46,10 @@ class ProjectFixtures extends Fixture
             $project->setLink('project-'.$projectNumber);
             $project->setTitle('project '.$projectNumber);
             $project->setDescription('Some Random Text '.rand(0, $this->entrys));
-            $project->setPicture(rand(0, $this->entrys));
-            $project->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
-            $project->setTags($this->jsonGenerator->getJson(7, $this->entrys));
-            $project->setComponents($this->jsonGenerator->getJson(7, $this->entrys));
+            //$project->setImage(rand(0, $this->entrys));
+            //$project->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
+            //$project->setTags($this->jsonGenerator->getJson(7, $this->entrys));
+            //$project->setComponents($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($project);
         }

@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  */
-class Component
+class Image
 {
     /**
      * @var int
@@ -23,14 +25,19 @@ class Component
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload an image first.")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg" })
      */
-    private $link;
+    private $uploadedFile;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(max=255)
      */
     private $title;
 
@@ -38,27 +45,12 @@ class Component
      * @var string
      *
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
-     * @var Image
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $image;
-
-    /**
-     * @var Category[]|ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category")
-     * @ORM\OrderBy({"name": "ASC"})
-     */
-    private $categories;
-
-    /**
-     * @var Tag[]|ArrayCollection
+     * @var Tags[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag")
      * @ORM\OrderBy({"name": "ASC"})
@@ -67,28 +59,27 @@ class Component
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getUploadedFile(): UploadedFile
     {
-        return $this->link;
+        return $this->uploadedFile;
     }
 
-    public function setLink(string $link): self
+    public function setUploadedFile(UploadedFile $uploadedFile): self
     {
-        $this->link = $link;
+        $this->uploadedFile = $uploadedFile;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -100,7 +91,7 @@ class Component
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -110,37 +101,6 @@ class Component
         $this->description = $description;
 
         return $this;
-    }
-
-    public function getImage(): Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(Image $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function addCategory(?Category ...$categories): void
-    {
-        foreach ($categories as $category) {
-            if (!$this->categories->contains($category)) {
-                $this->categories->add($category);
-            }
-        }
-    }
-
-    public function removeCategory(Category $category): void
-    {
-        $this->categories->removeElement($category);
-    }
-
-    public function getCategories(): Collection
-    {
-        return $this->categories;
     }
 
     public function addTag(?Tag ...$tags): void

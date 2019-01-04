@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -10,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -17,39 +21,64 @@ class Project
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $link;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @var Image
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $picture;
+    private $image;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @var Category[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @var Tag[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @var Component[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component")
+     * @ORM\OrderBy({"name": "ASC"})
      */
     private $components;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->components = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -92,51 +121,72 @@ class Project
         return $this;
     }
 
-    public function getPicture(): ?int
+    public function getImage(): ?Image
     {
-        return $this->picture;
+        return $this->image;
     }
 
-    public function setPicture(?int $picture): self
+    public function setImage(?Image $image): self
     {
-        $this->picture = $picture;
+        $this->image = $image;
 
         return $this;
     }
 
-    public function getCategories(): ?string
+    public function addCategory(?Category ...$categories): void
+    {
+        foreach ($categories as $category) {
+            if (!$this->categories->contains($category)) {
+                $this->categories->add($category);
+            }
+        }
+    }
+
+    public function removeCategory(Category $category): void
+    {
+        $this->categories->removeElement($category);
+    }
+
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
 
-    public function setCategories(?string $categories): self
+    public function addTag(?Tag ...$tags): void
     {
-        $this->categories = $categories;
-
-        return $this;
+        foreach ($tags as $tag) {
+            if (!$this->tags->contains($tag)) {
+                $this->tags->add($tag);
+            }
+        }
     }
 
-    public function getTags(): ?string
+    public function removeTag(Tag $tag): void
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function setTags(?string $tags): self
+    public function addComponent(?Component ...$components): void
     {
-        $this->tags = $tags;
-
-        return $this;
+        foreach ($components as $component) {
+            if (!$this->components->contains($component)) {
+                $this->components->add($component);
+            }
+        }
     }
 
-    public function getComponents(): ?string
+    public function removeComponent(Component $component): void
+    {
+        $this->components->removeElement($component);
+    }
+
+    public function getComponents(): Collection
     {
         return $this->components;
-    }
-
-    public function setComponents(?string $components): self
-    {
-        $this->components = $components;
-
-        return $this;
     }
 }

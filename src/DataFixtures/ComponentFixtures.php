@@ -3,11 +3,14 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Component;
-use App\Services\JsonGenerator;
+use App\Entity\Category;
+use App\Entity\Tag;
+use App\Services\GenerateArrayCollection;
 
-class ComponentFixtures extends Fixture
+class ComponentFixtures extends Fixture implements FixtureGroupInterface
 {
     /**
      * @var ObjectManager
@@ -18,20 +21,6 @@ class ComponentFixtures extends Fixture
      * @var int
      */
     private $entrys;
-
-    /**
-     * @var JsonGenerator
-     */
-    private $jsonGenerator;
-
-    /**
-     * @param JsonArrayToArrayClasses
-     */
-    public function __construct(
-        JsonGenerator $jsonGenerator
-    ) {
-        $this->jsonGenerator = $jsonGenerator;
-    }
 
     /**
      * @param ObjectManager
@@ -47,17 +36,39 @@ class ComponentFixtures extends Fixture
         $this->manager->flush();
     }
 
+    public static function getGroups(): array
+    {
+        return ['third'];
+    }
+
     private function component()
     {
+        $generateArrayCollection = new GenerateArrayCollection();
+
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
-            $componentNumber = rand(0, $this->entrys);
+
+            $componentNumber = \rand(0, $this->entrys);
             $component->setLink('component'.$componentNumber);
             $component->setTitle('component '.$componentNumber);
-            $component->setDescription('Some Random Text '.rand(0, $this->entrys));
-            $component->setPicture(rand(0, $this->entrys));
-            $component->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
-            $component->setTags($this->jsonGenerator->getJson(7, $this->entrys));
+            $component->setDescription('Some Random Text '.\rand(0, $this->entrys));
+            //$component->setImage(\rand(0, $this->entrys));
+
+            // for ($k = 0; $k < 7; ++$k) {
+            //     $category = new Category();
+            //     $category->setName('category '.\rand(0, $this->entrys));
+            //     $category->setComponentLink('category'.\rand(0, $this->entrys));
+
+            //     $component->addCategory($category);
+            // }
+
+            // for ($k = 0; $k < 7; ++$k) {
+            //     $tag = new Tag();
+            //     $tag->setName('tag '.\rand(0, $this->entrys));
+            //     $tag->setComponentLink('tag'.\rand(0, $this->entrys));
+
+            //     $component->addTag($tag);
+            // }
 
             $this->manager->persist($component);
         }

@@ -3,11 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Tag;
-use App\Services\JsonGenerator;
 
-class TagFixtures extends Fixture
+class TagFixtures extends Fixture implements FixtureGroupInterface
 {
     /**
      * @var ObjectManager
@@ -18,20 +18,6 @@ class TagFixtures extends Fixture
      * @var int
      */
     private $entrys;
-
-    /**
-     * @var JsonGenerator
-     */
-    private $jsonGenerator;
-
-    /**
-     * @param JsonArrayToArrayClasses
-     */
-    public function __construct(
-        JsonGenerator $jsonGenerator
-    ) {
-        $this->jsonGenerator = $jsonGenerator;
-    }
 
     /**
      * @param ObjectManager
@@ -47,14 +33,17 @@ class TagFixtures extends Fixture
         $this->manager->flush();
     }
 
+    public static function getGroups(): array
+    {
+        return ['first'];
+    }
+
     private function tag()
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $tag = new Tag();
             $tag->setName('tag '.rand(0, $this->entrys));
             $tag->setComponentLink('tag'.rand(0, $this->entrys));
-            $tag->setProjects($this->jsonGenerator->getJson(7, $this->entrys));
-            $tag->setComponents($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($tag);
         }
