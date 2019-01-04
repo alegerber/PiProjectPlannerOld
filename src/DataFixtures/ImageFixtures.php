@@ -42,7 +42,6 @@ class ImageFixtures extends Fixture
             $image->setUploadedFile($uploadedFile);
             $image->setTitle('image '.rand(0, $this->entrys));
             $image->setDescription('Some Random Text '.rand(0, $this->entrys));
-            //$image->setTags($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($image);
         }

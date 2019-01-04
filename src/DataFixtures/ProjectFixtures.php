@@ -41,10 +41,6 @@ class ProjectFixtures extends Fixture
             $project->setLink('project-'.$projectNumber);
             $project->setTitle('project '.$projectNumber);
             $project->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
-            //$project->setImage(rand(0, $this->entrys));
-            //$project->setCategories($this->jsonGenerator->getJson(7, $this->entrys));
-            //$project->setTags($this->jsonGenerator->getJson(7, $this->entrys));
-            //$project->setComponents($this->jsonGenerator->getJson(7, $this->entrys));
 
             $this->manager->persist($project);
         }

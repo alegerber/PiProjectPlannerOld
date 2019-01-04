@@ -48,23 +48,6 @@ class ComponentFixtures extends Fixture
             $component->setTitle('component '.$componentNumber);
             $component->setName('component '.$componentNumber);
             $component->setDescription('Some Random Text '.\rand(0, $this->entrys));
-            //$component->setImage(\rand(0, $this->entrys));
-
-            // for ($k = 0; $k < 7; ++$k) {
-            //     $category = new Category();
-            //     $category->setName('category '.\rand(0, $this->entrys));
-            //     $category->setComponentLink('category'.\rand(0, $this->entrys));
-
-            //     $component->addCategory($category);
-            // }
-
-            // for ($k = 0; $k < 7; ++$k) {
-            //     $tag = new Tag();
-            //     $tag->setName('tag '.\rand(0, $this->entrys));
-            //     $tag->setComponentLink('tag'.\rand(0, $this->entrys));
-
-            //     $component->addTag($tag);
-            // }
 
             $this->manager->persist($component);
         }
