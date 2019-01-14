@@ -25,10 +25,8 @@
     margin: 5px 5px;
 }
 
-// custom upload
-.image-file-upload input[type="file"] {
-    display: none;
-}
-.image-file-upload .image-file-upload {
-    cursor: pointer;
+// Image
+.view-image {
+    width:  400px;
+    height: 400px;
 }

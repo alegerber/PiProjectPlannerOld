@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Form\ProjectType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Services\UploadedFileFormHandling;
 
 class ProjectController extends AbstractController
 {
@@ -19,6 +20,16 @@ class ProjectController extends AbstractController
      * @var Project[]
      */
     private $projects;
+
+    /**
+     * @var UploadedFileFormHandling
+     */
+    private $uploadedFileFormHandling;
+
+    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
+    {
+        $this->uploadedFileFormHandling = $uploadedFileFormHandling;
+    }
 
     /**
      * @Route("/project", name="project")
@@ -34,9 +45,9 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/project/{slug}", name="project_view")
+     * @Route("/project/{slug}", methods={"GET", "POST"}, name="project_view")
      */
-    public function view($slug)
+    public function view(Request $request, string $slug)
     {
         $this->project = $this->getDoctrine()
             ->getRepository(Project::class)
@@ -45,6 +56,23 @@ class ProjectController extends AbstractController
             ]);
 
         $form = $this->createForm(ProjectType::class, $this->project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->uploadedFileFormHandling->handle(
+                $this->project->getImage(),
+                $this->getParameter('image_file_directory')
+            );
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($this->project);
+            $em->persist($this->project->getImage());
+            $em->flush();
+
+            return $this->redirectToRoute('project_view', [
+                'slug' => $this->project->getLink(),
+            ]);
+        }
 
         return $this->render('05-pages/project-view.html.twig', [
             'project' => $this->project,

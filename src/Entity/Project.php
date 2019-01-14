@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -106,14 +107,7 @@ class Project
     {
         $this->title = $title;
 
-        //Lower case everything
-        $this->link = strtolower($name);
-        //Make alphanumeric (removes all other characters)
-        $this->link = preg_replace("/[^a-z0-9_\s-]/", '', $this->link);
-        //Clean up multiple dashes or whitespaces
-        $this->link = preg_replace("/[\s-]+/", ' ', $this->link);
-        //Convert whitespaces and underscore to dash
-        $this->link = preg_replace("/[\s_]/", '-', $this->link);
+        $this->link = Slugger::slugify($title);
 
         return $this;
     }
