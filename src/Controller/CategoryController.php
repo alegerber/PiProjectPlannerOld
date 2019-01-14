@@ -29,10 +29,10 @@ class CategoryController extends AbstractController
             'component_link' => $slug,
         ]);
 
-        $components = $this->getDoctrine()
+        $componentsAll = $this->getDoctrine()
             ->getRepository(Component::class)->findAll();
 
-        foreach ($components as $component) {
+        foreach ($componentsAll as $component) {
             if ($component->getCategories()->contains($this->category)) {
                 $this->components[] = $component;
             }

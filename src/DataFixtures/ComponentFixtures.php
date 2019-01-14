@@ -3,12 +3,8 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Component;
-use App\Entity\Category;
-use App\Entity\Tag;
-use App\Services\GenerateArrayCollection;
 
 class ComponentFixtures extends Fixture
 {
@@ -38,8 +34,6 @@ class ComponentFixtures extends Fixture
 
     private function component(): void
     {
-        $generateArrayCollection = new GenerateArrayCollection();
-
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
 

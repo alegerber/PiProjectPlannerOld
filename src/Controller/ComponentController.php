@@ -38,19 +38,19 @@ class ComponentController extends AbstractController
         $this->categories = $this->getDoctrine()
         ->getRepository(Category::class)->findAll();
 
-        $containers[0]['content'] = $this->categories;
-        $containers[0]['title'] = 'Categories';
-        $containers[0]['prefix'] = '/category';
+        $this->containers[0]['content'] = $this->categories;
+        $this->containers[0]['title'] = 'Categories';
+        $this->containers[0]['prefix'] = '/category';
 
         $this->tags = $this->getDoctrine()
         ->getRepository(Tag::class)->findAll();
 
-        $containers[1]['content'] = $this->tags;
-        $containers[1]['title'] = 'Tags';
-        $containers[1]['prefix'] = '/tag';
+        $this->containers[1]['content'] = $this->tags;
+        $this->containers[1]['title'] = 'Tags';
+        $this->containers[1]['prefix'] = '/tag';
 
         return $this->render('05-pages/components.html.twig', [
-            'containers' => $containers,
+            'containers' => $this->containers,
         ]);
     }
 

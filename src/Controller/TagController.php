@@ -24,22 +24,23 @@ class TagController extends AbstractController
      */
     public function index($slug)
     {
-        $this->tag = $this->getDoctrine()
+        $this->tags = $this->getDoctrine()
             ->getRepository(Tag::class)
             ->findOneBy([
                 'component_link' => $slug,
             ]);
-        
-        $components = $this->getDoctrine()
+
+        $componentsAll = $this->getDoctrine()
             ->getRepository(Component::class)->findAll();
 
-        foreach ($components as $component) {
-            if ($component->getTags()->contains($this->tag)) {
+        foreach ($componentsAll as $component) {
+            if ($component->getTags()->contains($this->tags)) {
                 $this->components[] = $component;
             }
         }
+
         return $this->render('05-pages/tag.html.twig', [
-            'tag' => $this->tag,
+            'tag' => $this->tags,
             'components' => $this->components,
         ]);
     }
