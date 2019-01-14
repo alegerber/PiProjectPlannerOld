@@ -94,7 +94,7 @@ class Component
 
         return $this;
     }
-    
+
     public function getName(): string
     {
         return $this->name;
@@ -157,7 +157,7 @@ class Component
         $this->categories->removeElement($category);
     }
 
-    public function getCategories(): Collection
+    public function getCategory(): Collection
     {
         return $this->categories;
     }

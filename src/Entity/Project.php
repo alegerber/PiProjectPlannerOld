@@ -97,7 +97,7 @@ class Project
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -106,10 +106,19 @@ class Project
     {
         $this->title = $title;
 
+        //Lower case everything
+        $this->link = strtolower($name);
+        //Make alphanumeric (removes all other characters)
+        $this->link = preg_replace("/[^a-z0-9_\s-]/", '', $this->link);
+        //Clean up multiple dashes or whitespaces
+        $this->link = preg_replace("/[\s-]+/", ' ', $this->link);
+        //Convert whitespaces and underscore to dash
+        $this->link = preg_replace("/[\s_]/", '-', $this->link);
+
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -121,7 +130,7 @@ class Project
         return $this;
     }
 
-    public function getImage(): Image
+    public function getImage(): ?Image
     {
         return $this->image;
     }
@@ -147,7 +156,7 @@ class Project
         $this->categories->removeElement($category);
     }
 
-    public function getCategories(): Collection
+    public function getCategories(): ?Collection
     {
         return $this->categories;
     }
@@ -166,7 +175,7 @@ class Project
         $this->tags->removeElement($tag);
     }
 
-    public function getTags(): Collection
+    public function getTags(): ?Collection
     {
         return $this->tags;
     }

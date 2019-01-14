@@ -36,6 +36,15 @@ class Image
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload an image first.")
+     */
+    private $uploadedFileOriginName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
      * @Assert\NotBlank
      * @Assert\Length(max=255)
      */
@@ -67,19 +76,20 @@ class Image
         return $this->id;
     }
 
-    public function getUploadedFile(): UploadedFile
+    public function getUploadedFile(): ?UploadedFile
     {
-        return $this->uploadedFile;
+        return new UploadedFile($this->uploadedFile, $this->uploadedFileOriginName);
     }
 
     public function setUploadedFile(UploadedFile $uploadedFile): self
     {
         $this->uploadedFile = $uploadedFile;
+        $this->uploadedFileOriginName = $uploadedFile->getClientOriginalName();
 
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -91,7 +101,7 @@ class Image
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -117,7 +127,7 @@ class Image
         $this->tags->removeElement($tag);
     }
 
-    public function getTags(): Collection
+    public function getTags(): ?Collection
     {
         return $this->tags;
     }

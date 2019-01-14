@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
+use App\Form\ProjectType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProjectController extends AbstractController
 {
@@ -41,9 +43,12 @@ class ProjectController extends AbstractController
             ->findOneBy([
                 'link' => $slug,
             ]);
-            
+
+        $form = $this->createForm(ProjectType::class, $this->project);
+
         return $this->render('05-pages/project-view.html.twig', [
             'project' => $this->project,
+            'form' => $form->createView(),
         ]);
     }
 }
