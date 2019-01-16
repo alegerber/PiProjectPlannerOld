@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Image;
@@ -38,8 +37,11 @@ class ImageFixtures extends Fixture
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $image = new Image();
-            $uploadedFile = new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'bildschirmfoto.jpg');
-            $image->setUploadedFile($uploadedFile);
+
+            $image->setUploadedFile(
+                new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'bildschirmfoto.jpg')
+            );
+
             $image->setTitle('image '.rand(0, $this->entrys));
             $image->setDescription('Some Random Text '.rand(0, $this->entrys));
 

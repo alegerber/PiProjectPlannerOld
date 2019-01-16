@@ -17,6 +17,11 @@ class ProjectController extends AbstractController
     private $project;
 
     /**
+     * @var ImageRepository
+     */
+    private $imageRepository;
+
+    /**
      * @var Project[]
      */
     private $projects;
@@ -64,10 +69,7 @@ class ProjectController extends AbstractController
                 $this->getParameter('image_file_directory')
             );
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($this->project);
-            $em->persist($this->project->getImage());
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('project_view', [
                 'slug' => $this->project->getLink(),

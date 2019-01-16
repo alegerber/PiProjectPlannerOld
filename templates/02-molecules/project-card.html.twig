@@ -1,6 +1,7 @@
 
 <div class="card bg-light">
-    <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
+    <img src="{{ project.image.uploadedFile.pathname }}" 
+    alt="{{ project.title }} image" class="rounded float-right">
     <div class="card-body">
         <h2 class="card-title">{{ project.title }}</h2>
         <p class="card-text">{{ project.description }}</p>

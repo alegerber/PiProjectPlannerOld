@@ -10,7 +10,7 @@ use App\Entity\Image;
 use App\Entity\Project;
 use App\Entity\Tag;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FixtureController extends AbstractController
 {
@@ -27,26 +27,26 @@ class FixtureController extends AbstractController
     /**
      * @Route("/dev/{slug}", name="dev")
      */
-    public function index($slug)
+    public function index(string $slug)
     {
-        if ($_SERVER['APP_ENV'] === 'dev' && $slug === 'kd0lK8KUV5rDGby7iCfzLXkATSzBxq') {
+        if ('dev' === $_SERVER['APP_ENV'] && 'kd0lK8KUV5rDGby7iCfzLXkATSzBxq' === $slug) {
             $entityManager = $this->getDoctrine()->getManager();
 
             $this->categories = $this->getDoctrine()
             ->getRepository(Category::class)->findAll();
-            
+
             $this->components = $this->getDoctrine()
             ->getRepository(Component::class)->findAll();
 
             $this->images = $this->getDoctrine()
             ->getRepository(Image::class)->findAll();
-             
+
             $this->projects = $this->getDoctrine()
             ->getRepository(Project::class)->findAll();
 
             $this->tags = $this->getDoctrine()
             ->getRepository(Tag::class)->findAll();
-            
+
             $lengthCategory = \count($this->categories) - 1;
 
             $lengthComponent = \count($this->components) - 1;
@@ -59,6 +59,9 @@ class FixtureController extends AbstractController
                 for ($i = 0; $i < 7; ++$i) {
                     $image->addTag($this->tags[\mt_rand(0, $lengthTag)]);
                 }
+                $image->setUploadedFile(
+                    new UploadedFile('img/placeholder.jpg', 'bildschirmfoto.jpg')
+                );
                 $entityManager->persist($image);
             }
 
@@ -80,7 +83,7 @@ class FixtureController extends AbstractController
                 $project->setImage($this->images[\mt_rand(0, $lengthImage)]);
                 $entityManager->persist($project);
             }
-            
+
             $entityManager->flush();
 
             return new Response('<html><body>OK<body></html>');

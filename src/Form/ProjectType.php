@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Project;
 use App\Repository\ComponentRepository;
-use App\Services\ChoiceBuilder;
 
 class ProjectType extends AbstractType
 {
@@ -21,15 +20,9 @@ class ProjectType extends AbstractType
      */
     private $componentRepository;
 
-    /**
-     * @var ChoiceBuilder
-     */
-    private $choiceBuilder;
-
     public function __construct(ComponentRepository $componentRepository)
     {
         $this->componentRepository = $componentRepository;
-        $this->choiceBuilder = new ChoiceBuilder($this->componentRepository);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -54,7 +47,14 @@ class ProjectType extends AbstractType
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
                     'label' => false,
-                    'choices' => $this->choiceBuilder->getArray($this->componentRepository),
+                    'choices' => $this->componentRepository->findAll(),
+                    'choice_label' => function ($component, $key, $value) {
+                        /* @var App\Entity\Component $component */
+                        return $component->getTitle();
+                    },
+                    'choice_attr' => function ($component, $key, $value) {
+                        return ['class' => 'component_'.strtolower($component->getTitle())];
+                    },
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -23,6 +23,7 @@ class UploadedFileFormHandling
         } catch (\FileException $e) {
             echo 'Can\'t Save File'.$e->getMessage()."\n";
         }
+
         $object->setUploadedFile(
             new UploadedFile('uploads/images'.'/'.$fileName, $file->getClientOriginalName())
         );
