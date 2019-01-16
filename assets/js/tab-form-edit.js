@@ -185,8 +185,6 @@ $(document).ready(function() {
     $collectionHolderComponent.data('index', $collectionHolderComponent.find('select').length);
 
     $addComponentButton.on('click', function(e) {
-
-        console.log($collectionHolderComponent);
         // add a new component form (see next code block)
         addComponentForm($collectionHolderComponent, $newLinkLiComponent);
     });

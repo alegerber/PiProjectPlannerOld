@@ -13,7 +13,7 @@
                 'attr': {'class': 'form-control'}
             }) }}
         </div>
-        <h3>Tags</h3>
+        <label>Tags</label>
         <ul class="view-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.tags %}
                 <li>
@@ -21,7 +21,7 @@
                 </li>
             {% endfor %}
         </ul>
-        <h3>Category</h3>
+        <label>Category</label>
         <ul class="categories" data-prototype="{{ itemForm.printItemRow(form.categories.vars.prototype)|e('html_attr') }}">
             {% for category in form.categories %}
                 <li>
@@ -47,8 +47,13 @@
                 'label': 'Image Description',
             }) }}
         </div>
-        {{ form_row(form.image.uploadedfile) }}
-        <h4>Image Tags</h4>
+        <div class="form-group">
+            {{ form_row(form.image.uploadedfile, {
+                'attr': {'class': 'form-control-file'},
+                'label': 'Image File',
+            }) }}
+        </div>
+        <label>Image Tags</label>
         <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.image.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.image.tags %}
                 <li>
