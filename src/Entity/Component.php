@@ -157,7 +157,7 @@ class Component
         $this->categories->removeElement($category);
     }
 
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
         return $this->categories;
     }

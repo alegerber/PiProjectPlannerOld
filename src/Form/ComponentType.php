@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ComponentType extends AbstractType
 {
@@ -17,8 +18,10 @@ class ComponentType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('image', ImageType::class)
-            ->add('category', CollectionType::class, [
+            ->add('image', ImageType::class, [
+                'required' => false,
+            ])
+            ->add('categories', CollectionType::class, [
                 'entry_type' => CategoryType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -29,6 +32,10 @@ class ComponentType extends AbstractType
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Create',
+                'attr' => ['class' => 'btn btn-default'],
             ])
         ;
     }

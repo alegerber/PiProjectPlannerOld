@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Form\ComponentType;
+use App\Services\UploadedFileFormHandling;
 
 class ComponentController extends AbstractController
 {
@@ -29,6 +32,16 @@ class ComponentController extends AbstractController
      * @var Component
      */
     private $component;
+
+    /**
+     * @var UploadedFileFormHandling
+     */
+    private $uploadedFileFormHandling;
+
+    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
+    {
+        $this->uploadedFileFormHandling = $uploadedFileFormHandling;
+    }
 
     /**
      * @Route("/component", name="component")
@@ -57,15 +70,35 @@ class ComponentController extends AbstractController
     /**
      * @Route("/component/{slug}", name="component_view")
      */
-    public function view($slug)
+    public function view(Request $request, string $slug)
     {
         $this->component = $this->getDoctrine()
         ->getRepository(Component::class)->findOneBy([
             'link' => $slug,
         ]);
 
+        $form = $this->createForm(ComponentType::class, $this->component);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getImage()->getUploadedFile() !=
+            $this->component->getImage()->getUploadedFile()
+            ) {
+                $this->uploadedFileFormHandling->handle(
+                    $this->component->getImage(),
+                    $this->getParameter('image_file_directory')
+                );
+            }
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('project_view', [
+                'slug' => $this->component->getLink(),
+            ]);
+        }
+
         return $this->render('05-pages/component-view.html.twig', [
             'component' => $this->component,
+            'form' => $form->createView(),
         ]);
     }
 }
