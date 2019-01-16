@@ -24,7 +24,15 @@
     width: 300px;
     margin: 5px 5px;
 }
-#edit .tags {
+#edit .view-tags {
+    list-style: none;
+    padding: 0px;
+}
+#edit .image-tags {
+    list-style: none;
+    padding: 0px;
+}
+#edit .categories {
     list-style: none;
     padding: 0px;
 }

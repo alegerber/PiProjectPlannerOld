@@ -1,31 +1,59 @@
 window.$ = require('jquery');
 
 
-var $collectionHolderTags;
+var $collectionHolderViewTags;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="add_tag_link btn btn-success btn-outline">Add a tag</button>');
-var $newLinkLiTags = $('<li></li>').append($addTagButton);
+var $addViewTagButton = $('<button type="button" class="add_view_tag_link btn btn-success btn-outline">Add a tag</button>');
+var $newLinkLiViewTags = $('<li></li>').append($addViewTagButton);
 
 $(document).ready(function() {
     // Get the ul that holds the collection of tags
-    $collectionHolderTags = $('ul.tags');
+    $collectionHolderViewTags = $('ul.view-tags');
 
     // add a delete link to all of the existing tag form li elements
-    $collectionHolderTags.find('li').each(function() {
+    $collectionHolderViewTags.find('li').each(function() {
         addTagFormDeleteLink($(this));
     });
 
     // add the "add a tag" anchor and li to the tags ul
-    $collectionHolderTags.append($newLinkLiTags);
+    $collectionHolderViewTags.append($newLinkLiViewTags);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
-    $collectionHolderTags.data('index', $collectionHolderTags.find(':input').length);
+    $collectionHolderViewTags.data('index', $collectionHolderViewTags.find(':input').length);
 
-    $addTagButton.on('click', function(e) {
+    $addViewTagButton.on('click', function(e) {
         // add a new tag form (see next code block)
-        addTagForm($collectionHolderTags, $newLinkLiTags);
+        addTagForm($collectionHolderViewTags, $newLinkLiViewTags);
+    });
+});
+
+var $collectionHolderImageTags;
+
+// setup an "add a tag" link
+var $addImageTagButton = $('<button type="button" class="add_view_tag_link btn btn-success btn-outline">Add a tag</button>');
+var $newLinkLiImageTags = $('<li></li>').append($addImageTagButton);
+
+$(document).ready(function() {
+    // Get the ul that holds the collection of tags
+    $collectionHolderImageTags = $('ul.image-tags');
+
+    // add a delete link to all of the existing tag form li elements
+    $collectionHolderImageTags.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolderImageTags.append($newLinkLiImageTags);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolderImageTags.data('index', $collectionHolderImageTags.find(':input').length);
+
+    $addImageTagButton.on('click', function(e) {
+        // add a new tag form (see next code block)
+        addTagForm($collectionHolderImageTags, $newLinkLiImageTags);
     });
 });
 
@@ -58,7 +86,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<div class="input-group-append"><button class="btn btn-danger btn-outline" type="button">Remove</button><div>');
+    var $removeFormButton = $('<div class="input-group-append"><button class="btn btn-danger btn-outline" type="button">Remove</button></div>');
     $tagFormLi.children().append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
@@ -70,7 +98,7 @@ function addTagFormDeleteLink($tagFormLi) {
 var $collectionHolderCategory;
 
 // setup an "add a tag" link
-var $addCategoryButton = $('<button type="button" class="add_category_link">Add a Category</button>');
+var $addCategoryButton = $('<button type="button" class="add_category_link btn btn-success btn-outline">Add a Category</button>');
 var $newLinkLiCategory = $('<li></li>').append($addCategoryButton);
 
 $(document).ready(function() {
@@ -124,8 +152,8 @@ function addCategoryForm($collectionHolder, $newLinkLi) {
 }
 
 function addCategoryFormDeleteLink($categoryFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this Category</button>');
-    $categoryFormLi.append($removeFormButton);
+    var $removeFormButton = $('<div class="input-group-append"><button class="btn btn-danger btn-outline" type="button">Remove</button></div>');
+    $categoryFormLi.children().append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
         // remove the li for the category form

@@ -1,0 +1,8 @@
+{% macro printItemRow(item) %}
+    <div class="input-group mb-3">
+        {{ form_widget(item.children['name'], {
+            'attr': {'class': 'form-control'},
+            'label': false,
+        }) }}
+    </div>
+{% endmacro %}

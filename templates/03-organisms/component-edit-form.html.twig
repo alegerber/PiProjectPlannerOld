@@ -1,3 +1,5 @@
+{% import '02-molecules/item-form.html.twig' as itemForm %}
+
 {{ form_start(form) }}
 <div class="row">
     <div class="col-sm-12 col-md-8">
@@ -12,25 +14,24 @@
             }) }}
         </div>
         <h3>Tags</h3>
-        <ul class="tags view-tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="view-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.tags %}
-                <li><div class="input-group mb-3">
-                {{ form_widget(tag.children['name'], {
-                    'attr': {'class': 'form-control'},
-                    'label': false,
-                }) }}
-                </div></li>
+                <li>
+                    {{ itemForm.printItemRow(tag) }}
+                </li>
             {% endfor %}
         </ul>
         <h3>Category</h3>
-        <ul class="categories" data-prototype="{{ form_widget(form.categories.vars.prototype)|e('html_attr') }}">
+        <ul class="categories" data-prototype="{{ itemForm.printItemRow(form.categories.vars.prototype)|e('html_attr') }}">
             {% for category in form.categories %}
-                <li>{{ form_row(category) }}</li>
+                <li>
+                    {{ itemForm.printItemRow(category) }}
+                </li>
             {% endfor %}
         </ul>
         {{ form_row(form.submit, {
             'attr': {'class': 'btn btn-default'},
-            'label': 'Create',
+            'label': 'Update',
         }) }}
     </div>
     <div class="col-sm-12 col-md-4">
@@ -48,14 +49,11 @@
         </div>
         {{ form_row(form.image.uploadedfile) }}
         <h4>Image Tags</h4>
-        <ul class="tags image-tags" data-prototype="{{ form_widget(form.image.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.image.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.image.tags %}
-                <li><div class="input-group mb-3">
-                {{ form_widget(tag.children['name'], {
-                    'attr': {'class': 'form-control'},
-                    'label': false,
-                }) }}
-                </div></li>
+                <li>
+                    {{ itemForm.printItemRow(tag) }}
+                </li>
             {% endfor %}
         </ul>
     </div>
