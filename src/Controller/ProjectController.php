@@ -64,11 +64,14 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->uploadedFileFormHandling->handle(
-                $this->project->getImage(),
-                $this->getParameter('image_file_directory')
-            );
-
+            if ($form->getData()->getImage()->getUploadedFile() !=
+            $this->project->getImage()->getUploadedFile()
+            ) {
+                $this->uploadedFileFormHandling->handle(
+                    $this->project->getImage(),
+                    $this->getParameter('image_file_directory')
+                );
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('project_view', [

@@ -30,7 +30,9 @@ class ProjectType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('image', ImageType::class)
+            ->add('image', ImageType::class, [
+                'required' => false,
+            ])
             ->add('categories', CollectionType::class, [
                 'entry_type' => CategoryType::class,
                 'entry_options' => ['label' => false],

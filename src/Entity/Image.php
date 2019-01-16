@@ -81,10 +81,12 @@ class Image
         return new UploadedFile($this->uploadedFile, $this->uploadedFileOriginName);
     }
 
-    public function setUploadedFile(UploadedFile $uploadedFile): self
+    public function setUploadedFile(?UploadedFile $uploadedFile): self
     {
-        $this->uploadedFile = $uploadedFile;
-        $this->uploadedFileOriginName = $uploadedFile->getClientOriginalName();
+        if (null !== $uploadedFile) {
+            $this->uploadedFile = $uploadedFile;
+            $this->uploadedFileOriginName = $uploadedFile->getClientOriginalName();
+        }
 
         return $this;
     }
