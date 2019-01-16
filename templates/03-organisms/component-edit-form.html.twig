@@ -1,12 +1,25 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-sm-12 col-md-8">
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
+        <div class="form-group">
+            {{ form_row(form.title, {
+                'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.description, {
+                'attr': {'class': 'form-control'}
+            }) }}
+        </div>
         <h3>Tags</h3>
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="tags view-tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.tags %}
-                <li>{{ form_row(tag) }}</li>
+                <li><div class="input-group mb-3">
+                {{ form_widget(tag.children['name'], {
+                    'attr': {'class': 'form-control'},
+                    'label': false,
+                }) }}
+                </div></li>
             {% endfor %}
         </ul>
         <h3>Category</h3>
@@ -15,16 +28,34 @@
                 <li>{{ form_row(category) }}</li>
             {% endfor %}
         </ul>
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, {
+            'attr': {'class': 'btn btn-default'},
+            'label': 'Create',
+        }) }}
     </div>
     <div class="col-sm-12 col-md-4">
-        {{ form_row(form.image.title) }}
-        {{ form_row(form.image.description) }}
+        <div class="form-group">
+            {{ form_row(form.image.title, {
+                'attr': {'class': 'form-control'},
+                'label': 'Image Title',
+            }) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.image.description, {
+                'attr': {'class': 'form-control'},
+                'label': 'Image Description',
+            }) }}
+        </div>
         {{ form_row(form.image.uploadedfile) }}
         <h4>Image Tags</h4>
-        <ul class="tags" data-prototype="{{ form_widget(form.image.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="tags image-tags" data-prototype="{{ form_widget(form.image.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.image.tags %}
-                <li>{{ form_row(tag.name) }}</li>
+                <li><div class="input-group mb-3">
+                {{ form_widget(tag.children['name'], {
+                    'attr': {'class': 'form-control'},
+                    'label': false,
+                }) }}
+                </div></li>
             {% endfor %}
         </ul>
     </div>

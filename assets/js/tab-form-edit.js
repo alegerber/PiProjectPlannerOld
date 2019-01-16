@@ -4,7 +4,7 @@ window.$ = require('jquery');
 var $collectionHolderTags;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
+var $addTagButton = $('<button type="button" class="add_tag_link btn btn-success btn-outline">Add a tag</button>');
 var $newLinkLiTags = $('<li></li>').append($addTagButton);
 
 $(document).ready(function() {
@@ -58,8 +58,8 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this tag</button>');
-    $tagFormLi.append($removeFormButton);
+    var $removeFormButton = $('<div class="input-group-append"><button class="btn btn-danger btn-outline" type="button">Remove</button><div>');
+    $tagFormLi.children().append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
         // remove the li for the tag form

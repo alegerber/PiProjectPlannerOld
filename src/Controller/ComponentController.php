@@ -91,7 +91,7 @@ class ComponentController extends AbstractController
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('project_view', [
+            return $this->redirectToRoute('component_view', [
                 'slug' => $this->component->getLink(),
             ]);
         }
