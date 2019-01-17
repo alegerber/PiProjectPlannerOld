@@ -2,7 +2,7 @@
     <h2>{{ title }}</h2>
     <div class="list-group">
         {% for button in buttons %}
-            <a class="list-group-item list-group-item-action list-group-item-light" href="{{ prefix }}/{{ button.componentLink }}">{{ button.name }}</a>
+            <a class="list-group-item list-group-item-action list-group-item-light" href="{{ prefix }}/{{ button.slug }}">{{ button.name }}</a>
         {% endfor %}
     </div>
 </div>

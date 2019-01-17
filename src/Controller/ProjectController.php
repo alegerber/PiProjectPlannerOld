@@ -16,10 +16,7 @@ class ProjectController extends AbstractController
      */
     private $project;
 
-    /**
-     * @var Project[]
-     */
-    private $projects;
+
 
     /**
      * @var UploadedFileFormHandling
@@ -36,28 +33,25 @@ class ProjectController extends AbstractController
      */
     public function index()
     {
-        $this->projects = $this->getDoctrine()
+        /**
+        * @var Project[]
+        */
+        $projects = $this->getDoctrine()
         ->getRepository(Project::class)->findAll();
 
         return $this->render('05-pages/projects.html.twig', [
-            'projects' => $this->projects,
+            'projects' => $projects,
         ]);
     }
 
     /**
      * @Route("/project/{slug}", methods={"GET", "POST"}, name="project_view")
      */
-    public function view(Request $request, string $slug)
+    public function view(Request $request, Project $project)
     {
-        $this->project = $this->getDoctrine()
-            ->getRepository(Project::class)
-            ->findOneBy([
-                'link' => $slug,
-            ]);
+        $form = $this->createForm(ProjectType::class, $project);
 
-        $form = $this->createForm(ProjectType::class, $this->project);
-
-        $oldFileName = $this->project->getImage()->getUploadedFile()->getFilename();
+        $oldFileName = $project->getImage()->getUploadedFile()->getFilename();
 
         $form->handleRequest($request);
 
@@ -74,12 +68,12 @@ class ProjectController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('project_view', [
-                'slug' => $this->project->getLink(),
+                'slug' => $project->getSlug(),
             ]);
         }
 
         return $this->render('05-pages/project-view.html.twig', [
-            'project' => $this->project,
+            'project' => $project,
             'form' => $form->createView(),
         ]);
     }

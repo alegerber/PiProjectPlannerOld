@@ -26,7 +26,7 @@ class Component
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $link;
+    private $slug;
 
     /**
      * @var string
@@ -77,9 +77,9 @@ class Component
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getSlug(): ?string
     {
-        return $this->link;
+        return $this->slug;
     }
 
     public function getName(): ?string
@@ -91,7 +91,7 @@ class Component
     {
         $this->name = $name;
 
-        $this->link = Slugger::slugify($name);
+        $this->slug = Slugger::slugify($name);
 
         return $this;
     }

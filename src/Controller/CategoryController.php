@@ -10,36 +10,21 @@ use App\Entity\Category;
 class CategoryController extends AbstractController
 {
     /**
-     * @var Component[]
-     */
-    private $components;
-
-    /**
-     * @var Category
-     */
-    private $category;
-
-    /**
      * @Route("/category/{slug}", name="category")
      */
-    public function index($slug)
+    public function index(Category $category)
     {
-        $this->category = $this->getDoctrine()
-        ->getRepository(Category::class)->findOneBy([
-            'component_link' => $slug,
-        ]);
-
         $componentsAll = $this->getDoctrine()
             ->getRepository(Component::class)->findAll();
 
         foreach ($componentsAll as $component) {
-            if ($component->getCategories()->contains($this->category)) {
+            if ($component->getCategories()->contains($category)) {
                 $this->components[] = $component;
             }
         }
 
         return $this->render('05-pages/category.html.twig', [
-            'category' => $this->category,
+            'category' => $category,
             'components' => $this->components,
         ]);
     }

@@ -70,16 +70,11 @@ class ComponentController extends AbstractController
     /**
      * @Route("/component/{slug}", name="component_view")
      */
-    public function view(Request $request, string $slug)
+    public function view(Request $request, Component $component)
     {
-        $this->component = $this->getDoctrine()
-        ->getRepository(Component::class)->findOneBy([
-            'link' => $slug,
-        ]);
+        $form = $this->createForm(ComponentType::class, $component);
 
-        $form = $this->createForm(ComponentType::class, $this->component);
-
-        $oldFileName = $this->component->getImage()->getUploadedFile()->getFilename();
+        $oldFileName = $component->getImage()->getUploadedFile()->getFilename();
 
         $form->handleRequest($request);
 
@@ -88,7 +83,7 @@ class ComponentController extends AbstractController
             $oldFileName
             ) {
                 $this->uploadedFileFormHandling->handle(
-                    $this->component->getImage(),
+                    $form->getData()->getImage(),
                     $this->getParameter('image_file_directory')
                 );
             }
@@ -96,12 +91,12 @@ class ComponentController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('component_view', [
-                'slug' => $this->component->getLink(),
+                'slug' => $component->getSlug(),
             ]);
         }
 
         return $this->render('05-pages/component-view.html.twig', [
-            'component' => $this->component,
+            'component' => $component,
             'form' => $form->createView(),
         ]);
     }

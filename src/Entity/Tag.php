@@ -25,7 +25,7 @@ class Tag
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $component_link;
+    private $slug;
 
     public function getId(): ?int
     {
@@ -41,13 +41,13 @@ class Tag
     {
         $this->name = $name;
 
-        $this->component_link = Slugger::slugify($name);
+        $this->slug = Slugger::slugify($name);
 
         return $this;
     }
 
-    public function getComponentLink(): string
+    public function getSlug(): string
     {
-        return $this->component_link;
+        return $this->slug;
     }
 }

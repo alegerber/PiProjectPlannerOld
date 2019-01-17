@@ -26,7 +26,7 @@ class Project
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $link;
+    private $slug;
 
     /**
      * @var string
@@ -86,16 +86,9 @@ class Project
         return $this->id;
     }
 
-    public function getLink(): string
+    public function getSlug(): string
     {
-        return $this->link;
-    }
-
-    public function setLink(string $link): self
-    {
-        $this->link = $link;
-
-        return $this;
+        return $this->slug;
     }
 
     public function getName(): ?string
@@ -107,7 +100,7 @@ class Project
     {
         $this->name = $name;
 
-        $this->link = Slugger::slugify($name);
+        $this->slug = Slugger::slugify($name);
 
         return $this;
     }
