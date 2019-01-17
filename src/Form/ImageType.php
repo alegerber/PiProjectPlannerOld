@@ -21,7 +21,6 @@ class ImageType extends AbstractType
             ->add('uploadedfile', FileType::class)
             ->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
-                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
             ])

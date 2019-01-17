@@ -35,13 +35,11 @@ class ProjectType extends AbstractType
             ])
             ->add('categories', CollectionType::class, [
                 'entry_type' => CategoryType::class,
-                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
             ->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
-                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
@@ -62,10 +60,7 @@ class ProjectType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Create',
-                'attr' => ['class' => 'btn btn-default'],
-            ])
+            ->add('submit', SubmitType::class)
         ;
     }
 
