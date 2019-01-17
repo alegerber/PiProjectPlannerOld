@@ -165,7 +165,7 @@ function addCategoryFormDeleteLink($categoryFormLi) {
 var $collectionHolderComponent;
 
 // setup an "add a components" link
-var $addComponentButton = $('<button type="button" class="add_component_link">Add a Component</button>');
+var $addComponentButton = $('<button type="button" class="add_component_link btn btn-success btn-outline">Add a Component</button>');
 var $newLinkLiComponent = $('<li></li>').append($addComponentButton);
 
 $(document).ready(function() {
@@ -220,8 +220,8 @@ function addComponentForm($collectionHolder, $newLinkLi) {
 }
 
 function addComponentFormDeleteLink($componentFormLi) {
-    var $removeFormButton = $('<button type="button">Delete this tag</button>');
-    $componentFormLi.append($removeFormButton);
+    var $removeFormButton = $('<button class="btn btn-danger btn-outline" type="button">Remove</button>');
+    $componentFormLi.children().append($removeFormButton);
 
     $removeFormButton.on('click', function(e) {
         // remove the li for the component form

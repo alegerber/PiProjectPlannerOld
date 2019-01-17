@@ -36,9 +36,21 @@
     list-style: none;
     padding: 0px;
 }
-
+#edit .components {
+    list-style: none;
+    padding: 0px;
+}
+#edit .components li {
+    margin: 10px 0px;
+}
+#edit .component-form-group {
+    display: flex;
+}
 // File Upload
 #component_image_uploadedfile {
+    background-color: lightgray;
+}
+#project_image_uploadedfile {
     background-color: lightgray;
 }
 // Image

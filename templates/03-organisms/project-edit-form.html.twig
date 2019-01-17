@@ -1,37 +1,77 @@
+{% import '02-molecules/item-form.html.twig' as itemForm %}
+
+{% import '02-molecules/component-form.html.twig' as componentForm %}
+
 {{ form_start(form) }}
 <div class="row">
     <div class="col-sm-12 col-md-8">
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
+        <div class="form-group">
+        {{ form_row(form.title, {
+            'attr': {'class': 'form-control'}
+        }) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(form.description, {
+            'attr': {'class': 'form-control'}
+        }) }}
+        </div>
         <h3>Tags</h3>
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="view-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.tags %}
-                <li>{{ form_row(tag) }}</li>
+                <li>
+                    {{ itemForm.printItemRow(tag) }}
+                </li>
             {% endfor %}
         </ul>
-        <h3>Category</h3>
-        <ul class="categories" data-prototype="{{ form_widget(form.categories.vars.prototype)|e('html_attr') }}">
+        <h3>Categories</h3>
+        <ul class="categories" data-prototype="{{ itemForm.printItemRow(form.categories.vars.prototype)|e('html_attr') }}">
             {% for category in form.categories %}
-                <li>{{ form_row(category) }}</li>
+                <li>
+                    {{ itemForm.printItemRow(category) }}
+                </li>
             {% endfor %}
         </ul>
-        <ul class="components" data-prototype="<div>{{ form_widget(form.components.vars.prototype)|e('html_attr') }}</div>">
-            {% for components in form.components %}
-                <li>{{ form_row(components) }}</li>
+        <h3>Components</h3>
+        <ul class="components" data-prototype="{{ componentForm.printItemRow(form.components.vars.prototype)|e('html_attr') }}">
+            {% for component in form.components %}
+                <li>
+                    {{ componentForm.printItemRow(component) }}
+                </li>
             {% endfor %}
         </ul>
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, {
+            'attr': {'class': 'btn btn-default'},
+            'label': 'Update',
+        }) }}
     </div>
     <div class="col-sm-12 col-md-4">
-        {{ form_row(form.image.title) }}
-        {{ form_row(form.image.description) }}
-        {{ form_row(form.image.uploadedfile) }}
+        <div class="form-group">
+        {{ form_row(form.image.title, {
+                'attr': {'class': 'form-control'},
+                'label': 'Image Title',
+            }) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(form.image.description, {
+                'attr': {'class': 'form-control'},
+                'label': 'Image Description',
+            }) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(form.image.uploadedfile, {
+                'attr': {'class': 'form-control-file'},
+                'label': 'Image File',
+            }) }}
+        </div>
         <h4>Image Tags</h4>
-        <ul class="tags" data-prototype="{{ form_widget(form.image.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.image.tags %}
-                <li>{{ form_row(tag.name) }}</li>
+                <li>
+                    {{ itemForm.printItemRow(tag) }}
+                </li>
             {% endfor %}
         </ul>
     </div>
 </div>
 {{ form_end(form) }}
+
