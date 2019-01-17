@@ -64,7 +64,7 @@
             }) }}
         </div>
         <label>Image Tags</label>
-        <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
+        <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.image.tags.vars.prototype)|e('html_attr') }}">
             {% for tag in form.image.tags %}
                 <li>
                     {{ itemForm.printItemRow(tag) }}
