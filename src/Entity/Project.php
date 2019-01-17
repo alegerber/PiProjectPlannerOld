@@ -33,7 +33,7 @@ class Project
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $name;
 
     /**
      * @var string
@@ -53,7 +53,7 @@ class Project
     /**
      * @var Category[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
@@ -61,7 +61,7 @@ class Project
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;
@@ -69,7 +69,7 @@ class Project
     /**
      * @var Component[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Component")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $components;
@@ -98,16 +98,16 @@ class Project
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
-        $this->link = Slugger::slugify($title);
+        $this->link = Slugger::slugify($name);
 
         return $this;
     }

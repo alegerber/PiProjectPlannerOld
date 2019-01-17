@@ -50,11 +50,4 @@ class Tag
     {
         return $this->component_link;
     }
-
-    public function setComponentLink(string $component_link): self
-    {
-        $this->component_link = $component_link;
-
-        return $this;
-    }
 }

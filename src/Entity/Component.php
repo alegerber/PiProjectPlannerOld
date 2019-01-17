@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
@@ -37,13 +38,6 @@ class Component
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
     private $description;
@@ -59,7 +53,7 @@ class Component
     /**
      * @var Category[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
@@ -67,7 +61,7 @@ class Component
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;
@@ -83,19 +77,12 @@ class Component
         return $this->id;
     }
 
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    public function setLink(string $link): self
-    {
-        $this->link = $link;
-
-        return $this;
-    }
-
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -104,22 +91,12 @@ class Component
     {
         $this->name = $name;
 
-        return $this;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+        $this->link = Slugger::slugify($name);
 
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -131,7 +108,7 @@ class Component
         return $this;
     }
 
-    public function getImage(): Image
+    public function getImage(): ?Image
     {
         return $this->image;
     }
@@ -157,7 +134,7 @@ class Component
         $this->categories->removeElement($category);
     }
 
-    public function getCategories(): Collection
+    public function getCategories(): ?Collection
     {
         return $this->categories;
     }
@@ -176,7 +153,7 @@ class Component
         $this->tags->removeElement($tag);
     }
 
-    public function getTags(): Collection
+    public function getTags(): ?Collection
     {
         return $this->tags;
     }

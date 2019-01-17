@@ -38,8 +38,7 @@ class ProjectFixtures extends Fixture
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $project = new Project();
             $projectNumber = rand(0, $this->entrys);
-            $project->setLink('project-'.$projectNumber);
-            $project->setTitle('project '.$projectNumber);
+            $project->setName('project '.$projectNumber);
             $project->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
 
             $this->manager->persist($project);

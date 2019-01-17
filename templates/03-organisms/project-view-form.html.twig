@@ -22,13 +22,13 @@
         <div class="text-view">
             {% for component in project.components %}
                 <div>
-                    {{ component.title }}
+                    {{ component.name }}
                 </div>
             {% endfor %}
         </div>
     </div>
     <div>
         <img class="view-image" src="../{{ project.image.uploadedFile|e('html') }}" 
-        alt="{{ project.title }} image" class="rounded">
+        alt="{{ project.name }} image" class="rounded">
     </div>
 </div> 

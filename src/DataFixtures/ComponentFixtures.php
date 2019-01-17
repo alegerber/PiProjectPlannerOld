@@ -38,8 +38,6 @@ class ComponentFixtures extends Fixture
             $component = new Component();
 
             $componentNumber = \rand(0, $this->entrys);
-            $component->setLink('component'.$componentNumber);
-            $component->setTitle('component '.$componentNumber);
             $component->setName('component '.$componentNumber);
             $component->setDescription('Some Random Text '.\rand(0, $this->entrys));
 

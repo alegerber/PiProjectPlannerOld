@@ -16,7 +16,7 @@ class ComponentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('image', ImageType::class, [
                 'required' => false,

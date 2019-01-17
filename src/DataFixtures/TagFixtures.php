@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Tag;
 
@@ -38,7 +37,6 @@ class TagFixtures extends Fixture
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $tag = new Tag();
             $tag->setName('tag '.rand(0, $this->entrys));
-            $tag->setComponentLink('tag'.rand(0, $this->entrys));
 
             $this->manager->persist($tag);
         }

@@ -42,7 +42,7 @@ class ImageFixtures extends Fixture
                 new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'bildschirmfoto.jpg')
             );
 
-            $image->setTitle('image '.rand(0, $this->entrys));
+            $image->setName('image '.rand(0, $this->entrys));
             $image->setDescription('Some Random Text '.rand(0, $this->entrys));
 
             $this->manager->persist($image);

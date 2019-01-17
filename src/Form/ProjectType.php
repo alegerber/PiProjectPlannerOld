@@ -28,7 +28,7 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('image', ImageType::class, [
                 'required' => false,
@@ -50,11 +50,11 @@ class ProjectType extends AbstractType
                     'choices' => $this->componentRepository->findAll(),
                     'choice_label' => function ($component, $key, $value) {
                         /* @var App\Entity\Component $component */
-                        return $component->getTitle();
+                        return $component->getName();
                     },
                     'choice_attr' => function ($component, $key, $value) {
                         /* @var App\Entity\Component $component */
-                        return ['class' => 'component_'.strtolower($component->getTitle())];
+                        return ['class' => 'component_'.strtolower($component->getName())];
                     },
                 ],
                 'allow_add' => true,

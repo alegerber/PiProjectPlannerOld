@@ -3,13 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
-
 class Category
 {
     /**
@@ -34,7 +32,7 @@ class Category
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -43,18 +41,13 @@ class Category
     {
         $this->name = $name;
 
+        $this->component_link = Slugger::slugify($name);
+
         return $this;
     }
 
-    public function getComponentLink(): string
+    public function getComponentLink(): ?string
     {
         return $this->component_link;
-    }
-
-    public function setComponentLink(string $component_link): self
-    {
-        $this->component_link = $component_link;
-
-        return $this;
     }
 }

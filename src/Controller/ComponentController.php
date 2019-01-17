@@ -52,14 +52,14 @@ class ComponentController extends AbstractController
         ->getRepository(Category::class)->findAll();
 
         $this->containers[0]['content'] = $this->categories;
-        $this->containers[0]['title'] = 'Categories';
+        $this->containers[0]['name'] = 'Categories';
         $this->containers[0]['prefix'] = '/category';
 
         $this->tags = $this->getDoctrine()
         ->getRepository(Tag::class)->findAll();
 
         $this->containers[1]['content'] = $this->tags;
-        $this->containers[1]['title'] = 'Tags';
+        $this->containers[1]['name'] = 'Tags';
         $this->containers[1]['prefix'] = '/tag';
 
         return $this->render('05-pages/components.html.twig', [
@@ -92,7 +92,7 @@ class ComponentController extends AbstractController
                     $this->getParameter('image_file_directory')
                 );
             }
-            
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('component_view', [

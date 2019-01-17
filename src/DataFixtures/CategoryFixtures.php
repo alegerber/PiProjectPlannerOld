@@ -38,7 +38,6 @@ class CategoryFixtures extends Fixture
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
             $category->setName('category '.rand(0, $this->entrys));
-            $category->setComponentLink('category'.rand(0, $this->entrys));
 
             $this->manager->persist($category);
         }
