@@ -10,7 +10,7 @@ use App\Entity\Component;
 class TagController extends AbstractController
 {
     /**
-     * @Route("/tag/{slug}", name="tag")
+     * @Route("/tag/{slug}", methods={"GET"}, name="tag")
      */
     public function index(Tag $tag)
     {

@@ -44,7 +44,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component", name="component")
+     * @Route("/component", methods={"GET"}, name="component")
      */
     public function index()
     {
@@ -68,7 +68,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component/{slug}", name="component_view")
+     * @Route("/component/{slug}", methods={"GET", "POST"}, name="component_view")
      */
     public function view(Request $request, Component $component)
     {

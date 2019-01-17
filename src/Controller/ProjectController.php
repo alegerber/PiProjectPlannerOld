@@ -29,7 +29,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/project", name="project")
+     * @Route("/project", methods={"GET"}, name="project")
      */
     public function index()
     {

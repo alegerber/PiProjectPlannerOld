@@ -10,7 +10,7 @@ use App\Entity\Category;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/{slug}", name="category")
+     * @Route("/category/{slug}", methods={"GET"}, name="category")
      */
     public function index(Category $category)
     {
