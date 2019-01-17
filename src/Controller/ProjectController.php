@@ -17,11 +17,6 @@ class ProjectController extends AbstractController
     private $project;
 
     /**
-     * @var ImageRepository
-     */
-    private $imageRepository;
-
-    /**
      * @var Project[]
      */
     private $projects;

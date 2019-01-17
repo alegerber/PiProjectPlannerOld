@@ -55,6 +55,7 @@ class ProjectType extends AbstractType
                         return $component->getTitle();
                     },
                     'choice_attr' => function ($component, $key, $value) {
+                        /* @var App\Entity\Component $component */
                         return ['class' => 'component_'.strtolower($component->getTitle())];
                     },
                 ],
