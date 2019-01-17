@@ -1,7 +1,8 @@
 <div class="view-container">
     <div>
         <h4>Beschreibung</h4>
-        <div>{{ component.description }}</div>
+        <div>
+            {{ component.description }}</div>
         <h4>Category</h4>
         <div class="text-view">
             {% for category in component.categories %}
@@ -20,6 +21,7 @@
         </div>
     </div>
     <div>
-        <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded"> 
+        <img class="view-image" src="../{{ component.image.uploadedFile|e('html') }}" 
+        alt="{{ component.title }} image" class="rounded">
     </div>
-</div>     
+</div>

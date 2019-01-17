@@ -61,17 +61,21 @@ class ProjectController extends AbstractController
             ]);
 
         $form = $this->createForm(ProjectType::class, $this->project);
+
+        $oldFileName = $this->project->getImage()->getUploadedFile()->getFilename();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile() !=
-            $this->project->getImage()->getUploadedFile()
+            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
+            $oldFileName
             ) {
                 $this->uploadedFileFormHandling->handle(
-                    $this->project->getImage(),
+                    $form->getData()->getImage(),
                     $this->getParameter('image_file_directory')
                 );
             }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('project_view', [

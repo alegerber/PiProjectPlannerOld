@@ -18,6 +18,14 @@
                 </div>
             {% endfor %}
         </div>
+        <h4>Components</h4>
+        <div class="text-view">
+            {% for component in project.components %}
+                <div>
+                    {{ component.title }}
+                </div>
+            {% endfor %}
+        </div>
     </div>
     <div>
         <img class="view-image" src="../{{ project.image.uploadedFile|e('html') }}" 

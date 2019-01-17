@@ -78,17 +78,21 @@ class ComponentController extends AbstractController
         ]);
 
         $form = $this->createForm(ComponentType::class, $this->component);
+
+        $oldFileName = $this->component->getImage()->getUploadedFile()->getFilename();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile() !=
-            $this->component->getImage()->getUploadedFile()
+            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
+            $oldFileName
             ) {
                 $this->uploadedFileFormHandling->handle(
                     $this->component->getImage(),
                     $this->getParameter('image_file_directory')
                 );
             }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('component_view', [
