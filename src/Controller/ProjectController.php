@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
+use App\Entity\Image;
 use App\Form\ProjectType;
 use App\Services\UploadedFileFormHandling;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProjectController extends AbstractController
 {
@@ -15,8 +17,6 @@ class ProjectController extends AbstractController
      * @var Project
      */
     private $project;
-
-
 
     /**
      * @var UploadedFileFormHandling
@@ -34,8 +34,8 @@ class ProjectController extends AbstractController
     public function index()
     {
         /**
-        * @var Project[]
-        */
+         * @var Project[]
+         */
         $projects = $this->getDoctrine()
         ->getRepository(Project::class)->findAll();
 
@@ -45,9 +45,52 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/project/{slug}", methods={"GET", "POST"}, name="project_view")
+     * @Route("/project/new", methods={"GET", "POST"}, name="project_new")
      */
-    public function view(Request $request, Project $project)
+    public function new(Request $request)
+    {
+        $project = new Project();
+
+        $image = new Image();
+        $image->setUploadedFile(new UploadedFile('img/placeholder.jpg', 'placeholder.jpg'));
+
+        $project->setImage($image);
+
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $oldFileName = $project->getImage()->getUploadedFile()->getFilename();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
+            $oldFileName
+            ) {
+                $this->uploadedFileFormHandling->handle(
+                    $form->getData()->getImage(),
+                    $this->getParameter('image_file_directory')
+                );
+            }
+
+            $entityManger = $this->getDoctrine()->getManager();
+            $entityManger->persist($image);
+            $entityManger->persist($project);
+            $entityManger->flush();
+
+            return $this->redirectToRoute('project_edit', [
+                'slug' => $project->getSlug(),
+            ]);
+        }
+
+        return $this->render('05-pages/project-new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/project/{slug}", methods={"GET", "POST"}, name="project_edit")
+     */
+    public function edit(Request $request, Project $project)
     {
         $form = $this->createForm(ProjectType::class, $project);
 
@@ -67,7 +110,7 @@ class ProjectController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('project_view', [
+            return $this->redirectToRoute('project_edit', [
                 'slug' => $project->getSlug(),
             ]);
         }
