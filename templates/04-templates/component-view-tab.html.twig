@@ -1,9 +1,12 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" href="#view">Ansicht</a>
+        <a class="nav-link active" href="#view">View</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#edit">Bearbeiten</a>
+        <a class="nav-link" href="#edit">Edit</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#config">Config</a>
     </li>
 </ul>
 <div class="tab-content">
@@ -12,5 +15,8 @@
     </div>
     <div id="edit" class="container tab-pane fade edit-container"><br>
         {% include '03-organisms/component-edit-form.html.twig' with {'form': form } %}
+    </div>
+    <div id="config" class="container tab-pane fade"><br>
+        {% include '03-organisms/component-config-form.html.twig' with {'component': component } %}
     </div>
 </div>

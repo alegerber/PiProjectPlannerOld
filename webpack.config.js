@@ -23,15 +23,15 @@ Encore
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './assets/js/app.js'
     ])
-    .addEntry('js/tab-form-edit', [
-        './assets/js/tab-form-edit.js'
+    .addEntry('js/tab-form', [
+        './assets/js/tab-form.js'
     ])
     .addStyleEntry('css/app', [
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './assets/scss/app.scss',
     ])
-    .addStyleEntry('css/tab-view', [
-        './assets/scss/tab-view.scss'
+    .addStyleEntry('css/tab-form', [
+        './assets/scss/tab-form.scss'
     ])
 
     // will require an extra script tag for runtime.js

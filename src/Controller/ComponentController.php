@@ -144,4 +144,20 @@ class ComponentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/component/{slug}/delete", methods={"POST"}, name="component_delete")
+     */
+    public function delete(Request $request, Component $component)
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('component');
+        }
+
+        $entityManger = $this->getDoctrine()->getManager();
+        $entityManger->remove($component);
+        $entityManger->flush();
+
+        return $this->redirectToRoute('component');
+    }
 }
