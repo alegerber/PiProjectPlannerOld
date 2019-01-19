@@ -1,0 +1,19 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('css/tab-view') }}
+{% endblock %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+    <div class="container mt-3">
+        <h1>New</h1>
+        <div id="edit" class="container new-entry"><br>
+            {% include '03-organisms/component-edit-form.html.twig' with {'form': form } %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/tab-form-edit') }}
+{% endblock %}

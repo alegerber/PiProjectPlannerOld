@@ -8,8 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\Image;
 use App\Form\ComponentType;
 use App\Services\UploadedFileFormHandling;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ComponentController extends AbstractController
 {
@@ -68,9 +70,51 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component/{slug}", methods={"GET", "POST"}, name="component_view")
+     * @Route("/component/new", methods={"GET", "POST"}, name="component_new")
      */
-    public function view(Request $request, Component $component)
+    public function new(Request $request)
+    {
+        $component = new Component();
+
+        $image = new Image();
+        $image->setUploadedFile(new UploadedFile('img/placeholder.jpg', 'placeholder.jpg'));
+        $component->setImage($image);
+
+        $form = $this->createForm(ComponentType::class, $component);
+
+        $oldFileName = $component->getImage()->getUploadedFile()->getFilename();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
+            $oldFileName
+            ) {
+                $this->uploadedFileFormHandling->handle(
+                    $form->getData()->getImage(),
+                    $this->getParameter('image_file_directory')
+                );
+            }
+
+            $entityManger = $this->getDoctrine()->getManager();
+            $entityManger->persist($image);
+            $entityManger->persist($component);
+            $entityManger->flush();
+
+            return $this->redirectToRoute('component_edit', [
+                'slug' => $component->getSlug(),
+            ]);
+        }
+
+        return $this->render('05-pages/component-new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/component/{slug}", methods={"GET", "POST"}, name="component_edit")
+     */
+    public function edit(Request $request, Component $component)
     {
         $form = $this->createForm(ComponentType::class, $component);
 
