@@ -167,10 +167,18 @@ class ComponentController extends AbstractController
         $componentsAll = $this->getDoctrine()
             ->getRepository(Component::class)->findAll();
 
+        $projectsAll = $this->getDoctrine()
+            ->getRepository(Project::class)->findAll();
+
         foreach ($tags as $tag) {
             $existTag = false;
             foreach ($componentsAll as $comp) {
                 if ($comp->getTags()->contains($tag) && $comp->getId() !== $component->getId()) {
+                    $existTag = true;
+                }
+            }
+            foreach ($projectsAll as $pro) {
+                if ($pro->getTags()->contains($tag)) {
                     $existTag = true;
                 }
             }
@@ -183,6 +191,11 @@ class ComponentController extends AbstractController
             $existCategory = false;
             foreach ($componentsAll as $comp) {
                 if ($comp->getCategories()->contains($category) && $comp->getId() !== $component->getId()) {
+                    $existCategory = true;
+                }
+            }
+            foreach ($projectsAll as $pro) {
+                if ($pro->getCategories()->contains($category)) {
                     $existCategory = true;
                 }
             }
