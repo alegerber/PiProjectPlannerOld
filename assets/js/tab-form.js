@@ -133,6 +133,7 @@ $(document).on('submit', 'form[data-confirmation]', function (event) {
     // Callback handler that will be called on success
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
+        
         window.location.pathname =window.location.pathname.split("/")[1];
     });
 

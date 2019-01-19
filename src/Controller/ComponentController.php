@@ -154,8 +154,42 @@ class ComponentController extends AbstractController
             return $this->redirectToRoute('component');
         }
 
+        $tags = $component->getTags();
+        $categories = $component->getCategories();
+
         $entityManger = $this->getDoctrine()->getManager();
         $entityManger->remove($component);
+        $entityManger->remove($component->getImage());
+
+        $existTag = false;
+        $existCategory = false;
+
+        $componentsAll = $this->getDoctrine()
+            ->getRepository(Component::class)->findAll();
+
+        foreach ($tags as $tag) {
+            $existTag = false;
+            foreach ($componentsAll as $comp) {
+                if ($comp->getTags()->contains($tag) && $comp->getId() !== $component->getId()) {
+                    $existTag = true;
+                }
+            }
+            if (!$existTag) {
+                $entityManger->remove($tag);
+            }
+        }
+
+        foreach ($categories as $category) {
+            $existCategory = false;
+            foreach ($componentsAll as $comp) {
+                if ($comp->getCategories()->contains($category) && $comp->getId() !== $component->getId()) {
+                    $existCategory = true;
+                }
+            }
+            if (!$existCategory) {
+                $entityManger->remove($category);
+            }
+        }
         $entityManger->flush();
 
         return $this->redirectToRoute('component');
