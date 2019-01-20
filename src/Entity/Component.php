@@ -46,7 +46,7 @@ class Component
      * @var Image
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Image", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $image;
 
