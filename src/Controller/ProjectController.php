@@ -7,12 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Entity\Image;
-use App\Entity\Tag;
 use App\Form\ProjectType;
 use App\Services\UploadedFileFormHandling;
-use App\Services\CheckExistInArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProjectController extends AbstractController
 {
@@ -26,17 +23,9 @@ class ProjectController extends AbstractController
      */
     private $uploadedFileFormHandling;
 
-    /**
-     * @var CheckExistInArrayCollection
-     */
-    private $checkExistInArrayCollection;
-
-    public function __construct(
-        UploadedFileFormHandling $uploadedFileFormHandling,
-        CheckExistInArrayCollection $checkExistInArrayCollection
-    ) {
+    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
+    {
         $this->uploadedFileFormHandling = $uploadedFileFormHandling;
-        $this->checkExistInArrayCollection = $checkExistInArrayCollection;
     }
 
     /**
