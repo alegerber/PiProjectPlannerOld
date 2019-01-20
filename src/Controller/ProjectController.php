@@ -7,9 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Entity\Image;
+use App\Entity\Tag;
 use App\Form\ProjectType;
 use App\Services\UploadedFileFormHandling;
+use App\Services\CheckExistInArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ProjectController extends AbstractController
 {
@@ -23,9 +26,17 @@ class ProjectController extends AbstractController
      */
     private $uploadedFileFormHandling;
 
-    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
-    {
+    /**
+     * @var CheckExistInArrayCollection
+     */
+    private $checkExistInArrayCollection;
+
+    public function __construct(
+        UploadedFileFormHandling $uploadedFileFormHandling,
+        CheckExistInArrayCollection $checkExistInArrayCollection
+    ) {
         $this->uploadedFileFormHandling = $uploadedFileFormHandling;
+        $this->checkExistInArrayCollection = $checkExistInArrayCollection;
     }
 
     /**
@@ -119,5 +130,24 @@ class ProjectController extends AbstractController
             'project' => $project,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/project/{slug}/delete", methods={"POST"}, name="project_delete")
+     */
+    public function delete(Request $request, Project $project)
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('project');
+        }
+
+        $entityManger = $this->getDoctrine()->getManager();
+
+        $image = $project->getImage();
+        $entityManger->remove($project);
+        $entityManger->remove($image);
+        $entityManger->flush();
+
+        return $this->redirectToRoute('project');
     }
 }

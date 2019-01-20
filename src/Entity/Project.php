@@ -46,7 +46,7 @@ class Project
      * @var Image
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Image", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $image;
 
@@ -61,7 +61,7 @@ class Project
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"}, orphanRemoval=true)
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;
@@ -69,7 +69,7 @@ class Project
     /**
      * @var Component[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Component", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", cascade={"persist"}, orphanRemoval=true)
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $components;

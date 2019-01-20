@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-sm-12 col-md-8">
+        <form action="{{ url('project_delete', {slug: project.slug}) }}" method="post" data-confirmation="true" id="delete-form">
+            <label>Type the name of the Project to Remove the Project:</label>
+            <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" pattern="{{ project.name }}"/>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-danger btn-outline">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete Project
+                    </button>
+                </div>       
+            </div>
+        </form>
+    </div>
+</div>

@@ -5,6 +5,9 @@
     <li class="nav-item">
         <a class="nav-link" href="#edit">Edit</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#config">Config</a>
+    </li>
 </ul>
 <div class="tab-content">
     <div id="view" class="container tab-pane active"><br>
@@ -12,5 +15,8 @@
     </div>
     <div id="edit" class="container tab-pane fade"><br>
         {% include '03-organisms/project-edit-form.html.twig' with {'form': form } %}
+    </div>
+    <div id="config" class="container tab-pane fade"><br>
+        {% include '03-organisms/project-config-form.html.twig' with {'project': project } %}
     </div>
 </div>
