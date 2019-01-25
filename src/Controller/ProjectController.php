@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ProjectController extends AbstractController
 {
     /**
-     * @var Project
-     */
-    private $project;
-
-    /**
      * @var UploadedFileFormHandling
      */
     private $uploadedFileFormHandling;

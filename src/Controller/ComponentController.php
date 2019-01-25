@@ -31,11 +31,6 @@ class ComponentController extends AbstractController
     private $tags;
 
     /**
-     * @var Component
-     */
-    private $component;
-
-    /**
      * @var UploadedFileFormHandling
      */
     private $uploadedFileFormHandling;
@@ -137,9 +132,9 @@ class ComponentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            /*             return $this->redirectToRoute('component_edit', [
-                            'slug' => $component->getSlug(),
-                        ]); */
+            return $this->redirectToRoute('component_edit', [
+            'slug' => $component->getSlug(),
+            ]);
         }
 
         return $this->render('05-pages/component-view.html.twig', [
