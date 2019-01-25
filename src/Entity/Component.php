@@ -10,7 +10,7 @@ use App\Utils\Slugger;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
  */
-class Component
+class Component implements \JsonSerializable
 {
     /**
      * @var int
@@ -156,5 +156,18 @@ class Component
     public function getTags(): ?Collection
     {
         return $this->tags;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

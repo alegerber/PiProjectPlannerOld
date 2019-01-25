@@ -17,6 +17,7 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
+    .autoProvidejQuery()
     .addEntry('js/app', [
         './node_modules/jquery/dist/jquery.slim.js',
         './node_modules/popper.js/dist/umd/popper.min.js',
@@ -24,6 +25,8 @@ Encore
         './assets/js/app.js'
     ])
     .addEntry('js/tab-form', [
+        './node_modules/bloodhound-js/dist/bloodhound.min.js',
+        './node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
         './assets/js/tab-form.js'
     ])
     .addStyleEntry('css/app', [

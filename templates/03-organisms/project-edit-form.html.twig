@@ -1,44 +1,46 @@
-{% import '02-molecules/item-form.html.twig' as itemForm %}
-
-{% import '02-molecules/component-form.html.twig' as componentForm %}
-
 {{ form_start(form) }}
 <div class="row">
     <div class="col-sm-12 col-md-8">
         <div class="form-group">
-        {{ form_row(form.name, {
+            {{ form_row(form.name, {
             'attr': {'class': 'form-control'}
         }) }}
         </div>
         <div class="form-group">
-        {{ form_row(form.description, {
+            {{ form_row(form.description, {
             'attr': {'class': 'form-control'}
         }) }}
         </div>
-        <label>Tags</label>
-        <ul class="view-tags" data-prototype="{{ itemForm.printItemRow(form.tags.vars.prototype)|e('html_attr') }}">
-            {% for tag in form.tags %}
-                <li>
-                    {{ itemForm.printItemRow(tag) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <label>Categories</label>
-        <ul class="categories" data-prototype="{{ itemForm.printItemRow(form.categories.vars.prototype)|e('html_attr') }}">
-            {% for category in form.categories %}
-                <li>
-                    {{ itemForm.printItemRow(category) }}
-                </li>
-            {% endfor %}
-        </ul>
-        <label>Components</label>
-        <ul class="components" data-prototype="{{ componentForm.printItemRow(form.components.vars.prototype)|e('html_attr') }}">
-            {% for component in form.components %}
-                <li>
-                    {{ componentForm.printItemRow(component) }}
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': tags|json_encode}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.categories, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': categories|json_encode}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.components, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': components|json_encode}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
         {{ form_row(form.submit, {
             'attr': {'class': 'btn btn-default'},
             'label': 'Update',
@@ -46,34 +48,34 @@
     </div>
     <div class="col-sm-12 col-md-4">
         <div class="form-group">
-        {{ form_row(form.image.name, {
+            {{ form_row(form.image.name, {
                 'attr': {'class': 'form-control'},
                 'label': 'Image Title',
             }) }}
         </div>
         <div class="form-group">
-        {{ form_row(form.image.description, {
+            {{ form_row(form.image.description, {
                 'attr': {'class': 'form-control'},
                 'label': 'Image Description',
             }) }}
         </div>
         <div class="form-group">
-        {{ form_row(form.image.uploadedfile, {
+            {{ form_row(form.image.uploadedfile, {
                 'attr': {'class': 'form-control-file'},
                 'label': 'Image File',
             }) }}
         </div>
-        <label>Image Tags</label>
-        <ul class="image-tags" data-prototype="{{ itemForm.printItemRow(form.image.tags.vars.prototype)|e('html_attr') }}">
-            {% for tag in form.image.tags %}
-                <li>
-                    {{ itemForm.printItemRow(tag) }}
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.image.tags, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': image_tags|json_encode}}) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div style="display:none"> {# Hack for new Projects#}
-    {{ form_rest(form) }}
-</div>
+
 {{ form_end(form) }}
