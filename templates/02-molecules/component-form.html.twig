@@ -1,8 +1,0 @@
-{% macro printItemRow(item) %}
-    <div class="form-group component-form-group">
-        {{ form_widget(item, {
-            'attr': {'class': 'form-control'},
-        }) }}
-    </div>
-    {{ form_errors(item) }}
-{% endmacro %}

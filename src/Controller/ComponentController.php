@@ -108,6 +108,9 @@ class ComponentController extends AbstractController
 
         return $this->render('05-pages/component-new.html.twig', [
             'form' => $form->createView(),
+            'tags' => $component->getTags()->toArray(),
+            'categories' => $component->getCategories()->toArray(),
+            'image_tags' => $component->getImage()->getTags()->toArray(),
         ]);
     }
 
@@ -134,14 +137,17 @@ class ComponentController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('component_view', [
-                'slug' => $component->getSlug(),
-            ]);
+            /*             return $this->redirectToRoute('component_edit', [
+                            'slug' => $component->getSlug(),
+                        ]); */
         }
 
         return $this->render('05-pages/component-view.html.twig', [
             'component' => $component,
             'form' => $form->createView(),
+            'tags' => $component->getTags()->toArray(),
+            'categories' => $component->getCategories()->toArray(),
+            'image_tags' => $component->getImage()->getTags()->toArray(),
         ]);
     }
 

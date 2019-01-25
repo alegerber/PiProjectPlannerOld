@@ -2,14 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Component;
+use App\Form\Type\TagsInputType;
+use App\Form\Type\CategoriesInputType;
 
 class ComponentType extends AbstractType
 {
@@ -21,15 +22,13 @@ class ComponentType extends AbstractType
             ->add('image', ImageType::class, [
                 'required' => false,
             ])
-            ->add('categories', CollectionType::class, [
-                'entry_type' => CategoryType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('tags', TagsInputType::class, [
+                'label' => 'label.tags',
+                'required' => false,
             ])
-            ->add('tags', CollectionType::class, [
-                'entry_type' => TagType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('categories', CategoriesInputType::class, [
+                'label' => 'label.tags',
+                'required' => false,
             ])
             ->add('submit', SubmitType::class)
         ;

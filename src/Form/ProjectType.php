@@ -7,11 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Project;
 use App\Repository\ComponentRepository;
+use App\Form\Type\TagsInputType;
+use App\Form\Type\CategoriesInputType;
+use App\Form\Type\ComponentsInputType;
 
 class ProjectType extends AbstractType
 {
@@ -33,32 +34,17 @@ class ProjectType extends AbstractType
             ->add('image', ImageType::class, [
                 'required' => false,
             ])
-            ->add('categories', CollectionType::class, [
-                'entry_type' => CategoryType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('tags', TagsInputType::class, [
+                'label' => 'label.tags',
+                'required' => false,
             ])
-            ->add('tags', CollectionType::class, [
-                'entry_type' => TagType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('categories', CategoriesInputType::class, [
+                'label' => 'label.categories',
+                'required' => false,
             ])
-            ->add('components', CollectionType::class, [
-                'entry_type' => ChoiceType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'choices' => $this->componentRepository->findAll(),
-                    'choice_label' => function ($component, $key, $value) {
-                        /* @var App\Entity\Component $component */
-                        return $component->getName();
-                    },
-                    'choice_attr' => function ($component, $key, $value) {
-                        /* @var App\Entity\Component $component */
-                        return ['class' => 'component_'.strtolower($component->getName())];
-                    },
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
+            ->add('components', ComponentsInputType::class, [
+                'label' => 'label.components',
+                'required' => false,
             ])
             ->add('submit', SubmitType::class)
         ;

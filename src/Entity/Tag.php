@@ -8,7 +8,7 @@ use App\Utils\Slugger;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
-class Tag
+class Tag implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -49,5 +49,18 @@ class Tag
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

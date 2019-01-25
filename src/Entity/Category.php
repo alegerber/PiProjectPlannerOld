@@ -8,7 +8,7 @@ use App\Utils\Slugger;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
-class Category
+class Category implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -41,7 +41,7 @@ class Category
     {
         $this->name = $name;
 
-        $this->slug= Slugger::slugify($name);
+        $this->slug = Slugger::slugify($name);
 
         return $this;
     }
@@ -49,5 +49,18 @@ class Category
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize(): string
+    {
+        return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

@@ -84,6 +84,10 @@ class ProjectController extends AbstractController
 
         return $this->render('05-pages/project-new.html.twig', [
             'form' => $form->createView(),
+            'tags' => $project->getTags()->toArray(),
+            'categories' => $project->getCategories()->toArray(),
+            'components' => $project->getComponents()->toArray(),
+            'image_tags' => $project->getImage()->getTags()->toArray(),
         ]);
     }
 
@@ -118,6 +122,10 @@ class ProjectController extends AbstractController
         return $this->render('05-pages/project-view.html.twig', [
             'project' => $project,
             'form' => $form->createView(),
+            'tags' => $project->getTags()->toArray(),
+            'categories' => $project->getCategories()->toArray(),
+            'components' => $project->getComponents()->toArray(),
+            'image_tags' => $project->getImage()->getTags()->toArray(),
         ]);
     }
 
