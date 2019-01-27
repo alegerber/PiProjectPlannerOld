@@ -53,7 +53,12 @@ class Component implements \JsonSerializable
     /**
      * @var Category[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", cascade={"persist"})
+     * @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Category",
+     *     mappedBy="components",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
@@ -124,6 +129,7 @@ class Component implements \JsonSerializable
     {
         foreach ($categories as $category) {
             if (!$this->categories->contains($category)) {
+                $category->addComponent($this);
                 $this->categories->add($category);
             }
         }
@@ -143,6 +149,7 @@ class Component implements \JsonSerializable
     {
         foreach ($tags as $tag) {
             if (!$this->tags->contains($tag)) {
+                $tag->addComponent($this);
                 $this->tags->add($tag);
             }
         }

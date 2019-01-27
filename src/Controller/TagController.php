@@ -14,19 +14,7 @@ class TagController extends AbstractController
      */
     public function index(Tag $tag)
     {
-        /**
-        * @var Component[]
-        */
-        $components;
-
-        $componentsAll = $this->getDoctrine()
-            ->getRepository(Component::class)->findAll();
-
-        foreach ($componentsAll as $component) {
-            if ($component->getTags()->contains($tag)) {
-                $components[] = $component;
-            }
-        }
+        $components = $tag->getComponents();
 
         return $this->render('05-pages/tag.html.twig', [
             'tag' => $tag,

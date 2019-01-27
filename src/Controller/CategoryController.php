@@ -14,18 +14,11 @@ class CategoryController extends AbstractController
      */
     public function index(Category $category)
     {
-        $componentsAll = $this->getDoctrine()
-            ->getRepository(Component::class)->findAll();
-
-        foreach ($componentsAll as $component) {
-            if ($component->getCategories()->contains($category)) {
-                $this->components[] = $component;
-            }
-        }
+        $components = $category->getComponents();
 
         return $this->render('05-pages/category.html.twig', [
             'category' => $category,
-            'components' => $this->components,
+            'components' => $components,
         ]);
     }
 }

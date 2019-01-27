@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Utils\Slugger;
 
@@ -11,6 +13,8 @@ use App\Utils\Slugger;
 class Tag implements \JsonSerializable
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -18,14 +22,30 @@ class Tag implements \JsonSerializable
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @var Component
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="categories")
+     */
+    private $components;
+
+    public function __construct()
+    {
+        $this->components = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,6 +69,24 @@ class Tag implements \JsonSerializable
     public function getSlug(): string
     {
         return $this->slug;
+    }
+    public function addComponent(?Component ...$components): void
+    {
+        foreach ($components as $component) {
+            if (!$this->components->contains($component)) {
+                $this->components->add($component);
+            }
+        }
+    }
+
+    public function removeComponent(Tag $component): void
+    {
+        $this->components->removeElement($component);
+    }
+
+    public function getComponents(): ?Collection
+    {
+        return $this->components;
     }
 
     /**
