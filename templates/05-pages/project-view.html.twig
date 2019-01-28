@@ -8,6 +8,7 @@
 {% block content %}
     <div class="container mt-3">
         <h1>{{ project.name }}</h1>
+        {% include '02-molecules/flash-messages.html.twig' with {'flashes': app.flashes} %}
         {% include '04-templates/project-view-tab.html.twig' with {'project': project, 'form': form } %}
     </div>
 {% endblock %}

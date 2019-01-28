@@ -72,6 +72,11 @@ class ProjectController extends AbstractController
             $entityManger->persist($project);
             $entityManger->flush();
 
+            $this->addFlash(
+                'success',
+                'Project successfully created'
+            );
+
             return $this->redirectToRoute('project_edit', [
                 'slug' => $project->getSlug(),
             ]);
@@ -108,6 +113,11 @@ class ProjectController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Project successfully updated'
+            );
 
             return $this->redirectToRoute('project_edit', [
                 'slug' => $project->getSlug(),

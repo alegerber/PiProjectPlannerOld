@@ -96,6 +96,11 @@ class ComponentController extends AbstractController
             $entityManger->persist($component);
             $entityManger->flush();
 
+            $this->addFlash(
+                'success',
+                'Component successfully created'
+            );
+
             return $this->redirectToRoute('component_edit', [
                 'slug' => $component->getSlug(),
             ]);
@@ -131,6 +136,11 @@ class ComponentController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Component successfully updated'
+            );
 
             return $this->redirectToRoute('component_edit', [
             'slug' => $component->getSlug(),
