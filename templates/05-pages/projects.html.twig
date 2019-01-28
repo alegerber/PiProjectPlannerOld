@@ -2,10 +2,8 @@
 
 {% block title %}Projects{% endblock %}
 {% block content %}
+    {% include '02-molecules/flash-messages.html.twig' with {'flashes': app.flashes} %}
     <div class="card-columns ">
-        {% for project in projects %}
-            {% include '02-molecules/project-card.html.twig' with {'project': project } %}
-        {% endfor %}
         <div class="card bg-info">
             <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
             <div class="card-body">
@@ -14,5 +12,8 @@
                 <a href="/project/new" class="btn btn-primary">Read More</a>
             </div>
         </div>
+        {% for project in projects %}
+            {% include '02-molecules/project-card.html.twig' with {'project': project } %}
+        {% endfor %}
     </div>
 {% endblock %}
