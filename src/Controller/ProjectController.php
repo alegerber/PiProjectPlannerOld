@@ -10,6 +10,7 @@ use App\Entity\Image;
 use App\Form\ProjectType;
 use App\Services\UploadedFileFormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Utils\Slugger;
 
 class ProjectController extends AbstractController
 {
@@ -67,6 +68,10 @@ class ProjectController extends AbstractController
                 );
             }
 
+            $form->getData()->setSlug(
+                Slugger::slugify($form->getData()->getName())
+            );
+
             $entityManger = $this->getDoctrine()->getManager();
             $entityManger->persist($image);
             $entityManger->persist($project);
@@ -78,7 +83,7 @@ class ProjectController extends AbstractController
             );
 
             return $this->redirectToRoute('project_edit', [
-                'slug' => $project->getSlug(),
+                'slug' => $form->getSlug(),
             ]);
         }
 
@@ -111,6 +116,10 @@ class ProjectController extends AbstractController
                     $this->getParameter('image_file_directory')
                 );
             }
+
+            $form->getData()->setSlug(
+                Slugger::slugify($form->getData()->getName())
+            );
 
             $this->getDoctrine()->getManager()->flush();
 

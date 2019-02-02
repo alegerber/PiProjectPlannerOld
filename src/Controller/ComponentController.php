@@ -12,6 +12,7 @@ use App\Entity\Image;
 use App\Form\ComponentType;
 use App\Services\UploadedFileFormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Utils\Slugger;
 
 class ComponentController extends AbstractController
 {
@@ -91,6 +92,10 @@ class ComponentController extends AbstractController
                 );
             }
 
+            $form->getData()->setSlug(
+                Slugger::slugify($form->getData()->getName())
+            );
+
             $entityManger = $this->getDoctrine()->getManager();
             $entityManger->persist($image);
             $entityManger->persist($component);
@@ -134,6 +139,10 @@ class ComponentController extends AbstractController
                     $this->getParameter('image_file_directory')
                 );
             }
+
+            $form->getData()->setSlug(
+                Slugger::slugify($form->getData()->getName())
+            );
 
             $this->getDoctrine()->getManager()->flush();
 

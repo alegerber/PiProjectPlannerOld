@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -26,14 +25,14 @@ class Project
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $slug;
 
     /**
      * @var string
@@ -86,11 +85,6 @@ class Project
         return $this->id;
     }
 
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -100,7 +94,17 @@ class Project
     {
         $this->name = $name;
 
-        $this->slug = Slugger::slugify($name);
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
