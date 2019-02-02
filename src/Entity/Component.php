@@ -26,14 +26,14 @@ class Component implements \JsonSerializable
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $slug;
 
     /**
      * @var string
@@ -82,11 +82,6 @@ class Component implements \JsonSerializable
         return $this->id;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -96,7 +91,17 @@ class Component implements \JsonSerializable
     {
         $this->name = $name;
 
-        $this->slug = Slugger::slugify($name);
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

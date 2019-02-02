@@ -8,20 +8,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Entity\Image;
 use App\Form\ProjectType;
-use App\Services\UploadedFileFormHandling;
+use App\Services\FormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Utils\Slugger;
 
 class ProjectController extends AbstractController
 {
     /**
-     * @var UploadedFileFormHandling
+     * @var FormHandling
      */
-    private $uploadedFileFormHandling;
+    private $formHandling;
 
-    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
+    public function __construct(FormHandling $formHandling)
     {
-        $this->uploadedFileFormHandling = $uploadedFileFormHandling;
+        $this->formHandling = $formHandling;
     }
 
     /**
@@ -46,7 +46,6 @@ class ProjectController extends AbstractController
     public function new(Request $request)
     {
         $project = new Project();
-
         $image = new Image();
         $image->setUploadedFile(new UploadedFile('img/placeholder.jpg', 'placeholder.jpg'));
 
@@ -59,31 +58,22 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
-            $oldFileName
-            ) {
-                $this->uploadedFileFormHandling->handle(
-                    $form->getData()->getImage(),
-                    $this->getParameter('image_file_directory')
-                );
+            try {
+                $this->formHandling->handleNew($form, $oldFileName);
+
+                $this->addFlash(
+                    'success',
+                    'Project successfully created'
+                );    
+            } catch (ORMException $e){
+                $this->addFlash(
+                    'success',
+                    'cant\'t save in Database. Error:' . $e->getMessage()
+                ); 
             }
-
-            $form->getData()->setSlug(
-                Slugger::slugify($form->getData()->getName())
-            );
-
-            $entityManger = $this->getDoctrine()->getManager();
-            $entityManger->persist($image);
-            $entityManger->persist($project);
-            $entityManger->flush();
-
-            $this->addFlash(
-                'success',
-                'Project successfully created'
-            );
-
+            
             return $this->redirectToRoute('project_edit', [
-                'slug' => $form->getSlug(),
+                'slug' => $form->getData()->getSlug(),
             ]);
         }
 
@@ -108,28 +98,22 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
-            $oldFileName
-            ) {
-                $this->uploadedFileFormHandling->handle(
-                    $form->getData()->getImage(),
-                    $this->getParameter('image_file_directory')
-                );
+            try {
+                $this->formHandling->handleUpdate($form, $oldFileName);
+
+                $this->addFlash(
+                    'success',
+                    'Project successfully updated'
+                );    
+            } catch (ORMException $e){
+                $this->addFlash(
+                    'success',
+                    'cant\'t update Project in Database. Error:' . $e->getMessage()
+                ); 
             }
 
-            $form->getData()->setSlug(
-                Slugger::slugify($form->getData()->getName())
-            );
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash(
-                'success',
-                'Project successfully updated'
-            );
-
             return $this->redirectToRoute('project_edit', [
-                'slug' => $project->getSlug(),
+                'slug' => $form->getData()->getSlug(),
             ]);
         }
 

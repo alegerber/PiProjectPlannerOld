@@ -10,7 +10,7 @@ use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\Image;
 use App\Form\ComponentType;
-use App\Services\UploadedFileFormHandling;
+use App\Services\FormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Utils\Slugger;
 
@@ -32,13 +32,13 @@ class ComponentController extends AbstractController
     private $tags;
 
     /**
-     * @var UploadedFileFormHandling
+     * @var FormHandling
      */
-    private $uploadedFileFormHandling;
+    private $formHandling;
 
-    public function __construct(UploadedFileFormHandling $uploadedFileFormHandling)
+    public function __construct(FormHandling $formHandling)
     {
-        $this->uploadedFileFormHandling = $uploadedFileFormHandling;
+        $this->formHandling = $formHandling;
     }
 
     /**
@@ -83,31 +83,22 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
-            $oldFileName
-            ) {
-                $this->uploadedFileFormHandling->handle(
-                    $form->getData()->getImage(),
-                    $this->getParameter('image_file_directory')
-                );
+            try {
+                $this->formHandling->handleNew($form, $oldFileName);
+
+                $this->addFlash(
+                    'success',
+                    'Component successfully created'
+                );    
+            } catch (ORMException $e){
+                $this->addFlash(
+                    'success',
+                    'cant\'t save Component in Database. Error:' . $e->getMessage()
+                ); 
             }
 
-            $form->getData()->setSlug(
-                Slugger::slugify($form->getData()->getName())
-            );
-
-            $entityManger = $this->getDoctrine()->getManager();
-            $entityManger->persist($image);
-            $entityManger->persist($component);
-            $entityManger->flush();
-
-            $this->addFlash(
-                'success',
-                'Component successfully created'
-            );
-
             return $this->redirectToRoute('component_edit', [
-                'slug' => $component->getSlug(),
+                'slug' => $form->getData()->getSlug(),
             ]);
         }
 
@@ -131,25 +122,20 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
-            $oldFileName
-            ) {
-                $this->uploadedFileFormHandling->handle(
-                    $form->getData()->getImage(),
-                    $this->getParameter('image_file_directory')
-                );
+            try {
+                $this->formHandling->handleUpdate($form, $oldFileName);
+
+                $this->addFlash(
+                    'success',
+                    'Component successfully updated'
+                );    
+            } catch (ORMException $e){
+                $this->addFlash(
+                    'success',
+                    'cant\'t update Component in Database. Error:' . $e->getMessage()
+                ); 
             }
 
-            $form->getData()->setSlug(
-                Slugger::slugify($form->getData()->getName())
-            );
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash(
-                'success',
-                'Component successfully updated'
-            );
 
             return $this->redirectToRoute('component_edit', [
             'slug' => $component->getSlug(),
@@ -166,7 +152,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component/{slug}/delete", methods={"POST"}, name="component_delete")
+     * @Route("/component/{slug}/delete", methods={"GET", "POST"}, name="component_delete")
      */
     public function delete(Request $request, Component $component)
     {
