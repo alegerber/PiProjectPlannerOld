@@ -5,7 +5,7 @@
     <p><span>Create A New Component ?</span>
     <a class="btn btn-info" href="/component/new">New Component</a>
     </p>
-    <div class="row">
+    <div class="card-group">
     {% for container in containers %}
         {% include '02-molecules/text-container.html.twig' with {'title': container.name, 'prefix': container.prefix, 'buttons': container.content } %}
     {% endfor %}

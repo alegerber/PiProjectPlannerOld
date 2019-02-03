@@ -3,9 +3,9 @@
 {% block title %}Projects{% endblock %}
 {% block content %}
     {% include '02-molecules/flash-messages.html.twig' with {'flashes': app.flashes} %}
-    <div class="card-columns ">
-        <div class="card bg-info">
-            <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
+    <div class="card-columns">
+        <div class="card bg-info custom-card-layout">
+            <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded card-img-top">
             <div class="card-body">
                 <h2 class="card-title">New</h2>
                 <p class="card-text">Create a New Project.</p>

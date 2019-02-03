@@ -18,3 +18,17 @@ $fa-font-path: '~font-awesome/fonts';
     width:  200px;
     height: 200px;
 }
+
+.custom-card-layout {
+    max-width: 300px;
+    margin-bottom: 30px !important;
+}
+
+.card-columns {
+    @include media-breakpoint-only(md) {
+        column-count: 2;
+    }
+    @include media-breakpoint-only(sm) {
+        column-count: 2;
+    }
+}

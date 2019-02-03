@@ -1,8 +1,9 @@
-<div class="card bg-light">
-    <img src="{{ asset('/img/placeholder.jpg') }}" alt="placeholder" class="rounded float-right">
+<div class="card bg-light custom-card-layout">
+    <img src="../{{ component.image.uploadedFile.pathname }}"
+    alt="{{ component.name }} image" class="rounded card-img-top">
     <div class="card-body">
         <h2 class="card-title">{{ component.name }}</h2>
-        <p class="card-text">{{ component.description }}</p>
+        <p class="card-text">{{ component.description|striptags|slice(0, 200) }}</p>
         <a href="/component/{{ component.slug }}" class="btn btn-primary">Read More</a>
     </div>
 </div>
