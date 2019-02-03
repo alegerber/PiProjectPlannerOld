@@ -1,0 +1,12 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block title %}404 Page not found{% endblock %}
+{% block content %}
+<div class="alert alert-danger">
+    <h1>404 Page not found</h1>
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('dashboard') }}">return to the dashboard</a>.
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block title %}403 Forbidden{% endblock %}
+{% block content %}
+<div class="alert alert-danger">
+    <h1>403 Forbidden</h1>
+    <p>
+        The requested page couldn't be reached, because you haven't access. <a href="{{ path('dashboard') }}">Return to the dashboard</a>.
+    </p>
+</div>
+{% endblock %}
