@@ -12,7 +12,6 @@ use App\Entity\Image;
 use App\Form\ComponentType;
 use App\Services\FormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Utils\Slugger;
 
 class ComponentController extends AbstractController
 {
@@ -84,7 +83,7 @@ class ComponentController extends AbstractController
 
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'component');
 
-        if(!$redirect){
+        if (!$redirect) {
             return $this->render('05-pages/component-new.html.twig', [
                 'form' => $form->createView(),
                 'tags' => $component->getTags()->toArray(),
@@ -108,8 +107,8 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
 
         $redirect = $this->formHandling->handleUpdate($form, $oldFileName, $request, 'component');
-        
-        if(!$redirect){
+
+        if (!$redirect) {
             return $this->render('05-pages/component-view.html.twig', [
                 'component' => $component,
                 'form' => $form->createView(),
