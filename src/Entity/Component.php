@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")

@@ -16,6 +16,9 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class ComponentArrayToStringTransformer implements DataTransformerInterface
 {
+    /**
+     * @var Component[]|array
+     */
     private $components;
 
     public function __construct(ComponentRepository $components)
@@ -42,10 +45,8 @@ class ComponentArrayToStringTransformer implements DataTransformerInterface
 
         $names = \array_filter(\array_unique(\array_map('trim', \explode(',', $string))));
 
-        $components = $this->components->findBy([
+        return $this->components->findBy([
             'name' => $names,
         ]);
-
-        return $components;
     }
 }

@@ -15,11 +15,6 @@ class ImagePathFixtures extends Fixture implements OrderedFixtureInterface
     private $manager;
 
     /**
-     * @var int
-     */
-    private $entrys;
-
-    /**
      * @param ObjectManager
      */
     public function load(ObjectManager $manager): void

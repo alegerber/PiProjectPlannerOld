@@ -59,14 +59,14 @@ class FormHandling
     {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->formHandling->handleUpdate($form, $oldFileName);
+                $this->formFlushUpdate($form, $oldFileName);
 
-                $this->addFlash(
+                $request->getSession()->getFlashBag()->set(
                     'success',
                     $dataName.' successfully updated'
                 );
             } catch (ORMException $e) {
-                $this->addFlash(
+                $request->getSession()->getFlashBag()->set(
                     'danger',
                     'cant\'t update '.$dataName.' in Database. Error:'.$e->getMessage()
                 );
