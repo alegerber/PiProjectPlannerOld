@@ -48,8 +48,7 @@ class FormHandling
             return new RedirectResponse(
                 $this->router->generate($dataName.'_edit', [
                     'slug' => $form->getData()->getSlug(),
-                ]), 
-                302
+                ])
             );
         } else {
             return false;
@@ -76,8 +75,7 @@ class FormHandling
             return new RedirectResponse(
                 $this->router->generate($dataName.'_edit', [
                     'slug' => $form->getData()->getSlug(),
-                ]), 
-                302
+                ])
             );
         } else {
             return false;
