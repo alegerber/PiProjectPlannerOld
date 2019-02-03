@@ -28,9 +28,63 @@ class FormHandling
         $this->router = $router;
     }
 
-    
+    public function handleNew(Form $form, string $oldFileName, Request $request, $dataName)
+    {   
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->FormFlushNew($form, $oldFileName);
 
-    public function FormFlushNew(Form $form, string $oldFileName): void
+                $request->getSession()->getFlashBag()->set(
+                    'success',
+                    $dataName.' successfully created'
+                );    
+            } catch (ORMException $e){
+                $request->getSession()->getFlashBag()->set(
+                    'danger',
+                    'cant\'t save '.$dataName.' in Database. Error:' . $e->getMessage()
+                ); 
+            }
+
+            return new RedirectResponse(
+                $this->router->generate($dataName.'_edit', [
+                    'slug' => $form->getData()->getSlug(),
+                ]), 
+                302
+            );
+        } else {
+            return false;
+        }
+    }
+
+    public function handleUpdate(Form $form, string $oldFileName, Request $request, $dataName)
+    {
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->formHandling->handleUpdate($form, $oldFileName);
+
+                $this->addFlash(
+                    'success',
+                    $dataName.' successfully updated'
+                );    
+            } catch (ORMException $e){
+                $this->addFlash(
+                    'danger',
+                    'cant\'t update '.$dataName.' in Database. Error:' . $e->getMessage()
+                ); 
+            }
+
+            return new RedirectResponse(
+                $this->router->generate($dataName.'_edit', [
+                    'slug' => $form->getData()->getSlug(),
+                ]), 
+                302
+            );
+        } else {
+            return false;
+        }
+    }
+
+    private function FormFlushNew(Form $form, string $oldFileName): void
     {   
         $this->setFormData($form, $oldFileName);
 
@@ -39,7 +93,7 @@ class FormHandling
         $this->entityManger->flush();
     }
 
-    public function FormFlushUpdate(Form $form, string $oldFileName): void
+    private function FormFlushUpdate(Form $form, string $oldFileName): void
     {
         $this->setFormData($form, $oldFileName);
 

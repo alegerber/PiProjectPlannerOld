@@ -82,32 +82,18 @@ class ComponentController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $this->formHandling->handleNew($form, $oldFileName);
+        $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'component');
 
-                $this->addFlash(
-                    'success',
-                    'Component successfully created'
-                );    
-            } catch (ORMException $e){
-                $this->addFlash(
-                    'success',
-                    'cant\'t save Component in Database. Error:' . $e->getMessage()
-                ); 
-            }
-
-            return $this->redirectToRoute('component_edit', [
-                'slug' => $form->getData()->getSlug(),
+        if(!$redirect){
+            return $this->render('05-pages/component-new.html.twig', [
+                'form' => $form->createView(),
+                'tags' => $component->getTags()->toArray(),
+                'categories' => $component->getCategories()->toArray(),
+                'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
+        } else {
+            return $redirect;
         }
-
-        return $this->render('05-pages/component-new.html.twig', [
-            'form' => $form->createView(),
-            'tags' => $component->getTags()->toArray(),
-            'categories' => $component->getCategories()->toArray(),
-            'image_tags' => $component->getImage()->getTags()->toArray(),
-        ]);
     }
 
     /**
@@ -121,34 +107,19 @@ class ComponentController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $this->formHandling->handleUpdate($form, $oldFileName);
-
-                $this->addFlash(
-                    'success',
-                    'Component successfully updated'
-                );    
-            } catch (ORMException $e){
-                $this->addFlash(
-                    'success',
-                    'cant\'t update Component in Database. Error:' . $e->getMessage()
-                ); 
-            }
-
-
-            return $this->redirectToRoute('component_edit', [
-            'slug' => $component->getSlug(),
+        $redirect = $this->formHandling->handleUpdate($form, $oldFileName, $request, 'component');
+        
+        if(!$redirect){
+            return $this->render('05-pages/component-view.html.twig', [
+                'component' => $component,
+                'form' => $form->createView(),
+                'tags' => $component->getTags()->toArray(),
+                'categories' => $component->getCategories()->toArray(),
+                'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
+        } else {
+            return $redirect;
         }
-
-        return $this->render('05-pages/component-view.html.twig', [
-            'component' => $component,
-            'form' => $form->createView(),
-            'tags' => $component->getTags()->toArray(),
-            'categories' => $component->getCategories()->toArray(),
-            'image_tags' => $component->getImage()->getTags()->toArray(),
-        ]);
     }
 
     /**

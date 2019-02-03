@@ -57,33 +57,19 @@ class ProjectController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $this->formHandling->handleNew($form, $oldFileName);
+        $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'project');
 
-                $this->addFlash(
-                    'success',
-                    'Project successfully created'
-                );    
-            } catch (ORMException $e){
-                $this->addFlash(
-                    'success',
-                    'cant\'t save in Database. Error:' . $e->getMessage()
-                ); 
-            }
-            
-            return $this->redirectToRoute('project_edit', [
-                'slug' => $form->getData()->getSlug(),
+        if(!$redirect){
+            return $this->render('05-pages/project-new.html.twig', [
+                'form' => $form->createView(),
+                'tags' => $project->getTags()->toArray(),
+                'categories' => $project->getCategories()->toArray(),
+                'components' => $project->getComponents()->toArray(),
+                'image_tags' => $project->getImage()->getTags()->toArray(),
             ]);
+        } else {
+            return $redirect;
         }
-
-        return $this->render('05-pages/project-new.html.twig', [
-            'form' => $form->createView(),
-            'tags' => $project->getTags()->toArray(),
-            'categories' => $project->getCategories()->toArray(),
-            'components' => $project->getComponents()->toArray(),
-            'image_tags' => $project->getImage()->getTags()->toArray(),
-        ]);
     }
 
     /**
@@ -97,34 +83,20 @@ class ProjectController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $this->formHandling->handleUpdate($form, $oldFileName);
+        $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'project');
 
-                $this->addFlash(
-                    'success',
-                    'Project successfully updated'
-                );    
-            } catch (ORMException $e){
-                $this->addFlash(
-                    'success',
-                    'cant\'t update Project in Database. Error:' . $e->getMessage()
-                ); 
-            }
-
-            return $this->redirectToRoute('project_edit', [
-                'slug' => $form->getData()->getSlug(),
+        if(!$redirect){
+            return $this->render('05-pages/project-view.html.twig', [
+                'project' => $project,
+                'form' => $form->createView(),
+                'tags' => $project->getTags()->toArray(),
+                'categories' => $project->getCategories()->toArray(),
+                'components' => $project->getComponents()->toArray(),
+                'image_tags' => $project->getImage()->getTags()->toArray(),
             ]);
+        } else {
+            return $redirect;
         }
-
-        return $this->render('05-pages/project-view.html.twig', [
-            'project' => $project,
-            'form' => $form->createView(),
-            'tags' => $project->getTags()->toArray(),
-            'categories' => $project->getCategories()->toArray(),
-            'components' => $project->getComponents()->toArray(),
-            'image_tags' => $project->getImage()->getTags()->toArray(),
-        ]);
     }
 
     /**
