@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class FormHandling
 {
     /**
-     * @var EntityManager 
+     * @var EntityManager
      */
     private $entityManger;
 
     /**
-     * @var Router 
+     * @var Router
      */
     private $router;
 
@@ -29,7 +29,7 @@ class FormHandling
     }
 
     public function handleNew(Form $form, string $oldFileName, Request $request, $dataName)
-    {   
+    {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->FormFlushNew($form, $oldFileName);
@@ -37,12 +37,12 @@ class FormHandling
                 $request->getSession()->getFlashBag()->set(
                     'success',
                     $dataName.' successfully created'
-                );    
-            } catch (ORMException $e){
+                );
+            } catch (ORMException $e) {
                 $request->getSession()->getFlashBag()->set(
                     'danger',
-                    'cant\'t save '.$dataName.' in Database. Error:' . $e->getMessage()
-                ); 
+                    'cant\'t save '.$dataName.' in Database. Error:'.$e->getMessage()
+                );
             }
 
             return new RedirectResponse(
@@ -64,12 +64,12 @@ class FormHandling
                 $this->addFlash(
                     'success',
                     $dataName.' successfully updated'
-                );    
-            } catch (ORMException $e){
+                );
+            } catch (ORMException $e) {
                 $this->addFlash(
                     'danger',
-                    'cant\'t update '.$dataName.' in Database. Error:' . $e->getMessage()
-                ); 
+                    'cant\'t update '.$dataName.' in Database. Error:'.$e->getMessage()
+                );
             }
 
             return new RedirectResponse(
@@ -82,8 +82,8 @@ class FormHandling
         }
     }
 
-    private function FormFlushNew(Form $form, string $oldFileName): void
-    {   
+    private function formFlushNew(Form $form, string $oldFileName): void
+    {
         $this->setFormData($form, $oldFileName);
 
         $this->entityManger->persist($form->getData()->getImage());
@@ -91,7 +91,7 @@ class FormHandling
         $this->entityManger->flush();
     }
 
-    private function FormFlushUpdate(Form $form, string $oldFileName): void
+    private function formFlushUpdate(Form $form, string $oldFileName): void
     {
         $this->setFormData($form, $oldFileName);
 

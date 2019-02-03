@@ -10,7 +10,6 @@ use App\Entity\Image;
 use App\Form\ProjectType;
 use App\Services\FormHandling;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Utils\Slugger;
 
 class ProjectController extends AbstractController
 {
@@ -59,7 +58,7 @@ class ProjectController extends AbstractController
 
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'project');
 
-        if(!$redirect){
+        if (!$redirect) {
             return $this->render('05-pages/project-new.html.twig', [
                 'form' => $form->createView(),
                 'tags' => $project->getTags()->toArray(),
@@ -85,7 +84,7 @@ class ProjectController extends AbstractController
 
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'project');
 
-        if(!$redirect){
+        if (!$redirect) {
             return $this->render('05-pages/project-view.html.twig', [
                 'project' => $project,
                 'form' => $form->createView(),
