@@ -2,6 +2,7 @@
 
 namespace App\Form\DataTransformer;
 
+use App\Utils\Slugger;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -52,6 +53,7 @@ class CategoryArrayToStringTransformer implements DataTransformerInterface
         foreach ($newNames as $name) {
             $category = new Category();
             $category->setName($name);
+            $category->setSlug(Slugger::slugify($name));
             $categories[] = $category;
         }
 

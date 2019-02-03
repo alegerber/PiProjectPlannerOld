@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Utils\Slugger;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
@@ -61,8 +60,6 @@ class Tag implements \JsonSerializable
     {
         $this->name = $name;
 
-        $this->slug = Slugger::slugify($name);
-
         return $this;
     }
 
@@ -70,6 +67,14 @@ class Tag implements \JsonSerializable
     {
         return $this->slug;
     }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
     public function addComponent(?Component ...$components): void
     {
         foreach ($components as $component) {

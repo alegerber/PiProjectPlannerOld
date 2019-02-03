@@ -2,13 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Utils\Slugger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use App\Entity\Tag;
+use App\Entity\Image;
 
-class TagFixtures extends Fixture implements OrderedFixtureInterface
+class ImagePathFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
@@ -27,28 +26,22 @@ class TagFixtures extends Fixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
-        $this->entrys = 100;
-
-        $this->tag();
+        $this->imagePath();
 
         $this->manager->flush();
     }
 
-    private function tag(): void
+    private function imagePath(): void
     {
-        for ($i = 0; $i <= $this->entrys; ++$i) {
-            $tag = new Tag();
-            $name = 'tag '.\mt_rand(0, $this->entrys);
-            $tag->setName($name);
-            $tag->setSlug(
-                Slugger::slugify($name)
-            );
-            $this->manager->persist($tag);
+        $imageAll = $this->manager->getRepository(Image::class)->findAll();
+        
+        foreach ($imageAll as $image) {
+            $image->setUploadedFileFixture('img/placeholder.jpg');
         }
     }
 
     public function getOrder()
     {
-        return 1;
+        return 99;
     }
 }

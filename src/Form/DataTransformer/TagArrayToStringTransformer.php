@@ -2,6 +2,7 @@
 
 namespace App\Form\DataTransformer;
 
+use App\Utils\Slugger;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -40,7 +41,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
         if ('' === $string || null === $string) {
             return [];
         }
-        
+
         $names = \array_filter(\array_unique(\array_map('trim', \explode(',', $string))));
 
         $tags = $this->tags->findBy([
@@ -51,8 +52,10 @@ class TagArrayToStringTransformer implements DataTransformerInterface
         foreach ($newNames as $name) {
             $tag = new Tag();
             $tag->setName($name);
+            $tag->setSlug(Slugger::slugify($name));
             $tags[] = $tag;
         }
+
         return $tags;
     }
 }

@@ -91,6 +91,19 @@ class Image
         return $this;
     }
 
+    /**
+     * Function for correcting the filepath in fixtures.
+     *
+     * @param string|null $uploadedFilePath
+     * @return void
+     */
+    public function setUploadedFileFixture(?string $uploadedFilePath): void
+    {
+        if (null !== $uploadedFilePath) {
+            $this->uploadedFile = $uploadedFilePath;
+        }
+    }
+
     public function getName(): ?string
     {
         return $this->name;

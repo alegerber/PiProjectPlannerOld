@@ -2,12 +2,17 @@
 
 namespace App\DataFixtures;
 
+use App\Utils\Slugger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use App\Entity\Project;
+use App\Entity\Component;
+use App\Entity\Image;
+use App\Entity\Tag;
+use App\Entity\Category;
 
-class ProjectFixtures extends Fixture
+class ProjectFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
@@ -37,11 +42,58 @@ class ProjectFixtures extends Fixture
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $project = new Project();
-            $projectNumber = rand(0, $this->entrys);
-            $project->setName('project '.$projectNumber);
+            $name = 'project '.\mt_rand(0, $this->entrys);
+            $project->setName($name);
+            $project->setSlug(
+                Slugger::slugify($name)
+            );
             $project->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
+
+            $tagAll = $this->manager->getRepository(Tag::class)->findAll();
+
+            $length = \count($tagAll) - 1;
+
+            $project->addTag(
+                $tagAll[\mt_rand(0, $length)],
+                $tagAll[\mt_rand(0, $length)],
+                $tagAll[\mt_rand(0, $length)],
+                $tagAll[\mt_rand(0, $length)]
+            );
+
+            $categoryAll = $this->manager->getRepository(Category::class)->findAll();
+
+            $length = \count($categoryAll) - 1;
+
+            $project->addCategory(
+                $categoryAll[\mt_rand(0, $length)],
+                $categoryAll[\mt_rand(0, $length)],
+                $categoryAll[\mt_rand(0, $length)],
+                $categoryAll[\mt_rand(0, $length)]
+            );
+
+            $componentAll = $this->manager->getRepository(Component::class)->findAll();
+
+            $length = \count($componentAll) - 1;
+
+            $project->addComponent(
+                $componentAll[\mt_rand(0, $length)],
+                $componentAll[\mt_rand(0, $length)],
+                $componentAll[\mt_rand(0, $length)],
+                $componentAll[\mt_rand(0, $length)]
+            );
+
+            $imageAll = $this->manager->getRepository(Image::class)->findAll();
+
+            $project->setImage(
+                $imageAll[\mt_rand(0, $length)]
+            );
 
             $this->manager->persist($project);
         }
+    }
+
+    public function getOrder()
+    {
+        return 3;
     }
 }

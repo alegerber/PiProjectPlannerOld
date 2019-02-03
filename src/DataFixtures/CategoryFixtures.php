@@ -2,12 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Utils\Slugger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use App\Entity\Category;
 
-class CategoryFixtures extends Fixture
+class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
@@ -37,9 +38,18 @@ class CategoryFixtures extends Fixture
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
-            $category->setName('category '.rand(0, $this->entrys));
+            $name = 'category '.\mt_rand(0, $this->entrys);
+            $category->setName($name);
+            $category->setSlug(
+                Slugger::slugify($name)
+            );
 
             $this->manager->persist($category);
         }
+    }
+
+    public function getOrder()
+    {
+        return 1;
     }
 }
