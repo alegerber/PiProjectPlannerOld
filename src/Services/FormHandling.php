@@ -9,9 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class FormHandling
 {
+    /**
+     * @var ParameterBag
+     */
+    private $parameterBag;
+
     /**
      * @var EntityManager
      */
@@ -22,10 +28,14 @@ class FormHandling
      */
     private $router;
 
-    public function __construct(EntityManagerInterface $entityManager, RouterInterface $router)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        RouterInterface $router,
+        ParameterBagInterface $parameterBag
+    ) {
         $this->entityManger = $entityManager;
         $this->router = $router;
+        $this->parameterBag = $parameterBag;
     }
 
     public function handleNew(Form $form, string $oldFileName, Request $request, $dataName)
@@ -103,9 +113,9 @@ class FormHandling
         if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
         $oldFileName
         ) {
-            $this->uploadedFileFormHandling->handle(
+            $this->uploadedFileHandle(
                 $form->getData()->getImage(),
-                $this->getParameter('image_file_directory')
+                $this->parameterBag->get('image_file_directory')
             );
         }
 
