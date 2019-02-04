@@ -52,7 +52,7 @@ class Project
     /**
      * @var Category[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", orphanRemoval=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="projects", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $categories;
@@ -60,7 +60,7 @@ class Project
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", orphanRemoval=true, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="projects", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;
@@ -68,7 +68,7 @@ class Project
     /**
      * @var Component[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Component", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $components;

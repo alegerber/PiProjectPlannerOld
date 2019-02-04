@@ -11,6 +11,7 @@ use App\Entity\Tag;
 use App\Entity\Image;
 use App\Form\ComponentType;
 use App\Services\FormHandling;
+use App\Services\RemoveDatabaseObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ComponentController extends AbstractController
@@ -35,9 +36,17 @@ class ComponentController extends AbstractController
      */
     private $formHandling;
 
-    public function __construct(FormHandling $formHandling)
-    {
+    /**
+     * @var RemoveDatabaseObject
+     */
+    private $removeDatabaseObject;
+
+    public function __construct(
+        FormHandling $formHandling,
+        RemoveDatabaseObject $removeDatabaseObject
+    ) {
         $this->formHandling = $formHandling;
+        $this->removeDatabaseObject = $removeDatabaseObject;
     }
 
     /**
@@ -130,13 +139,15 @@ class ComponentController extends AbstractController
             return $this->redirectToRoute('component');
         }
 
-        $entityManger = $this->getDoctrine()->getManager();
+        $primaryCheck = function ($item) {
+            return $item->getComponents();
+        };
 
-        $image = $component->getImage();
-        $entityManger->remove($component);
-        $entityManger->remove($image);
+        $secondaryCheck = function ($item) {
+            return $item->getProjects();
+        };
 
-        $entityManger->flush();
+        $this->removeDatabaseObject->handleRemove($component, $primaryCheck, $secondaryCheck);
 
         return $this->redirectToRoute('component');
     }

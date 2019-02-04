@@ -65,7 +65,12 @@ class Component implements \JsonSerializable
     /**
      * @var Tag[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
+     * @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Tag",
+     *     mappedBy="components",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      * @ORM\OrderBy({"name": "ASC"})
      */
     private $tags;

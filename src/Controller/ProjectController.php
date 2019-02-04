@@ -9,6 +9,7 @@ use App\Entity\Project;
 use App\Entity\Image;
 use App\Form\ProjectType;
 use App\Services\FormHandling;
+use App\Services\RemoveDatabaseObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProjectController extends AbstractController
@@ -18,9 +19,17 @@ class ProjectController extends AbstractController
      */
     private $formHandling;
 
-    public function __construct(FormHandling $formHandling)
-    {
+    /**
+     * @var RemoveDatabaseObject
+     */
+    private $removeDatabaseObject;
+
+    public function __construct(
+        FormHandling $formHandling,
+        RemoveDatabaseObject $removeDatabaseObject
+    ) {
         $this->formHandling = $formHandling;
+        $this->removeDatabaseObject = $removeDatabaseObject;
     }
 
     /**
@@ -107,12 +116,14 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project');
         }
 
-        $entityManger = $this->getDoctrine()->getManager();
+        $primaryCheck = function ($item) {
+            return $item->getProjects();
+        };
+        $secondaryCheck = function ($item) {
+            return $item->getComponents();
+        };
 
-        $image = $project->getImage();
-        $entityManger->remove($project);
-        $entityManger->remove($image);
-        $entityManger->flush();
+        $this->removeDatabaseObject->handleRemove($project, $primaryCheck, $secondaryCheck);
 
         return $this->redirectToRoute('project');
     }
