@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-8">
         <div class="form-group">
             {{ form_row(form.name, {
-            'attr': {'class': 'form-control'}
+            'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+'}
         }) }}
         </div>
         <div class="form-group">
@@ -12,8 +12,9 @@
         }) }}
         </div>
         <div class="form-group">
+            <label>Tags</label>
             <div class="input-group">
-                {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': tags|json_encode}}) }}
+                {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+', 'data-toggle': 'tagsinput', 'data-tags': tags|json_encode}}) }}
                 <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-tags" aria-hidden="true"></i>
@@ -22,8 +23,9 @@
             </div>
         </div>
         <div class="form-group">
+            <label>Categories</label>
             <div class="input-group">
-                {{ form_widget(form.categories, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': categories|json_encode}}) }}
+                {{ form_widget(form.categories, {'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+', 'data-toggle': 'tagsinput', 'data-tags': categories|json_encode}}) }}
                 <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-tags" aria-hidden="true"></i>
@@ -32,8 +34,9 @@
             </div>
         </div>
         <div class="form-group">
+            <label>Components</label>
             <div class="input-group">
-                {{ form_widget(form.components, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': components|json_encode}}) }}
+                {{ form_widget(form.components, {'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+', 'data-toggle': 'tagsinput', 'data-tags': components|json_encode}}) }}
                 <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-tags" aria-hidden="true"></i>
@@ -49,7 +52,7 @@
     <div class="col-sm-12 col-md-4">
         <div class="form-group">
             {{ form_row(form.image.name, {
-                'attr': {'class': 'form-control'},
+                'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+'},
                 'label': 'Image Title',
             }) }}
         </div>
@@ -66,8 +69,9 @@
             }) }}
         </div>
         <div class="form-group">
+            <label>Image Tags</label>
             <div class="input-group">
-                {{ form_widget(form.image.tags, {'attr': {'class': 'form-control', 'data-toggle': 'tagsinput', 'data-tags': image_tags|json_encode}}) }}
+                {{ form_widget(form.image.tags, {'attr': {'class': 'form-control', 'pattern': '[a-zA-Z0-9-]+', 'data-toggle': 'tagsinput', 'data-tags': image_tags|json_encode}}) }}
                 <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-tags" aria-hidden="true"></i>

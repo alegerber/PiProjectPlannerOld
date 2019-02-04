@@ -35,15 +35,12 @@ class ProjectType extends AbstractType
                 'required' => false,
             ])
             ->add('tags', TagsInputType::class, [
-                'label' => 'label.tags',
                 'required' => false,
             ])
             ->add('categories', CategoriesInputType::class, [
-                'label' => 'label.categories',
                 'required' => false,
             ])
             ->add('components', ComponentsInputType::class, [
-                'label' => 'label.components',
                 'required' => false,
             ])
             ->add('submit', SubmitType::class)

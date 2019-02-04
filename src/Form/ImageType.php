@@ -20,7 +20,6 @@ class ImageType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('uploadedfile', FileType::class)
             ->add('tags', TagsInputType::class, [
-                'label' => 'label.tags',
                 'required' => false,
             ])
         ;

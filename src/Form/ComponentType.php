@@ -23,11 +23,9 @@ class ComponentType extends AbstractType
                 'required' => false,
             ])
             ->add('tags', TagsInputType::class, [
-                'label' => 'label.tags',
                 'required' => false,
             ])
             ->add('categories', CategoriesInputType::class, [
-                'label' => 'label.tags',
                 'required' => false,
             ])
             ->add('submit', SubmitType::class)
