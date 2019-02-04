@@ -37,9 +37,16 @@ class Tag implements \JsonSerializable
     /**
      * @var Component
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="tags")
      */
     private $components;
+
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="tags")
+     */
+    private $projects;
 
     public function __construct()
     {
@@ -92,6 +99,25 @@ class Tag implements \JsonSerializable
     public function getComponents(): ?Collection
     {
         return $this->components;
+    }
+
+    public function addProject(?Project ...$projects): void
+    {
+        foreach ($projects as $project) {
+            if (!$this->projects->contains($project)) {
+                $this->projects->add($project);
+            }
+        }
+    }
+
+    public function removeProject(Project $project): void
+    {
+        $this->projects->removeElement($project);
+    }
+
+    public function getProjects(): ?Collection
+    {
+        return $this->projects;
     }
 
     /**

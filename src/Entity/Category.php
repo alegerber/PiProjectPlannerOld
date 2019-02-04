@@ -41,6 +41,13 @@ class Category implements \JsonSerializable
      */
     private $components;
 
+    /**
+     * @var Project
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="categories")
+     */
+    private $projects;
+
     public function __construct()
     {
         $this->components = new ArrayCollection();
@@ -92,6 +99,25 @@ class Category implements \JsonSerializable
     public function getComponents(): ?Collection
     {
         return $this->components;
+    }
+
+    public function addProject(?Project ...$projects): void
+    {
+        foreach ($projects as $project) {
+            if (!$this->projects->contains($project)) {
+                $this->projects->add($project);
+            }
+        }
+    }
+
+    public function removeProject(Tag $project): void
+    {
+        $this->projects->removeElement($project);
+    }
+
+    public function getProjects(): ?Collection
+    {
+        return $this->projects;
     }
 
     /**

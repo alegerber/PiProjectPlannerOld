@@ -137,6 +137,7 @@ class Project
     {
         foreach ($categories as $category) {
             if (!$this->categories->contains($category)) {
+                $category->addProject($this);
                 $this->categories->add($category);
             }
         }
@@ -156,6 +157,7 @@ class Project
     {
         foreach ($tags as $tag) {
             if (!$this->tags->contains($tag)) {
+                $tag->addProject($this);
                 $this->tags->add($tag);
             }
         }
