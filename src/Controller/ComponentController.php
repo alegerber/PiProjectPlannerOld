@@ -135,9 +135,10 @@ class ComponentController extends AbstractController
      */
     public function delete(Request $request, Component $component)
     {
-        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
-            return $this->redirectToRoute('component');
-        }
+        // @TODO Include for a user system
+        // if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+        //     return $this->redirectToRoute('component');
+        // }
 
         $primaryCheck = function ($item) {
             return $item->getComponents();

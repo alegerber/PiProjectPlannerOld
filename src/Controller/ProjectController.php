@@ -112,9 +112,10 @@ class ProjectController extends AbstractController
      */
     public function delete(Request $request, Project $project)
     {
-        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
-            return $this->redirectToRoute('project');
-        }
+        // @TODO Include for a user system
+        // if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+        //     return $this->redirectToRoute('project');
+        // }
 
         $primaryCheck = function ($item) {
             return $item->getProjects();
