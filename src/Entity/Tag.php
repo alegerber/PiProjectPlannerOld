@@ -35,14 +35,14 @@ class Tag implements \JsonSerializable
     private $slug;
 
     /**
-     * @var Component
+     * @var Component[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="tags")
      */
     private $components;
 
     /**
-     * @var Project
+     * @var Project[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="tags")
      */
@@ -51,6 +51,7 @@ class Tag implements \JsonSerializable
     public function __construct()
     {
         $this->components = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -35,14 +35,14 @@ class Category implements \JsonSerializable
     private $slug;
 
     /**
-     * @var Component
+     * @var Component[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="categories")
      */
     private $components;
 
     /**
-     * @var Project
+     * @var Project[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Project", inversedBy="categories")
      */

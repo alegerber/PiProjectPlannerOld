@@ -59,7 +59,7 @@ class Image
     private $description;
 
     /**
-     * @var Tags[]|ArrayCollection
+     * @var Tag[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
      * @ORM\OrderBy({"name": "ASC"})
