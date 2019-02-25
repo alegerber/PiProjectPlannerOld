@@ -21,35 +21,35 @@ use Symfony\Component\Form\FormView;
  */
 class ComponentsInputType extends AbstractType
 {
-    private $components;
+    private $componentRepository;
 
-    public function __construct(ComponentRepository $components)
+    public function __construct(ComponentRepository $componentRepository)
     {
-        $this->components = $components;
+        $this->componentRepository = $componentRepository;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer(new ComponentArrayToStringTransformer($this->components), true)
+                ->addModelTransformer(new ComponentArrayToStringTransformer($this->componentRepository), true)
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['tags'] = $this->components->findAll();
+        $view->vars['tags'] = $this->componentRepository->findAll();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }

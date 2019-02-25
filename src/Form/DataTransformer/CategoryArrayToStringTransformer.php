@@ -19,13 +19,13 @@ use Symfony\Component\Form\DataTransformerInterface;
 class CategoryArrayToStringTransformer implements DataTransformerInterface
 {
     /**
-     * @var Category[]|array
+     * @var CategoryRepository
      */
-    private $categories;
+    private $categoryRepository;
 
-    public function __construct(CategoryRepository $categories)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categories = $categories;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -47,19 +47,19 @@ class CategoryArrayToStringTransformer implements DataTransformerInterface
 
         $names = \array_filter(\array_unique(\array_map('trim', \explode(',', $string))));
 
-        $databaseCategories = $this->categories->findBy([
+        $categories = $this->categoryRepository->findBy([
             'name' => $names,
         ]);
 
-        $newNames = \array_diff($names, $databaseCategories);
+        $newNames = \array_diff($names, $categories);
 
         foreach ($newNames as $name) {
             $category = new Category();
             $category->setName($name);
             $category->setSlug(Slugger::slugify($name));
-            $databaseCategories[] = $category;
+            $categories[] = $category;
         }
 
-        return $databaseCategories;
+        return $categories;
     }
 }

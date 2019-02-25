@@ -19,13 +19,13 @@ use Symfony\Component\Form\DataTransformerInterface;
 class TagArrayToStringTransformer implements DataTransformerInterface
 {
     /**
-     * @var Tag[]|array
+     * @var TagRepository
      */
-    private $tags;
+    private $tagRepository;
 
-    public function __construct(TagRepository $tags)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->tags = $tags;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -47,18 +47,18 @@ class TagArrayToStringTransformer implements DataTransformerInterface
 
         $names = \array_filter(\array_unique(\array_map('trim', \explode(',', $string))));
 
-        $databaseTags = $this->tags->findBy([
+        $tags = $this->tagRepository->findBy([
             'name' => $names,
         ]);
 
-        $newNames = \array_diff($names, $databaseTags);
+        $newNames = \array_diff($names, $tags);
         foreach ($newNames as $name) {
             $tag = new Tag();
             $tag->setName($name);
             $tag->setSlug(Slugger::slugify($name));
-            $databaseTags[] = $tag;
+            $tags[] = $tag;
         }
 
-        return $databaseTags;
+        return $tags;
     }
 }

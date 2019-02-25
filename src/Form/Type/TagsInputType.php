@@ -21,35 +21,35 @@ use Symfony\Component\Form\FormView;
  */
 class TagsInputType extends AbstractType
 {
-    private $tags;
+    private $tagRepository;
 
-    public function __construct(TagRepository $tags)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->tags = $tags;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer(new TagArrayToStringTransformer($this->tags), true)
+                ->addModelTransformer(new TagArrayToStringTransformer($this->tagRepository), true)
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['tags'] = $this->tags->findAll();
+        $view->vars['tags'] = $this->tagRepository->findAll();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }

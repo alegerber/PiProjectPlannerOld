@@ -17,13 +17,13 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ComponentArrayToStringTransformer implements DataTransformerInterface
 {
     /**
-     * @var Component[]|array
+     * @var ComponentRepository
      */
-    private $components;
+    private $componentRepository;
 
-    public function __construct(ComponentRepository $components)
+    public function __construct(ComponentRepository $componentRepository)
     {
-        $this->components = $components;
+        $this->componentRepository = $componentRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ class ComponentArrayToStringTransformer implements DataTransformerInterface
 
         $names = \array_filter(\array_unique(\array_map('trim', \explode(',', $string))));
 
-        return $this->components->findBy([
+        return $this->componentRepository->findBy([
             'name' => $names,
         ]);
     }

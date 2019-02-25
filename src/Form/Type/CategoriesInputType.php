@@ -21,35 +21,35 @@ use Symfony\Component\Form\FormView;
  */
 class CategoriesInputType extends AbstractType
 {
-    private $categories;
+    private $categoryRepository;
 
-    public function __construct(CategoryRepository $categories)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categories = $categories;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer(new CategoryArrayToStringTransformer($this->categories), true)
+                ->addModelTransformer(new CategoryArrayToStringTransformer($this->categoryRepository), true)
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['tags'] = $this->categories->findAll();
+        $view->vars['tags'] = $this->categoryRepository->findAll();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }
