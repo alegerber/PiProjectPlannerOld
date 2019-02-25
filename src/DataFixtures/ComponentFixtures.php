@@ -14,17 +14,17 @@ use App\Entity\Category;
 class ComponentFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var ObjectManager
+     * @var ObjectManager $manager
      */
     private $manager;
 
     /**
-     * @var int
+     * @var int $entrys
      */
     private $entrys;
 
     /**
-     * @param ObjectManager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -41,22 +41,22 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
-            $name = 'component '.\mt_rand(0, $this->entrys);
+            $name = 'component '.\random_int(0, $this->entrys);
             $component->setName($name);
             $component->setSlug(
                 Slugger::slugify($name)
             );
-            $component->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
+            $component->setDescription('Some Random Text '.\random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
             $length = \count($tagAll) - 1;
 
             $component->addTag(
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)]
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
             );
 
             $categoryAll = $this->manager->getRepository(Category::class)->findAll();
@@ -64,23 +64,23 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
             $length = \count($categoryAll) - 1;
 
             $component->addCategory(
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)]
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)]
             );
 
             $imageAll = $this->manager->getRepository(Image::class)->findAll();
 
             $component->setImage(
-                $imageAll[\mt_rand(0, $length)]
+                $imageAll[\random_int(0, $length)]
             );
 
             $this->manager->persist($component);
         }
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

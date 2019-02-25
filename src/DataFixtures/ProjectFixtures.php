@@ -15,17 +15,17 @@ use App\Entity\Category;
 class ProjectFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var ObjectManager
+     * @var ObjectManager $manager
      */
     private $manager;
 
     /**
-     * @var int
+     * @var int $entrys
      */
     private $entrys;
 
     /**
-     * @param ObjectManager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -42,22 +42,22 @@ class ProjectFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $project = new Project();
-            $name = 'project '.\mt_rand(0, $this->entrys);
+            $name = 'project '.\random_int(0, $this->entrys);
             $project->setName($name);
             $project->setSlug(
                 Slugger::slugify($name)
             );
-            $project->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
+            $project->setDescription('Some Random Text '.\random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
             $length = \count($tagAll) - 1;
 
             $project->addTag(
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)]
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
             );
 
             $categoryAll = $this->manager->getRepository(Category::class)->findAll();
@@ -65,10 +65,10 @@ class ProjectFixtures extends Fixture implements OrderedFixtureInterface
             $length = \count($categoryAll) - 1;
 
             $project->addCategory(
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)],
-                $categoryAll[\mt_rand(0, $length)]
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)]
             );
 
             $componentAll = $this->manager->getRepository(Component::class)->findAll();
@@ -76,23 +76,23 @@ class ProjectFixtures extends Fixture implements OrderedFixtureInterface
             $length = \count($componentAll) - 1;
 
             $project->addComponent(
-                $componentAll[\mt_rand(0, $length)],
-                $componentAll[\mt_rand(0, $length)],
-                $componentAll[\mt_rand(0, $length)],
-                $componentAll[\mt_rand(0, $length)]
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)]
             );
 
             $imageAll = $this->manager->getRepository(Image::class)->findAll();
 
             $project->setImage(
-                $imageAll[\mt_rand(0, $length)]
+                $imageAll[\random_int(0, $length)]
             );
 
             $this->manager->persist($project);
         }
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 3;
     }

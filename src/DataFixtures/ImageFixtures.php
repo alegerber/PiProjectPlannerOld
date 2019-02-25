@@ -12,17 +12,17 @@ use App\Entity\Tag;
 class ImageFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var ObjectManager
+     * @var ObjectManager $manager
      */
     private $manager;
 
     /**
-     * @var int
+     * @var int $entrys
      */
     private $entrys;
 
     /**
-     * @param ObjectManager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -44,23 +44,23 @@ class ImageFixtures extends Fixture implements OrderedFixtureInterface
                 new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'bildschirmfoto.jpg')
             );
 
-            $image->setName('image '.\mt_rand(0, $this->entrys));
-            $image->setDescription('Some Random Text '.\mt_rand(0, $this->entrys));
+            $image->setName('image '.\random_int(0, $this->entrys));
+            $image->setDescription('Some Random Text '.\random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
             $length = \count($tagAll) - 1;
 
             $image->addTag(
-                $tagAll[\mt_rand(0, $length)],
-                $tagAll[\mt_rand(0, $length)]
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
             );
 
             $this->manager->persist($image);
         }
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

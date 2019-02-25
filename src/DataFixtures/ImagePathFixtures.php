@@ -10,12 +10,12 @@ use App\Entity\Image;
 class ImagePathFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var ObjectManager
+     * @var ObjectManager $manager
      */
     private $manager;
 
     /**
-     * @param ObjectManager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -35,7 +35,7 @@ class ImagePathFixtures extends Fixture implements OrderedFixtureInterface
         }
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 99;
     }

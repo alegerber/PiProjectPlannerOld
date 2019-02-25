@@ -11,17 +11,17 @@ use App\Entity\Category;
 class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var ObjectManager
+     * @var ObjectManager $manager
      */
     private $manager;
 
     /**
-     * @var int
+     * @var int $entrys
      */
     private $entrys;
 
     /**
-     * @param ObjectManager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -38,7 +38,7 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
-            $name = 'category '.\mt_rand(0, $this->entrys);
+            $name = 'category '.\random_int(0, $this->entrys);
             $category->setName($name);
             $category->setSlug(
                 Slugger::slugify($name)
@@ -48,7 +48,7 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
         }
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }
