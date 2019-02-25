@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
@@ -51,8 +54,9 @@ class ComponentController extends AbstractController
 
     /**
      * @Route("/component", methods={"GET"}, name="component")
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         $this->categories = $this->getDoctrine()
         ->getRepository(Category::class)->findAll();
@@ -75,8 +79,10 @@ class ComponentController extends AbstractController
 
     /**
      * @Route("/component/new", methods={"GET", "POST"}, name="component_new")
+     * @param Request $request
+     * @return Response
      */
-    public function new(Request $request)
+    public function new(Request $request): Response
     {
         $component = new Component();
 
@@ -92,22 +98,24 @@ class ComponentController extends AbstractController
 
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'component');
 
-        if (!$redirect) {
+        if ($redirect === null) {
             return $this->render('05-pages/component-new.html.twig', [
                 'form' => $form->createView(),
                 'tags' => $component->getTags()->toArray(),
                 'categories' => $component->getCategories()->toArray(),
                 'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
-        } else {
-            return $redirect;
         }
+        return $redirect;
     }
 
     /**
      * @Route("/component/{slug}", methods={"GET", "POST"}, name="component_edit")
+     * @param Request $request
+     * @param Component $component
+     * @return Response
      */
-    public function edit(Request $request, Component $component)
+    public function edit(Request $request, Component $component): Response
     {
         $form = $this->createForm(ComponentType::class, $component);
 
@@ -117,7 +125,7 @@ class ComponentController extends AbstractController
 
         $redirect = $this->formHandling->handleUpdate($form, $oldFileName, $request, 'component');
 
-        if (!$redirect) {
+        if ($redirect === null) {
             return $this->render('05-pages/component-view.html.twig', [
                 'component' => $component,
                 'form' => $form->createView(),
@@ -125,25 +133,35 @@ class ComponentController extends AbstractController
                 'categories' => $component->getCategories()->toArray(),
                 'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
-        } else {
-            return $redirect;
         }
+        return $redirect;
     }
 
     /**
      * @Route("/component/{slug}/delete", methods={"GET", "POST"}, name="component_delete")
+     * @param Request $request
+     * @param Component $component
+     * @return RedirectResponse
      */
-    public function delete(Request $request, Component $component)
+    public function delete(Request $request, Component $component): RedirectResponse
     {
         // @TODO Include for a user system
         // if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
         //     return $this->redirectToRoute('component');
         // }
 
+        /**
+         * @param Tag|Category $item
+         * @return Collection
+         */
         $primaryCheck = function ($item) {
             return $item->getComponents();
         };
 
+        /**
+         * @param Tag|Category $item
+         * @return Collection
+         */
         $secondaryCheck = function ($item) {
             return $item->getProjects();
         };
