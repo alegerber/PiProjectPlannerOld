@@ -33,8 +33,7 @@ class ProjectType extends AbstractType
             ->add('components', ComponentsInputType::class, [
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class)
-        ;
+            ->add('submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

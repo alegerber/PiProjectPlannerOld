@@ -29,7 +29,7 @@ class ImagePathFixtures extends Fixture implements OrderedFixtureInterface
     private function imagePath(): void
     {
         $imageAll = $this->manager->getRepository(Image::class)->findAll();
-        
+
         foreach ($imageAll as $image) {
             $image->setUploadedFileFixture('img/placeholder.jpg');
         }

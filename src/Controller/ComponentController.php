@@ -59,14 +59,14 @@ class ComponentController extends AbstractController
     public function index(): Response
     {
         $this->categories = $this->getDoctrine()
-        ->getRepository(Category::class)->findAll();
+            ->getRepository(Category::class)->findAll();
 
         $this->containers[0]['content'] = $this->categories;
         $this->containers[0]['name'] = 'Categories';
         $this->containers[0]['prefix'] = '/category';
 
         $this->tags = $this->getDoctrine()
-        ->getRepository(Tag::class)->findAll();
+            ->getRepository(Tag::class)->findAll();
 
         $this->containers[1]['content'] = $this->tags;
         $this->containers[1]['name'] = 'Tags';

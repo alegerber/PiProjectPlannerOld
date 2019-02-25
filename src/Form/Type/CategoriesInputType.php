@@ -34,8 +34,7 @@ class CategoriesInputType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer(new CategoryArrayToStringTransformer($this->categoryRepository), true)
-        ;
+            ->addModelTransformer(new CategoryArrayToStringTransformer($this->categoryRepository), true);
     }
 
     /**

@@ -21,8 +21,7 @@ class ImageType extends AbstractType
             ->add('uploadedfile', FileType::class)
             ->add('tags', TagsInputType::class, [
                 'required' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

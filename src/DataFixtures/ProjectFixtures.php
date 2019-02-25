@@ -42,12 +42,12 @@ class ProjectFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $project = new Project();
-            $name = 'project '.\random_int(0, $this->entrys);
+            $name = 'project ' . \random_int(0, $this->entrys);
             $project->setName($name);
             $project->setSlug(
                 Slugger::slugify($name)
             );
-            $project->setDescription('Some Random Text '.\random_int(0, $this->entrys));
+            $project->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 

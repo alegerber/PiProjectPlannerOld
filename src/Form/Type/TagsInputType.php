@@ -34,8 +34,7 @@ class TagsInputType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CollectionToArrayTransformer(), true)
-                ->addModelTransformer(new TagArrayToStringTransformer($this->tagRepository), true)
-        ;
+            ->addModelTransformer(new TagArrayToStringTransformer($this->tagRepository), true);
     }
 
     /**

@@ -48,30 +48,34 @@ class FormHandling
      * @param string $dataName
      * @return RedirectResponse|null
      */
-    public function handleNew(FormInterface $form, string $oldFileName, Request $request, string $dataName): ?RedirectResponse
-    {
+    public function handleNew(
+        FormInterface $form,
+        string $oldFileName,
+        Request $request,
+        string $dataName
+    ): ?RedirectResponse {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->formFlushNew($form, $oldFileName);
 
                 $request->getSession()->getFlashBag()->set(
                     'success',
-                    $dataName.' successfully created'
+                    $dataName . ' successfully created'
                 );
             } catch (ORMException $e) {
                 $request->getSession()->getFlashBag()->set(
                     'danger',
-                    'cant\'t save '.$dataName.' in Database. Error:'.$e->getMessage()
+                    'cant\'t save ' . $dataName . ' in Database. Error:' . $e->getMessage()
                 );
             }
 
             return new RedirectResponse(
-                $this->router->generate($dataName.'_edit', [
+                $this->router->generate($dataName . '_edit', [
                     'slug' => $form->getData()->getSlug(),
                 ])
             );
         }
-            return null;
+        return null;
     }
 
     /**
@@ -81,25 +85,29 @@ class FormHandling
      * @param $dataName
      * @return RedirectResponse|null
      */
-    public function handleUpdate(FormInterface $form, string $oldFileName, Request $request, $dataName): ?RedirectResponse
-    {
+    public function handleUpdate(
+        FormInterface $form,
+        string $oldFileName,
+        Request $request,
+        $dataName
+    ): ?RedirectResponse {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->formFlushUpdate($form, $oldFileName);
 
                 $request->getSession()->getFlashBag()->set(
                     'success',
-                    $dataName.' successfully updated'
+                    $dataName . ' successfully updated'
                 );
             } catch (ORMException $e) {
                 $request->getSession()->getFlashBag()->set(
                     'danger',
-                    'cant\'t update '.$dataName.' in Database. Error:'.$e->getMessage()
+                    'cant\'t update ' . $dataName . ' in Database. Error:' . $e->getMessage()
                 );
             }
 
             return new RedirectResponse(
-                $this->router->generate($dataName.'_edit', [
+                $this->router->generate($dataName . '_edit', [
                     'slug' => $form->getData()->getSlug(),
                 ])
             );
@@ -138,7 +146,7 @@ class FormHandling
     private function setFormData(FormInterface $form, string $oldFileName): void
     {
         if ($form->getData()->getImage()->getUploadedFile()->getFilename() !==
-        $oldFileName
+            $oldFileName
         ) {
             $this->uploadedFileHandle(
                 $form->getData()->getImage(),
@@ -155,14 +163,14 @@ class FormHandling
      * @param Image $object
      * @param string $parameter
      */
-    public function uploadedFileHandle(Image $object, string  $parameter): void
+    public function uploadedFileHandle(Image $object, string $parameter): void
     {
         /** @var UploadedFile $file */
         $file = $object->getUploadedFile();
 
         do {
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-        } while (\file_exists('uploads/images/'.$fileName));
+        } while (\file_exists('uploads/images/' . $fileName));
 
         try {
             $file->move(
@@ -170,11 +178,11 @@ class FormHandling
                 $fileName
             );
         } catch (FileException $e) {
-            echo 'Can\'t Save File'.$e->getMessage()."\n";
+            echo 'Can\'t Save File' . $e->getMessage() . "\n";
         }
 
         $object->setUploadedFile(
-            new UploadedFile('uploads/images/'.$fileName, $file->getClientOriginalName())
+            new UploadedFile('uploads/images/' . $fileName, $file->getClientOriginalName())
         );
     }
 

@@ -44,8 +44,8 @@ class ImageFixtures extends Fixture implements OrderedFixtureInterface
                 new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'bildschirmfoto.jpg')
             );
 
-            $image->setName('image '.\random_int(0, $this->entrys));
-            $image->setDescription('Some Random Text '.\random_int(0, $this->entrys));
+            $image->setName('image ' . \random_int(0, $this->entrys));
+            $image->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 

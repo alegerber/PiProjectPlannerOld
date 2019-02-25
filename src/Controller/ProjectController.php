@@ -47,7 +47,7 @@ class ProjectController extends AbstractController
          * @var Project[]
          */
         $projects = $this->getDoctrine()
-        ->getRepository(Project::class)->findAll();
+            ->getRepository(Project::class)->findAll();
 
         return $this->render('05-pages/projects.html.twig', [
             'projects' => $projects,

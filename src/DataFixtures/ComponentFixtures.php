@@ -41,12 +41,12 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $component = new Component();
-            $name = 'component '.\random_int(0, $this->entrys);
+            $name = 'component ' . \random_int(0, $this->entrys);
             $component->setName($name);
             $component->setSlug(
                 Slugger::slugify($name)
             );
-            $component->setDescription('Some Random Text '.\random_int(0, $this->entrys));
+            $component->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
             $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 

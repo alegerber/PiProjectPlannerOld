@@ -38,7 +38,7 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $category = new Category();
-            $name = 'category '.\random_int(0, $this->entrys);
+            $name = 'category ' . \random_int(0, $this->entrys);
             $category->setName($name);
             $category->setSlug(
                 Slugger::slugify($name)

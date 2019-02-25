@@ -38,7 +38,7 @@ class TagFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i <= $this->entrys; ++$i) {
             $tag = new Tag();
-            $name = 'tag '.\random_int(0, $this->entrys);
+            $name = 'tag ' . \random_int(0, $this->entrys);
             $tag->setName($name);
             $tag->setSlug(
                 Slugger::slugify($name)
