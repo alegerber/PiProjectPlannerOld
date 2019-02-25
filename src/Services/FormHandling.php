@@ -168,9 +168,17 @@ class FormHandling
         /** @var UploadedFile $file */
         $file = $object->getUploadedFile();
 
+        $path = 'uploads/images/';
+
+        /** TestCase */
+        if($this->parameterBag->get('app_test_env')) {
+            $file = new UploadedFile((string) $file, $file->getClientOriginalName(), null, null, true);
+            $path ='/var/www/html/public/uploads/images/';
+        }
+
         do {
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-        } while (\file_exists('uploads/images/' . $fileName));
+        } while (\file_exists( $path . $fileName));
 
         try {
             $file->move(
@@ -178,11 +186,11 @@ class FormHandling
                 $fileName
             );
         } catch (FileException $e) {
-            echo 'Can\'t Save File' . $e->getMessage() . "\n";
+            echo 'Can\'t Save File, because ' . $e->getMessage() . "\n";
         }
 
         $object->setUploadedFile(
-            new UploadedFile('uploads/images/' . $fileName, $file->getClientOriginalName())
+            new UploadedFile($path . $fileName, $file->getClientOriginalName())
         );
     }
 
