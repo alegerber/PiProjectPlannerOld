@@ -2,29 +2,32 @@
 
 namespace App\Services;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Utils\Slugger;
+use App\Entity\Image;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Form;
+use Doctrine\ORM\ORMException;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class FormHandling
 {
     /**
-     * @var ParameterBag
+     * @var ParameterBagInterface $parameterBag
      */
     private $parameterBag;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface $entityManger
      */
     private $entityManger;
 
     /**
-     * @var Router
+     * @var RouterInterface $router
      */
     private $router;
 
@@ -38,11 +41,18 @@ class FormHandling
         $this->parameterBag = $parameterBag;
     }
 
-    public function handleNew(Form $form, string $oldFileName, Request $request, $dataName)
+    /**
+     * @param FormInterface $form
+     * @param string $oldFileName
+     * @param Request $request
+     * @param string $dataName
+     * @return RedirectResponse|null
+     */
+    public function handleNew(FormInterface $form, string $oldFileName, Request $request, string $dataName): ?RedirectResponse
     {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->FormFlushNew($form, $oldFileName);
+                $this->formFlushNew($form, $oldFileName);
 
                 $request->getSession()->getFlashBag()->set(
                     'success',
@@ -60,12 +70,18 @@ class FormHandling
                     'slug' => $form->getData()->getSlug(),
                 ])
             );
-        } else {
-            return false;
         }
+            return null;
     }
 
-    public function handleUpdate(Form $form, string $oldFileName, Request $request, $dataName)
+    /**
+     * @param FormInterface $form
+     * @param string $oldFileName
+     * @param Request $request
+     * @param $dataName
+     * @return RedirectResponse|null
+     */
+    public function handleUpdate(FormInterface $form, string $oldFileName, Request $request, $dataName): ?RedirectResponse
     {
         if ($form->isSubmitted() && $form->isValid()) {
             try {
@@ -87,12 +103,15 @@ class FormHandling
                     'slug' => $form->getData()->getSlug(),
                 ])
             );
-        } else {
-            return false;
         }
+        return null;
     }
 
-    private function formFlushNew(Form $form, string $oldFileName): void
+    /**
+     * @param FormInterface $form
+     * @param string $oldFileName
+     */
+    private function formFlushNew(FormInterface $form, string $oldFileName): void
     {
         $this->setFormData($form, $oldFileName);
 
@@ -101,16 +120,24 @@ class FormHandling
         $this->entityManger->flush();
     }
 
-    private function formFlushUpdate(Form $form, string $oldFileName): void
+    /**
+     * @param FormInterface $form
+     * @param string $oldFileName
+     */
+    private function formFlushUpdate(FormInterface $form, string $oldFileName): void
     {
         $this->setFormData($form, $oldFileName);
 
         $this->entityManger->flush();
     }
 
-    private function setFormData(Form $form, string $oldFileName): void
+    /**
+     * @param FormInterface $form
+     * @param string $oldFileName
+     */
+    private function setFormData(FormInterface $form, string $oldFileName): void
     {
-        if ($form->getData()->getImage()->getUploadedFile()->getFilename() !=
+        if ($form->getData()->getImage()->getUploadedFile()->getFilename() !==
         $oldFileName
         ) {
             $this->uploadedFileHandle(
@@ -124,26 +151,30 @@ class FormHandling
         );
     }
 
-    public function uploadedFileHandle($object, $parameter): void
+    /**
+     * @param Image $object
+     * @param string $parameter
+     */
+    public function uploadedFileHandle(Image $object, string  $parameter): void
     {
-        /**
-         * @var UploadedFile
-         */
+        /** @var UploadedFile $file */
         $file = $object->getUploadedFile();
 
-        $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+        do {
+            $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+        } while (\file_exists('uploads/images/'.$fileName));
 
         try {
             $file->move(
                 $parameter,
                 $fileName
             );
-        } catch (\FileException $e) {
+        } catch (FileException $e) {
             echo 'Can\'t Save File'.$e->getMessage()."\n";
         }
 
         $object->setUploadedFile(
-            new UploadedFile('uploads/images'.'/'.$fileName, $file->getClientOriginalName())
+            new UploadedFile('uploads/images/'.$fileName, $file->getClientOriginalName())
         );
     }
 
@@ -152,6 +183,6 @@ class FormHandling
      */
     private function generateUniqueFileName(): string
     {
-        return \md5(\uniqid());
+        return \md5(\uniqid('', true));
     }
 }
