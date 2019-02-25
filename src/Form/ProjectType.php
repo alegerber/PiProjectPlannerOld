@@ -9,24 +9,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Project;
-use App\Repository\ComponentRepository;
 use App\Form\Type\TagsInputType;
 use App\Form\Type\CategoriesInputType;
 use App\Form\Type\ComponentsInputType;
 
 class ProjectType extends AbstractType
 {
-    /**
-     * @var ComponentRepository
-     */
-    private $componentRepository;
 
-    public function __construct(ComponentRepository $componentRepository)
-    {
-        $this->componentRepository = $componentRepository;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class)
@@ -47,7 +37,7 @@ class ProjectType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Project::class,
