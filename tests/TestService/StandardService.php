@@ -3,6 +3,7 @@
 namespace App\Tests\TestService;
 
 use App\Kernel;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use ReflectionMethod;
@@ -23,6 +24,11 @@ class StandardService
     public function getFormFactory(): FormFactoryInterface
     {
         return $this->getContainer()->get('form.factory');
+    }
+
+    public function getEntityManger(): EntityManagerInterface
+    {
+        return $this->getContainer()->get('doctrine.orm.default_entity_manager');
     }
 
     public function getReflectionMethodResult($class, string $function)
