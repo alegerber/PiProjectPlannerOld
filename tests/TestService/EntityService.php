@@ -1,42 +1,132 @@
 <?php
 
-
 namespace App\Tests\TestService;
 
-
+use App\Entity\Category;
+use App\Entity\Project;
+use App\Entity\Component;
 use App\Entity\Image;
 use App\Entity\Tag;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Utils\Slugger;
+use Doctrine\ORM\EntityManager;
+use App\DataFixtures\EntityFixtures;
 
 class EntityService
 {
-    public function getImage(ContainerInterface $container): Image
+    /**
+     * @var EntityFixtures $entityFixtures
+     */
+    private $entityFixtures;
+
+    /**
+     * @var EntityManager $entityManager
+     */
+    private $entityManager;
+
+    /**
+     * @var EntityManager $entityManager
+     */
+    private $entries;
+
+    public function __construct()
     {
-        $entityManager = $container->get('doctrine.orm.default_entity_manager');
+        $this->entityFixtures = new EntityFixtures();
+        $standardService = new StandardService();
+        $this->entityManager = $standardService->getEntityManger();
+        $this->entries = 100;
+    }
 
-        $entrys = 100;
+    public function getProject(): Project
+    {
+        return $this->entityFixtures->getProject($this->entityManager, $this->entries);
+    }
 
-        $image = new Image();
 
-        \copy('/var/www/html/public/img/placeholder.jpg', '/var/www/html/public/img/placeholder_test.jpg');
+    public function getComponent(): Component
+    {
+        return $this->entityFixtures->getComponent($this->entityManager, $this->entries);
+    }
 
-        $image->setUploadedFile(
-            new UploadedFile('/var/www/html/public/img/placeholder_test.jpg', 'placeholder.jpg')
+    public function getImage(): Image
+    {
+        return $this->entityFixtures->getImage($this->entityManager, $this->entries);
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->entityFixtures->getCategory($this->entries);
+    }
+
+    public function getTag(): Tag
+    {
+        return $this->entityFixtures->getTag($this->entries);
+    }
+
+    public function getComponentWithUniqueTagsAndCategories(): Component
+    {
+        $component = new Component();
+        $name = 'component ' . \random_int(0, $this->entries);
+        $component->setName($name);
+        $component->setSlug(
+            Slugger::slugify($name)
+        );
+        $component->setDescription('Some Random Text ' . \random_int(0, $this->entries));
+
+        $component->addTag(
+            $this->getTag(),
+            $this->getTag(),
+            $this->getTag(),
+            $this->getTag()
         );
 
-
-        $image->setName('image ' . \random_int(0, $entrys));
-        $image->setDescription('Some Random Text ' . \random_int(0, $entrys));
-
-        $tagAll = $entityManager->getRepository(Tag::class)->findAll();
-
-        $length = \count($tagAll) - 1;
-
-        $image->addTag(
-            $tagAll[\random_int(0, $length)],
-            $tagAll[\random_int(0, $length)]
+        $component->addCategory(
+            $this->getCategory(),
+            $this->getCategory(),
+            $this->getCategory(),
+            $this->getCategory()
         );
-        return $image;
+
+        $component->setImage(
+            $this->getImage()
+        );
+
+        return $component;
+    }
+    public function getProjectWithUniqueTagsComponentsAndCategories(): Project
+    {
+        $project = new Project();
+        $name = 'project ' . \random_int(0, $this->entries);
+        $project->setName($name);
+        $project->setSlug(
+            Slugger::slugify($name)
+        );
+        $project->setDescription('Some Random Text ' . \random_int(0, $this->entries));
+
+        $project->addTag(
+            $this->getTag(),
+            $this->getTag(),
+            $this->getTag(),
+            $this->getTag()
+        );
+
+        $project->addCategory(
+            $this->getCategory(),
+            $this->getCategory(),
+            $this->getCategory(),
+            $this->getCategory()
+        );
+
+        $project->addComponent(
+            $this->getComponent(),
+            $this->getComponent(),
+            $this->getComponent(),
+            $this->getComponent()
+        );
+
+        $project->setImage(
+            $this->getImage()
+        );
+
+        return $project;
     }
 }
