@@ -49,7 +49,7 @@ class FormHandlingTest extends TestCase
         \copy('/var/www/html/public/img/placeholder.jpg', '/var/www/html/public/img/placeholder_test.jpg');
 
         $image->setUploadedFile(
-            new UploadedFile('/var/www/html/public/img/placeholder_test.jpg', 'placeholder.jpg',  null, null,  true)
+            new UploadedFile('/var/www/html/public/img/placeholder_test.jpg', 'placeholder.jpg')
         );
 
 

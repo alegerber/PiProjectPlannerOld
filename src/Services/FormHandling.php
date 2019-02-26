@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Utils\Slugger;
 use App\Entity\Image;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -62,7 +62,7 @@ class FormHandling
                     'success',
                     $dataName . ' successfully created'
                 );
-            } catch (ORMException $e) {
+            } catch (ORMInvalidArgumentException $e) {
                 $request->getSession()->getFlashBag()->set(
                     'danger',
                     'cant\'t save ' . $dataName . ' in Database. Error:' . $e->getMessage()
@@ -99,7 +99,7 @@ class FormHandling
                     'success',
                     $dataName . ' successfully updated'
                 );
-            } catch (ORMException $e) {
+            } catch (ORMInvalidArgumentException $e) {
                 $request->getSession()->getFlashBag()->set(
                     'danger',
                     'cant\'t update ' . $dataName . ' in Database. Error:' . $e->getMessage()
@@ -171,7 +171,7 @@ class FormHandling
         $path = 'uploads/images/';
 
         /** TestCase */
-        if($this->parameterBag->get('app_test_env')) {
+        if($_SERVER['APP_ENV'] === 'dev' && $this->parameterBag->get('app_test_env')) {
             $file = new UploadedFile((string) $file, $file->getClientOriginalName(), null, null, true);
             $path ='/var/www/html/public/uploads/images/';
         }
