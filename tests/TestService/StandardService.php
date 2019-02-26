@@ -4,6 +4,7 @@ namespace App\Tests\TestService;
 
 use App\Kernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use ReflectionMethod;
 
 class StandardService
@@ -18,6 +19,12 @@ class StandardService
 
         return $kernel->getContainer();
     }
+
+    public function getFormFactory(): FormFactoryInterface
+    {
+        return $this->getContainer()->get('form.factory');
+    }
+
     public function getReflectionMethodResult($class, string $function)
     {
         $reflectionMethod = new ReflectionMethod($class, $function);
@@ -25,6 +32,15 @@ class StandardService
         $container = $this->getContainer();
         $containerClass = $container->get($class);
         return $reflectionMethod->invoke($containerClass);
+    }
+
+    public function getReflectionMethodResultWithArgs($class, string $function, array $args)
+    {
+        $reflectionMethod = new ReflectionMethod($class, $function);
+        $reflectionMethod->setAccessible(true);
+        $container = $this->getContainer();
+        $containerClass = $container->get($class);
+        return $reflectionMethod->invokeArgs($containerClass, $args);
     }
 
 }
