@@ -51,6 +51,7 @@ class Category implements \JsonSerializable
     public function __construct()
     {
         $this->components = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): int
