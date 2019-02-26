@@ -16,7 +16,11 @@ class FormHandlingTest extends TestCase
     public function testSetFormData(): void
     {
         $standardService = new  StandardService();
+
+        /** @var string $oldFileName */
         $oldFileName = null;
+
+        /** @var UploadedFile $originFile */
         $originFile = null;
 
         $form = $this->prepareFormData($oldFileName, $originFile, $standardService);
@@ -40,7 +44,11 @@ class FormHandlingTest extends TestCase
         /*
          * second route now with change filename
          */
+
+        /** @var string $oldFileName */
         $oldFileName = null;
+
+        /** @var UploadedFile $originFile */
         $originFile = null;
 
         $form = $this->prepareFormData($oldFileName, $originFile, $standardService);
