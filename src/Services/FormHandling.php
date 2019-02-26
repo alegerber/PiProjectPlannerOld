@@ -171,7 +171,7 @@ class FormHandling
         $path = 'uploads/images/';
 
         /** TestCase */
-        if($_SERVER['APP_ENV'] === 'dev' && $this->parameterBag->get('app_test_env')) {
+        if($this->parameterBag->get('app_test_env')) {
             $file = new UploadedFile((string) $file, $file->getClientOriginalName(), null, null, true);
             $path ='/var/www/html/public/uploads/images/';
         }
