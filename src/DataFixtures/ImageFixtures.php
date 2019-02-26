@@ -47,9 +47,14 @@ class ImageFixtures extends Fixture implements OrderedFixtureInterface
             $image->setName('image ' . \random_int(0, $this->entrys));
             $image->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
-            $tags = $this->manager->getRepository(Tag::class)->findAll();
+            $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
-            $image->addTag(\array_rand($tags, 2));
+            $length = \count($tagAll) - 1;
+
+            $image->addTag(
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
+            );
 
             $this->manager->persist($image);
         }

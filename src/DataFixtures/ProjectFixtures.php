@@ -49,17 +49,44 @@ class ProjectFixtures extends Fixture implements OrderedFixtureInterface
             );
             $project->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
-            $tags = $this->manager->getRepository(Tag::class)->findAll();
-            $project->addTag(\array_rand($tags, 4));
+            $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
-            $categories = $this->manager->getRepository(Category::class)->findAll();
-            $project->addCategory(\array_rand($categories, 4));
+            $length = \count($tagAll) - 1;
 
-            $components = $this->manager->getRepository(Component::class)->findAll();
-            $project->addComponent(\array_rand($components, 4));
+            $project->addTag(
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
+            );
 
-            $images = $this->manager->getRepository(Image::class)->findAll();
-            $project->setImage(\array_rand($images, 1));
+            $categoryAll = $this->manager->getRepository(Category::class)->findAll();
+
+            $length = \count($categoryAll) - 1;
+
+            $project->addCategory(
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)]
+            );
+
+            $componentAll = $this->manager->getRepository(Component::class)->findAll();
+
+            $length = \count($componentAll) - 1;
+
+            $project->addComponent(
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)],
+                $componentAll[\random_int(0, $length)]
+            );
+
+            $imageAll = $this->manager->getRepository(Image::class)->findAll();
+
+            $project->setImage(
+                $imageAll[\random_int(0, $length)]
+            );
 
             $this->manager->persist($project);
         }
