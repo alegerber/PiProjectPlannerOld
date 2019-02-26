@@ -3,7 +3,7 @@
 namespace App\Tests\Services;
 
 use App\Entity\Tag;
-use App\Kernel;
+use App\Tests\TestService\StandardService;
 use App\Entity\Image;
 use App\Services\FormHandling;
 use PHPUnit\Framework\TestCase;
@@ -12,9 +12,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FormHandlingTest extends TestCase
 {
+
     public function testUploadedFileHandle(): void
     {
-        $container = $this->getContainer();
+        $standardService = new  StandardService();
+        $container = $standardService->getContainer();
         $formHandling = $container->get(FormHandling::class);
 
         $image = $this->setImage($container);
@@ -28,16 +30,15 @@ class FormHandlingTest extends TestCase
         $this->assertTrue(\count($oldScanDir) + 1 === \count($newScanDir));
     }
 
-    private function getContainer(): ContainerInterface
+    public function testGenerateUniqueFileName(): void
     {
-        $kernel = new Kernel(
-            $_SERVER['APP_ENV'] ?? 'dev',
-            $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))
-        );
-        $kernel->boot();
+        $standardService = new  StandardService();
+        $result = $standardService->getReflectionMethodResult(FormHandling::class,'generateUniqueFileName');
 
-        return $kernel->getContainer();
+        $this->assertTrue(\strlen($result) ===  32 && \is_string($result));
     }
+
+
     private function setImage(ContainerInterface $container): Image
     {
         $entityManager = $container->get('doctrine.orm.default_entity_manager');
