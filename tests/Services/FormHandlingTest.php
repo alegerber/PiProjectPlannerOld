@@ -95,8 +95,9 @@ class FormHandlingTest extends TestCase
     public function testGenerateUniqueFileName(): void
     {
         $standardService = new  StandardService();
-        $result = $standardService->getReflectionMethodResult(FormHandling::class,'generateUniqueFileName');
+        $result = $standardService->getReflectionMethodResult(FormHandling::class, 'generateUniqueFileName');
 
-        $this->assertTrue(\strlen($result) ===  32 && \is_string($result));
+        $this->assertSame(\strlen($result), 32);
+        $this->assertInternalType('string', $result);
     }
 }
