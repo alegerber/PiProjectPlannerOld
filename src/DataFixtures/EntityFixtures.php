@@ -65,7 +65,6 @@ class EntityFixtures
         );
 
         return $project;
-
     }
 
     public function getComponent(ObjectManager $manager, int $entries): Component
