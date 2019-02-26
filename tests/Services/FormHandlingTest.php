@@ -89,13 +89,17 @@ class FormHandlingTest extends TestCase
         $formHandling = $container->get(FormHandling::class);
 
         $entityService = new EntityService();
-        $image = $entityService->getImage($container);
+        $image = $entityService->getImage();
+
+        \copy('/var/www/html/public/img/placeholder.jpg', '/var/www/html/public/img/placeholder_backup.jpg');
 
         $oldScanDir = \scandir('/var/www/html/public/uploads/images', SCANDIR_SORT_NONE);
         $formHandling->uploadedFileHandle($image, $container->getParameter('image_file_directory'));
 
         $newScanDir = \scandir('/var/www/html/public/uploads/images', SCANDIR_SORT_NONE);
         \unlink('/var/www/html/public/uploads/images/' . \implode(\array_diff($newScanDir, $oldScanDir)));
+
+        \rename('/var/www/html/public/img/placeholder_backup.jpg', '/var/www/html/public/img/placeholder.jpg');
 
         $this->assertSame(\count($oldScanDir) + 1, \count($newScanDir));
     }
