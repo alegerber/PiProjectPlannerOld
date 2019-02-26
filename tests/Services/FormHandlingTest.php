@@ -53,7 +53,7 @@ class FormHandlingTest extends TestCase
 
     }
 
-    public function prepareFormData(
+    private function prepareFormData(
         &$oldFileName,
         &$originFile,
         StandardService $standardService
