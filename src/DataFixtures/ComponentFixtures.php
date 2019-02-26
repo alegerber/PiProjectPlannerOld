@@ -19,9 +19,9 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
     private $manager;
 
     /**
-     * @var int $entrys
+     * @var int $entries
      */
-    private $entrys;
+    private $entries;
 
     /**
      * @param ObjectManager $manager
@@ -30,7 +30,7 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
-        $this->entrys = 100;
+        $this->entries = 100;
 
         $this->component();
 
@@ -39,44 +39,9 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
 
     private function component(): void
     {
-        for ($i = 0; $i <= $this->entrys; ++$i) {
-            $component = new Component();
-            $name = 'component ' . \random_int(0, $this->entrys);
-            $component->setName($name);
-            $component->setSlug(
-                Slugger::slugify($name)
-            );
-            $component->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
-
-            $tagAll = $this->manager->getRepository(Tag::class)->findAll();
-
-            $length = \count($tagAll) - 1;
-
-            $component->addTag(
-                $tagAll[\random_int(0, $length)],
-                $tagAll[\random_int(0, $length)],
-                $tagAll[\random_int(0, $length)],
-                $tagAll[\random_int(0, $length)]
-            );
-
-            $categoryAll = $this->manager->getRepository(Category::class)->findAll();
-
-            $length = \count($categoryAll) - 1;
-
-            $component->addCategory(
-                $categoryAll[\random_int(0, $length)],
-                $categoryAll[\random_int(0, $length)],
-                $categoryAll[\random_int(0, $length)],
-                $categoryAll[\random_int(0, $length)]
-            );
-
-            $imageAll = $this->manager->getRepository(Image::class)->findAll();
-
-            $component->setImage(
-                $imageAll[\random_int(0, $length)]
-            );
-
-            $this->manager->persist($component);
+        $entityFixtures = new EntityFixtures();
+        for ($i = 0; $i <= $this->entries; ++$i) {
+            $this->manager->persist($entityFixtures->getComponent($this->manager, $this->entries));
         }
     }
 

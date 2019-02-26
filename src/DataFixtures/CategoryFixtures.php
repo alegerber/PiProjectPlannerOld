@@ -16,9 +16,9 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     private $manager;
 
     /**
-     * @var int $entrys
+     * @var int $entries
      */
-    private $entrys;
+    private $entries;
 
     /**
      * @param ObjectManager $manager
@@ -27,7 +27,7 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
-        $this->entrys = 100;
+        $this->entries = 100;
 
         $this->category();
 
@@ -36,15 +36,9 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 
     private function category(): void
     {
-        for ($i = 0; $i <= $this->entrys; ++$i) {
-            $category = new Category();
-            $name = 'category ' . \random_int(0, $this->entrys);
-            $category->setName($name);
-            $category->setSlug(
-                Slugger::slugify($name)
-            );
-
-            $this->manager->persist($category);
+        $entityFixtures = new EntityFixtures();
+        for ($i = 0; $i <= $this->entries; ++$i) {
+            $this->manager->persist($entityFixtures->getCategory($this->entries));
         }
     }
 

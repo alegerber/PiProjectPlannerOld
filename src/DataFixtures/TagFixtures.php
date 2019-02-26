@@ -16,9 +16,9 @@ class TagFixtures extends Fixture implements OrderedFixtureInterface
     private $manager;
 
     /**
-     * @var int $entrys
+     * @var int $entries
      */
-    private $entrys;
+    private $entries;
 
     /**
      * @param ObjectManager $manager
@@ -27,7 +27,7 @@ class TagFixtures extends Fixture implements OrderedFixtureInterface
     {
         $this->manager = $manager;
 
-        $this->entrys = 100;
+        $this->entries = 100;
 
         $this->tag();
 
@@ -36,14 +36,10 @@ class TagFixtures extends Fixture implements OrderedFixtureInterface
 
     private function tag(): void
     {
-        for ($i = 0; $i <= $this->entrys; ++$i) {
-            $tag = new Tag();
-            $name = 'tag ' . \random_int(0, $this->entrys);
-            $tag->setName($name);
-            $tag->setSlug(
-                Slugger::slugify($name)
-            );
-            $this->manager->persist($tag);
+        $entityFixtures = new EntityFixtures();
+
+        for ($i = 0; $i <= $this->entries; ++$i) {
+            $this->manager->persist($entityFixtures->getTag($this->entries));
         }
     }
 
