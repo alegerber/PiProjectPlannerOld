@@ -16,20 +16,37 @@ class RemoveDatabaseObjectTest extends TestCase
 {
     public function testSetArrayCollection(): void
     {
-        $standardService = new StandardService();
-
-        $objects = $standardService->getEntityManger()->getRepository(Component::class)->findAll();
-        $this->setArrayCollection(Component::class, $objects);
-
-        $objects = $standardService->getEntityManger()->getRepository(Project::class)->findAll();
-        $this->setArrayCollection(Project::class, $objects);
+        $this->checkEmpty(Component::class);
+        $this->checkEmpty(Project::class);
 
         $entityService = new EntityService();
+
         $object = $entityService->getComponentWithUniqueTagsAndCategories();
-        $this->setArrayCollection(Project::class, [$object]);
+        $this->checkNotEmpty(Component::class, [$object]);
+
+        $object = $entityService->getProjectWithUniqueTagsComponentsAndCategories();
+        $this->checkNotEmpty(Project::class, [$object]);
     }
 
-    private function setArrayCollection($class, $objects): void
+    private function checkEmpty($class): void
+    {
+        $standardService = new StandardService();
+        $objects = $standardService->getEntityManger()->getRepository($class)->findAll();
+        [$removableTags, $removableCategories] = $this->setArrayCollection($class, $objects);
+
+        $this->assertEmpty($removableTags);
+        $this->assertEmpty($removableCategories);
+    }
+
+    private function checkNotEmpty($class, array $objects): void
+    {
+        [$removableTags, $removableCategories] = $this->setArrayCollection($class, $objects);
+
+        $this->assertNotEmpty($removableTags);
+        $this->assertNotEmpty($removableCategories);
+    }
+
+    private function setArrayCollection($class, array $objects): array
     {
         $standardService = new StandardService();
 
@@ -43,8 +60,7 @@ class RemoveDatabaseObjectTest extends TestCase
         $removableCategories = [];
         $standardService->getReflectionMethodResultWithArgs(RemoveDatabaseObject::class, 'setArrayCollection',
             [$object, $primaryCheck, $secondaryCheck, &$removableCategories]);
-        $this->assertEmpty($removableTags);
-        $this->assertEmpty($removableCategories);
+        return [$removableTags, $removableCategories];
     }
 
     private function setCheckFunctions($class): array
