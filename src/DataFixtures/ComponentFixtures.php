@@ -48,14 +48,33 @@ class ComponentFixtures extends Fixture implements OrderedFixtureInterface
             );
             $component->setDescription('Some Random Text ' . \random_int(0, $this->entrys));
 
-            $tags = $this->manager->getRepository(Tag::class)->findAll();
-            $component->addTag(\array_rand($tags, 4));
+            $tagAll = $this->manager->getRepository(Tag::class)->findAll();
 
-            $categories = $this->manager->getRepository(Category::class)->findAll();
-            $component->addCategory(\array_rand($categories, 4));
+            $length = \count($tagAll) - 1;
 
-            $images = $this->manager->getRepository(Image::class)->findAll();
-            $component->setImage(\array_rand($images, 1));
+            $component->addTag(
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)],
+                $tagAll[\random_int(0, $length)]
+            );
+
+            $categoryAll = $this->manager->getRepository(Category::class)->findAll();
+
+            $length = \count($categoryAll) - 1;
+
+            $component->addCategory(
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)],
+                $categoryAll[\random_int(0, $length)]
+            );
+
+            $imageAll = $this->manager->getRepository(Image::class)->findAll();
+
+            $component->setImage(
+                $imageAll[\random_int(0, $length)]
+            );
 
             $this->manager->persist($component);
         }
