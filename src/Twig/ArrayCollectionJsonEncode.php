@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -19,10 +19,10 @@ class ArrayCollectionJsonEncode extends AbstractExtension
     }
 
     /**
-     * @param ArrayCollection $arrayCollection
+     * @param PersistentCollection $arrayCollection
      * @return string
      */
-    public function arrayCollectionJsonEncode($arrayCollection): string
+    public function arrayCollectionJsonEncode(PersistentCollection $arrayCollection): string
     {
         return \json_encode($arrayCollection->toArray());
     }
