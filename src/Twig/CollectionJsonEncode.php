@@ -6,7 +6,7 @@ use Doctrine\ORM\PersistentCollection;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class ArrayCollectionJsonEncode extends AbstractExtension
+class CollectionJsonEncode extends AbstractExtension
 {
     /**
      * @return array
