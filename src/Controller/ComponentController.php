@@ -100,10 +100,8 @@ class ComponentController extends AbstractController
 
         if ($redirect === null) {
             return $this->render('05-pages/component-new.html.twig', [
+                'component' => $component,
                 'form' => $form->createView(),
-                'tags' => $component->getTags()->toArray(),
-                'categories' => $component->getCategories()->toArray(),
-                'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
         }
         return $redirect;
@@ -129,9 +127,6 @@ class ComponentController extends AbstractController
             return $this->render('05-pages/component-view.html.twig', [
                 'component' => $component,
                 'form' => $form->createView(),
-                'tags' => $component->getTags()->toArray(),
-                'categories' => $component->getCategories()->toArray(),
-                'image_tags' => $component->getImage()->getTags()->toArray(),
             ]);
         }
         return $redirect;

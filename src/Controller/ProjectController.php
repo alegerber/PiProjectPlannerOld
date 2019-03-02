@@ -77,11 +77,8 @@ class ProjectController extends AbstractController
 
         if ($redirect === null) {
             return $this->render('05-pages/project-new.html.twig', [
+                'project' => $project,
                 'form' => $form->createView(),
-                'tags' => $project->getTags()->toArray(),
-                'categories' => $project->getCategories()->toArray(),
-                'components' => $project->getComponents()->toArray(),
-                'image_tags' => $project->getImage()->getTags()->toArray(),
             ]);
         }
         return $redirect;
@@ -107,10 +104,6 @@ class ProjectController extends AbstractController
             return $this->render('05-pages/project-view.html.twig', [
                 'project' => $project,
                 'form' => $form->createView(),
-                'tags' => $project->getTags()->toArray(),
-                'categories' => $project->getCategories()->toArray(),
-                'components' => $project->getComponents()->toArray(),
-                'image_tags' => $project->getImage()->getTags()->toArray(),
             ]);
         }
         return $redirect;
