@@ -14,7 +14,7 @@ class ArrayCollectionJsonEncode extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('array_collection_json_encode', [$this, 'arrayCollectionJsonEncode']),
+            new TwigFilter('collection_json_encode', [$this, 'arrayCollectionJsonEncode']),
         ];
     }
 
