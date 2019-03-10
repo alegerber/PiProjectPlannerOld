@@ -15,10 +15,7 @@ class StandardService
         global $app_env_test;
         $app_env_test = true;
 
-        $kernel = new Kernel(
-            $_SERVER['APP_ENV'] ?? 'dev',
-            true
-        );
+        $kernel = new Kernel('dev', true);
         $kernel->boot();
 
         return $kernel->getContainer();
