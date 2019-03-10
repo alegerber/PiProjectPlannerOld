@@ -12,15 +12,20 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{slug}", methods={"GET"}, name="category")
      * @param Category $category
+     * @param \Twig_Environment $twig
      * @return Response
      */
-    public function index(Category $category): Response
+    public function index(Category $category, \Twig_Environment $twig): Response
     {
-        $components = $category->getComponents();
-
-        return $this->render('05-pages/category.html.twig', [
-            'category' => $category,
-            'components' => $components,
-        ]);
+        try {
+            return new Response(
+                $twig->render('05-pages/category.html.twig', [
+                    'category' => $category,
+                    'components' => $category->getComponents(),
+                ])
+            );
+        } catch (\Twig_Error $e) {
+            return new Response($e->getMessage(), 500);
+        }
     }
 }
