@@ -12,15 +12,12 @@ class DashboardController extends AbstractController
      * @Route("/", methods={"GET"}, name="dashboard")
      * @param \Twig_Environment $twig
      * @return Response
+     * @throws \Twig_Error
      */
     public function index(\Twig_Environment $twig): Response
     {
-        try {
-            return new Response(
-                $twig->render('05-pages/dashboard.html.twig')
-            );
-        } catch (\Twig_Error $e) {
-            return new Response($e->getMessage(), 500);
-        }
+        return new Response(
+            $twig->render('05-pages/dashboard.html.twig')
+        );
     }
 }

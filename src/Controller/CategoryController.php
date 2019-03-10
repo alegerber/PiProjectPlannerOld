@@ -14,18 +14,15 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param \Twig_Environment $twig
      * @return Response
+     * @throws \Twig_Error
      */
     public function index(Category $category, \Twig_Environment $twig): Response
     {
-        try {
-            return new Response(
-                $twig->render('05-pages/category.html.twig', [
-                    'category' => $category,
-                    'components' => $category->getComponents(),
-                ])
-            );
-        } catch (\Twig_Error $e) {
-            return new Response($e->getMessage(), 500);
-        }
+        return new Response(
+            $twig->render('05-pages/category.html.twig', [
+                'category' => $category,
+                'components' => $category->getComponents(),
+            ])
+        );
     }
 }
