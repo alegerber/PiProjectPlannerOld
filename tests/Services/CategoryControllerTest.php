@@ -12,14 +12,10 @@ class CategoryControllerTest extends TestCase
     public function testIndex(): void
     {
         /** @var MockObject $twig */
-        $twig = $this->getMockBuilder(\Twig_Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $twig = $this->createMock(\Twig_Environment::class);
 
         /** @var Category $category */
-        $category = $this->getMockBuilder(Category::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $category = $this->createMock(Category::class);
 
         $twig->expects($this->once())
             ->method('render')

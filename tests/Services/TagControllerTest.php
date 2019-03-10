@@ -12,14 +12,10 @@ class TagControllerTest extends TestCase
     public function testIndex(): void
     {
         /** @var MockObject $twig */
-        $twig = $this->getMockBuilder(\Twig_Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $twig = $this->createMock(\Twig_Environment::class);
 
         /** @var Tag $category */
-        $tag = $this->getMockBuilder(Tag::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $tag = $this->createMock(Tag::class);
 
         $twig->expects($this->once())
             ->method('render')
