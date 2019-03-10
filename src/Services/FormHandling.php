@@ -72,7 +72,7 @@ class FormHandling
             return new RedirectResponse(
                 $this->router->generate($dataName . '_edit', [
                     'slug' => $form->getData()->getSlug(),
-                ])
+                ]), 301
             );
         }
         return null;
@@ -109,7 +109,7 @@ class FormHandling
             return new RedirectResponse(
                 $this->router->generate($dataName . '_edit', [
                     'slug' => $form->getData()->getSlug(),
-                ])
+                ]),301
             );
         }
         return null;
