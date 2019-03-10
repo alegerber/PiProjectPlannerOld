@@ -16,6 +16,7 @@ use App\Form\ProjectType;
 use App\Services\FormHandling;
 use App\Services\RemoveDatabaseObject;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\RouterInterface;
 
 class ProjectController extends AbstractController
 {
@@ -29,17 +30,32 @@ class ProjectController extends AbstractController
      */
     private $removeDatabaseObject;
 
+    /**
+     * @var \Twig_Environment $twig
+     */
+    private $twig;
+
+    /**
+     * @var RouterInterface $route
+     */
+    private $route;
+
     public function __construct(
         FormHandling $formHandling,
-        RemoveDatabaseObject $removeDatabaseObject
+        RemoveDatabaseObject $removeDatabaseObject,
+        \Twig_Environment $twig,
+        RouterInterface $route
     ) {
         $this->formHandling = $formHandling;
         $this->removeDatabaseObject = $removeDatabaseObject;
+        $this->twig = $twig;
+        $this->route = $route;
     }
 
     /**
      * @Route("/project", methods={"GET"}, name="project")
      * @return Response
+     * @throws \Twig_Error
      */
     public function index(): Response
     {
@@ -49,15 +65,18 @@ class ProjectController extends AbstractController
         $projects = $this->getDoctrine()
             ->getRepository(Project::class)->findAll();
 
-        return $this->render('05-pages/projects.html.twig', [
-            'projects' => $projects,
-        ]);
+        return new Response(
+            $this->twig->render('05-pages/projects.html.twig', [
+                'projects' => $projects,
+            ])
+        );
     }
 
     /**
      * @Route("/project/new", methods={"GET", "POST"}, name="project_new")
      * @param Request $request
      * @return Response
+     * @throws \Twig_Error
      */
     public function new(Request $request): Response
     {
@@ -76,10 +95,12 @@ class ProjectController extends AbstractController
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'project');
 
         if ($redirect === null) {
-            return $this->render('05-pages/project-new.html.twig', [
-                'project' => $project,
-                'form' => $form->createView(),
-            ]);
+            return new Response(
+                $this->twig->render('05-pages/project-new.html.twig', [
+                    'project' => $project,
+                    'form' => $form->createView(),
+                ])
+            );
         }
         return $redirect;
     }
@@ -89,6 +110,7 @@ class ProjectController extends AbstractController
      * @param Request $request
      * @param Project $project
      * @return Response
+     * @throws \Twig_Error
      */
     public function edit(Request $request, Project $project): Response
     {
@@ -101,10 +123,12 @@ class ProjectController extends AbstractController
         $redirect = $this->formHandling->handleUpdate($form, $oldFileName, $request, 'project');
 
         if ($redirect === null) {
-            return $this->render('05-pages/project-view.html.twig', [
-                'project' => $project,
-                'form' => $form->createView(),
-            ]);
+            return new Response(
+                $this->twig->render('05-pages/project-view.html.twig', [
+                    'project' => $project,
+                    'form' => $form->createView(),
+                ])
+            );
         }
         return $redirect;
     }
@@ -140,6 +164,6 @@ class ProjectController extends AbstractController
 
         $this->removeDatabaseObject->handleRemove($project, $primaryCheck, $secondaryCheck);
 
-        return $this->redirectToRoute('project');
+        return new RedirectResponse($this->route->getGenerator()->generate('project'), 302);
     }
 }
