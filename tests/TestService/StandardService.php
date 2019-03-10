@@ -17,7 +17,7 @@ class StandardService
 
         $kernel = new Kernel(
             $_SERVER['APP_ENV'] ?? 'dev',
-            $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))
+            true
         );
         $kernel->boot();
 
