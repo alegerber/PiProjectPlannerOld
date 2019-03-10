@@ -12,6 +12,9 @@ class StandardService
 {
     public function getContainer(): ContainerInterface
     {
+        global $app_env_test;
+        $app_env_test = true;
+
         $kernel = new Kernel(
             $_SERVER['APP_ENV'] ?? 'dev',
             $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))
