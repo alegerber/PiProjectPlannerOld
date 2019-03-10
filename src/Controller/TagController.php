@@ -12,15 +12,20 @@ class TagController extends AbstractController
     /**
      * @Route("/tag/{slug}", methods={"GET"}, name="tag")
      * @param Tag $tag
+     * @param \Twig_Environment $twig
      * @return Response
      */
-    public function index(Tag $tag): Response
+    public function index(Tag $tag, \Twig_Environment $twig): Response
     {
-        $components = $tag->getComponents();
-
-        return $this->render('05-pages/tag.html.twig', [
-            'tag' => $tag,
-            'components' => $components,
-        ]);
+        try {
+            return new Response(
+                $twig->render('05-pages/tag.html.twig', [
+                    'tag' => $tag,
+                    'components' => $tag->getComponents(),
+                ])
+            );
+        } catch (\Twig_Error $e) {
+            return new Response($e->getMessage(), 500);
+        }
     }
 }
