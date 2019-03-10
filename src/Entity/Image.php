@@ -66,9 +66,15 @@ class Image
      */
     private $tags;
 
+    /**
+     * @var bool $uploadedFileTest
+     */
+    private $uploadedFileTest;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->uploadedFileTest = false;
     }
 
     public function getId(): int
@@ -78,14 +84,15 @@ class Image
 
     public function getUploadedFile(): ?UploadedFile
     {
-        return new UploadedFile($this->uploadedFile, $this->uploadedFileOriginName);
+        return new UploadedFile($this->uploadedFile, $this->uploadedFileOriginName, null, null, $this->uploadedFileTest);
     }
 
-    public function setUploadedFile(?UploadedFile $uploadedFile): self
+    public function setUploadedFile(?UploadedFile $uploadedFile, bool $test = false): self
     {
         if (null !== $uploadedFile) {
             $this->uploadedFile = $uploadedFile;
             $this->uploadedFileOriginName = $uploadedFile->getClientOriginalName();
+            $this->uploadedFileTest = $test;
         }
 
         return $this;

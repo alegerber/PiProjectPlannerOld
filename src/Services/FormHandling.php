@@ -149,8 +149,7 @@ class FormHandling
             $oldFileName
         ) {
             $this->uploadedFileHandle(
-                $form->getData()->getImage(),
-                $this->parameterBag->get('image_file_directory')
+                $form->getData()->getImage()
             );
         }
 
@@ -160,37 +159,28 @@ class FormHandling
     }
 
     /**
-     * @param Image $object
-     * @param string $parameter
+     * @param Image $image
      */
-    public function uploadedFileHandle(Image $object, string $parameter): void
+    public function uploadedFileHandle(Image $image): void
     {
         /** @var UploadedFile $file */
-        $file = $object->getUploadedFile();
-
-        $path = 'uploads/images/';
-
-        /** TestCase */
-        if($this->parameterBag->get('app_test_env')) {
-            $file = new UploadedFile((string) $file, $file->getClientOriginalName(), null, null, true);
-            $path ='/var/www/html/public/uploads/images/';
-        }
+        $file = $image->getUploadedFile();
 
         do {
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-        } while (\file_exists( $path . $fileName));
+        } while (\file_exists($this->parameterBag->get('image_web_directory') . '/' . $fileName));
 
         try {
             $file->move(
-                $parameter,
+                $this->parameterBag->get('image_file_directory'),
                 $fileName
             );
         } catch (FileException $e) {
             echo 'Can\'t Save File, because ' . $e->getMessage() . "\n";
         }
 
-        $object->setUploadedFile(
-            new UploadedFile($path . $fileName, $file->getClientOriginalName())
+        $image->setUploadedFile(
+            new UploadedFile($this->parameterBag->get('image_web_directory') . '/'  . $fileName, $file->getClientOriginalName())
         );
     }
 

@@ -7,7 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
 use App\Entity\Category;
@@ -16,7 +17,6 @@ use App\Entity\Image;
 use App\Form\ComponentType;
 use App\Services\FormHandling;
 use App\Services\RemoveDatabaseObject;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ComponentController extends AbstractController
 {
@@ -51,7 +51,7 @@ class ComponentController extends AbstractController
     private $twig;
 
     /**
-     * @var Router $route
+     * @var RouterInterface $route
      */
     private $route;
 
@@ -59,7 +59,7 @@ class ComponentController extends AbstractController
         FormHandling $formHandling,
         RemoveDatabaseObject $removeDatabaseObject,
         \Twig_Environment $twig,
-        Router $route
+        RouterInterface $route
     ) {
         $this->formHandling = $formHandling;
         $this->removeDatabaseObject = $removeDatabaseObject;

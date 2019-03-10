@@ -7,6 +7,7 @@ use App\Form\ComponentType;
 use App\Tests\TestService\StandardService;
 use App\Tests\TestService\EntityService;
 use App\Services\FormHandling;
+use Symfony\Component\DependencyInjection\Container;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -26,10 +27,16 @@ class FormHandlingTest extends TestCase
         $form = $this->prepareFormData($oldFileName, $originFile, $standardService);
         $form->getData()->setName('sfaERq awsw sda');
 
-        \copy('/var/www/html/public/img/placeholder.jpg', '/var/www/html/public/img/placeholder_test.jpg');
-        $oldFile = new UploadedFile('/var/www/html/public/img/placeholder_test.jpg', 'placeholder_test.jpg');
+        /** @var Container $container */
+        $container = $standardService->getContainer();
+        $imageFileDirectory = $container->getParameter('image_file_directory');
+        $staticImageFileDirectory = $container->getParameter('static_image_file_directory');
+
+        \copy($staticImageFileDirectory . '/placeholder.jpg', $staticImageFileDirectory . '/placeholder_test.jpg');
+        $oldFile = new UploadedFile($staticImageFileDirectory . '/placeholder_test.jpg', 'placeholder_test.jpg');
         $form->getData()->getImage()->setUploadedFile(
-            $oldFile
+            $oldFile,
+            true
         );
 
         $standardService->getReflectionMethodResultWithArgs(FormHandling::class, 'setFormData',
@@ -39,7 +46,7 @@ class FormHandlingTest extends TestCase
         $this->assertEquals($oldFile, $form->getData()->getImage()->getUploadedFile());
         $this->assertNotEquals($oldFile->getFilename(),
             $form->getData()->getImage()->getUploadedFile()->getFilename());
-        \unlink('/var/www/html/public/uploads/images/' . $form->getData()->getImage()->getUploadedFile()->getFilename());
+        \unlink($imageFileDirectory . '/' . $form->getData()->getImage()->getUploadedFile()->getFilename());
 
         /*
          * second route now with change filename
@@ -70,9 +77,12 @@ class FormHandlingTest extends TestCase
         $components = $entityManger->getRepository(Component::class)->findAll();
         $component = $components[\array_rand($components)];
 
+        $container = $standardService->getContainer();
+        $staticImageFileDirectory = $container->getParameter('static_image_file_directory');
+
         $formFactory = $standardService->getFormFactory();
 
-        $originFile = new UploadedFile('/var/www/html/public/img/placeholder.jpg', 'placeholder.jpg');
+        $originFile = new UploadedFile($staticImageFileDirectory . '/placeholder.jpg', 'placeholder.jpg');
         $component->getImage()->setUploadedFile(
             $originFile
         );
@@ -86,20 +96,27 @@ class FormHandlingTest extends TestCase
     {
         $standardService = new  StandardService();
         $container = $standardService->getContainer();
+        $imageFileDirectory = $container->getParameter('image_file_directory');
+        $staticImageFileDirectory = $container->getParameter('static_image_file_directory');
+
         $formHandling = $container->get(FormHandling::class);
 
         $entityService = new EntityService();
         $image = $entityService->getImage();
+        $image->setUploadedFile(
+            $image->getUploadedFile(),
+            true
+        );
 
-        \copy('/var/www/html/public/img/placeholder.jpg', '/var/www/html/public/img/placeholder_backup.jpg');
+        \copy($staticImageFileDirectory . '/placeholder.jpg', $staticImageFileDirectory . '/placeholder_backup.jpg');
 
-        $oldScanDir = \scandir('/var/www/html/public/uploads/images', SCANDIR_SORT_NONE);
-        $formHandling->uploadedFileHandle($image, $container->getParameter('image_file_directory'));
+        $oldScanDir = \scandir($imageFileDirectory, SCANDIR_SORT_NONE);
+        $formHandling->uploadedFileHandle($image, $imageFileDirectory, $staticImageFileDirectory);
 
-        $newScanDir = \scandir('/var/www/html/public/uploads/images', SCANDIR_SORT_NONE);
-        \unlink('/var/www/html/public/uploads/images/' . \implode(\array_diff($newScanDir, $oldScanDir)));
+        $newScanDir = \scandir($imageFileDirectory, SCANDIR_SORT_NONE);
+        \unlink($imageFileDirectory . '/' . \implode(\array_diff($newScanDir, $oldScanDir)));
 
-        \rename('/var/www/html/public/img/placeholder_backup.jpg', '/var/www/html/public/img/placeholder.jpg');
+        \rename($staticImageFileDirectory . '/placeholder_backup.jpg', $staticImageFileDirectory . '/placeholder.jpg');
 
         $this->assertSame(\count($oldScanDir) + 1, \count($newScanDir));
     }
