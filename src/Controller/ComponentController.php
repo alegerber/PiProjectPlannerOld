@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Component;
 use App\Entity\Category;
@@ -20,41 +21,56 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ComponentController extends AbstractController
 {
     /**
-     * @var mixed[][]
+     * @var mixed[][] $containers
      */
     private $containers;
 
     /**
-     * @var Category[]
+     * @var Category[]|array $categories
      */
     private $categories;
 
     /**
-     * @var Tag[]
+     * @var Tag[]|array $tags
      */
     private $tags;
 
     /**
-     * @var FormHandling
+     * @var FormHandling $formHandling
      */
     private $formHandling;
 
     /**
-     * @var RemoveDatabaseObject
+     * @var RemoveDatabaseObject $removeDatabaseObject
      */
     private $removeDatabaseObject;
 
+    /**
+     * @var \Twig_Environment $twig
+     */
+    private $twig;
+
+    /**
+     * @var Router $route
+     */
+    private $route;
+
     public function __construct(
         FormHandling $formHandling,
-        RemoveDatabaseObject $removeDatabaseObject
+        RemoveDatabaseObject $removeDatabaseObject,
+        \Twig_Environment $twig,
+        Router $route
     ) {
         $this->formHandling = $formHandling;
         $this->removeDatabaseObject = $removeDatabaseObject;
+        $this->twig = $twig;
+        $this->route = $route;
     }
 
     /**
      * @Route("/component", methods={"GET"}, name="component")
      * @return Response
+     * @throws \Twig_Error
      */
     public function index(): Response
     {
@@ -72,15 +88,18 @@ class ComponentController extends AbstractController
         $this->containers[1]['name'] = 'Tags';
         $this->containers[1]['prefix'] = '/tag';
 
-        return $this->render('05-pages/components.html.twig', [
-            'containers' => $this->containers,
-        ]);
+        return new Response(
+            $this->twig->render('05-pages/components.html.twig', [
+                'containers' => $this->containers,
+            ])
+        );
     }
 
     /**
      * @Route("/component/new", methods={"GET", "POST"}, name="component_new")
      * @param Request $request
      * @return Response
+     * @throws \Twig_Error
      */
     public function new(Request $request): Response
     {
@@ -99,10 +118,12 @@ class ComponentController extends AbstractController
         $redirect = $this->formHandling->handleNew($form, $oldFileName, $request, 'component');
 
         if ($redirect === null) {
-            return $this->render('05-pages/component-new.html.twig', [
-                'component' => $component,
-                'form' => $form->createView(),
-            ]);
+            return new Response(
+                $this->twig->render('05-pages/component-new.html.twig', [
+                    'component' => $component,
+                    'form' => $form->createView(),
+                ])
+            );
         }
         return $redirect;
     }
@@ -112,6 +133,7 @@ class ComponentController extends AbstractController
      * @param Request $request
      * @param Component $component
      * @return Response
+     * @throws \Twig_Error
      */
     public function edit(Request $request, Component $component): Response
     {
@@ -124,10 +146,12 @@ class ComponentController extends AbstractController
         $redirect = $this->formHandling->handleUpdate($form, $oldFileName, $request, 'component');
 
         if ($redirect === null) {
-            return $this->render('05-pages/component-view.html.twig', [
-                'component' => $component,
-                'form' => $form->createView(),
-            ]);
+            return new Response(
+                $this->twig->render('05-pages/component-view.html.twig', [
+                    'component' => $component,
+                    'form' => $form->createView(),
+                ])
+            );
         }
         return $redirect;
     }
@@ -163,6 +187,6 @@ class ComponentController extends AbstractController
 
         $this->removeDatabaseObject->handleRemove($component, $primaryCheck, $secondaryCheck);
 
-        return $this->redirectToRoute('component');
+        return new RedirectResponse($this->route->getGenerator()->generate('component'), 302);
     }
 }
