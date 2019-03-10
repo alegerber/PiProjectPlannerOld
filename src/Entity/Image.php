@@ -84,7 +84,7 @@ class Image
 
     public function getUploadedFile(): ?UploadedFile
     {
-        return new UploadedFile($this->uploadedFile, $this->uploadedFileOriginName, null, null, $this->uploadedFileTest);
+        return new UploadedFile((string) $this->uploadedFile, $this->uploadedFileOriginName, null, null, $this->uploadedFileTest);
     }
 
     public function setUploadedFile(?UploadedFile $uploadedFile, bool $test = false): self
