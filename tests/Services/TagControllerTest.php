@@ -11,7 +11,7 @@ class TagControllerTest extends TestCase
 {
     public function testIndex(): void
     {
-        /** @var MockObject $categoryController */
+        /** @var MockObject $twig */
         $twig = $this->getMockBuilder(\Twig_Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -28,7 +28,7 @@ class TagControllerTest extends TestCase
                 'components' => $tag->getComponents(),
             ]);
 
-        /** @var TagController $categoryController */
+        /** @var TagController $tagController */
         $tagController = new TagController();
 
         $tagController->index($tag, $twig);

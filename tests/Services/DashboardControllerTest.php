@@ -11,7 +11,7 @@ class DashboardControllerTest extends TestCase
 {
     public function testIndex(): void
     {
-        /** @var MockObject $categoryController */
+        /** @var MockObject $twig */
         $twig = $this->getMockBuilder(\Twig_Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
