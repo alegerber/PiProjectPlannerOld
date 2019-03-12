@@ -33,11 +33,8 @@ class FormHandlingTest extends TestCase
         $staticImageFileDirectory = $container->getParameter('static_image_file_directory');
 
         \copy($staticImageFileDirectory . '/placeholder.jpg', $staticImageFileDirectory . '/placeholder_test.jpg');
-        $oldFile = new UploadedFile($staticImageFileDirectory . '/placeholder_test.jpg', 'placeholder_test.jpg');
-        $form->getData()->getImage()->setUploadedFile(
-            $oldFile,
-            true
-        );
+        $oldFile = new UploadedFile($staticImageFileDirectory . '/placeholder_test.jpg', 'placeholder_test.jpg', null, null, true);
+        $form->getData()->getImage()->setUploadedFile($oldFile);
 
         $standardService->getReflectionMethodResultWithArgs(FormHandling::class, 'setFormData',
             [$form, $oldFileName]);
@@ -82,10 +79,8 @@ class FormHandlingTest extends TestCase
 
         $formFactory = $standardService->getFormFactory();
 
-        $originFile = new UploadedFile($staticImageFileDirectory . '/placeholder.jpg', 'placeholder.jpg');
-        $component->getImage()->setUploadedFile(
-            $originFile
-        );
+        $originFile = new UploadedFile($staticImageFileDirectory . '/placeholder.jpg', 'placeholder.jpg', null , null , true);
+        $component->getImage()->setUploadedFile($originFile);
 
         $oldFileName = $component->getImage()->getUploadedFile()->getFilename();
 
@@ -103,10 +98,6 @@ class FormHandlingTest extends TestCase
 
         $entityService = new EntityService();
         $image = $entityService->getImage();
-        $image->setUploadedFile(
-            $image->getUploadedFile(),
-            true
-        );
 
         \copy($staticImageFileDirectory . '/placeholder.jpg', $staticImageFileDirectory . '/placeholder_backup.jpg');
 
