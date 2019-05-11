@@ -73,11 +73,17 @@ class Project
      */
     private $components;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="projects")
+     */
+    private $media;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->components = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): int
@@ -190,5 +196,33 @@ class Project
     public function getComponents(): Collection
     {
         return $this->components;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeProject($this);
+        }
+
+        return $this;
     }
 }

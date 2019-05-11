@@ -48,10 +48,16 @@ class Tag implements \JsonSerializable
      */
     private $projects;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="tags")
+     */
+    private $media;
+
     public function __construct()
     {
         $this->components = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,5 +138,33 @@ class Tag implements \JsonSerializable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeTag($this);
+        }
+
+        return $this;
     }
 }

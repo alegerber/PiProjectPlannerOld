@@ -75,10 +75,16 @@ class Component implements \JsonSerializable
      */
     private $tags;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", mappedBy="components")
+     */
+    private $media;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): int
@@ -185,5 +191,33 @@ class Component implements \JsonSerializable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+            $medium->addComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+            $medium->removeComponent($this);
+        }
+
+        return $this;
     }
 }
