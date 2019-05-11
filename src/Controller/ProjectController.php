@@ -150,7 +150,7 @@ class ProjectController extends AbstractController
          * @param Tag|Category $item
          * @return Collection
          */
-        $primaryCheck = function ($item) {
+        $primaryCheck = static function ($item) {
             return $item->getProjects();
         };
 
@@ -158,7 +158,7 @@ class ProjectController extends AbstractController
          * @param Tag|Category $item
          * @return Collection
          */
-        $secondaryCheck = function ($item) {
+        $secondaryCheck = static function ($item) {
             return $item->getComponents();
         };
 
