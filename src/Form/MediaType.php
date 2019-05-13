@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Form\Type\TagsInputType;
 use App\Entity\Media;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MediaType extends AbstractType
 {
@@ -22,19 +23,19 @@ class MediaType extends AbstractType
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('thumbnail', FileType::class)
-            ->add('projects', TagsInputType::class, [
-                'required' => false,
-            ])
-            ->add('categories', TagsInputType::class, [
-                'required' => false,
-            ])
-            ->add('tags', TagsInputType::class, [
-                'required' => false,
-            ])
-            ->add('components', TagsInputType::class, [
-                'required' => false,
-            ]);
+            ->add('thumbnail', Image::class)
+            // ->add('projects', ChoiceType::class, [
+            //     'required' => false,
+            // ])
+            // ->add('categories', ChoiceType::class, [
+            //     'required' => false,
+            // ])
+            // ->add('tags', ChoiceType::class, [
+            //     'required' => false,
+            // ])
+            // ->add('components', ChoiceType::class, [
+            //     'required' => false,
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
