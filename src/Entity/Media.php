@@ -21,6 +21,25 @@ class Media
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload an image first.")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg" })
+     */
+    private $uploadedFile;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload an image first.")
+     */
+    private $uploadedFileOriginName;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -71,6 +90,33 @@ class Media
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUploadedFile(): ?UploadedFile
+    {
+        return new UploadedFile((string) $this->uploadedFile, $this->uploadedFileOriginName, null, null, 'test' === $_ENV['APP_ENV']);
+    }
+
+    public function setUploadedFile(?UploadedFile $uploadedFile): self
+    {
+        if (null !== $uploadedFile) {
+            $this->uploadedFile = $uploadedFile;
+            $this->uploadedFileOriginName = $uploadedFile->getClientOriginalName();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Function for correcting the filepath in fixtures.
+     *
+     * @param string|null $uploadedFilePath
+     */
+    public function setUploadedFileFixture(?string $uploadedFilePath): void
+    {
+        if (null !== $uploadedFilePath) {
+            $this->uploadedFile = $uploadedFilePath;
+        }
     }
 
     public function getName(): ?string
