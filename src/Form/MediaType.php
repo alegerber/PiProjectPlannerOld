@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use App\Form\Type\TagsInputType;
-use App\Entity\Media;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MediaType extends AbstractType
 {
