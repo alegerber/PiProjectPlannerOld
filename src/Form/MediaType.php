@@ -35,7 +35,8 @@ class MediaType extends AbstractType
             // ])
             // ->add('components', ChoiceType::class, [
             //     'required' => false,
-            // ]);
+            // ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
