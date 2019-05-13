@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -78,7 +80,7 @@ class Image
 
     public function getUploadedFile(): ?UploadedFile
     {
-        return new UploadedFile((string) $this->uploadedFile, $this->uploadedFileOriginName, null, null, $_ENV['APP_ENV'] === 'test');
+        return new UploadedFile((string) $this->uploadedFile, $this->uploadedFileOriginName, null, null, 'test' === $_ENV['APP_ENV']);
     }
 
     public function setUploadedFile(?UploadedFile $uploadedFile): self
@@ -95,7 +97,6 @@ class Image
      * Function for correcting the filepath in fixtures.
      *
      * @param string|null $uploadedFilePath
-     * @return void
      */
     public function setUploadedFileFixture(?string $uploadedFilePath): void
     {
