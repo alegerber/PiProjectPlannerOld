@@ -1,0 +1,15 @@
+{% extends "04-templates/base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('css/media') }}
+{% endblock %}
+{% block title %}Media{% endblock %}
+{% block content %}
+    <div class="media">
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/media') }}
+{% endblock %}
