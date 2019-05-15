@@ -80,6 +80,10 @@ class Image
 
     public function getUploadedFile(): ?UploadedFile
     {
+        if (null === $this->uploadedFile) {
+            return null;
+        }
+
         return new UploadedFile((string) $this->uploadedFile, $this->uploadedFileOriginName, null, null, 'test' === $_ENV['APP_ENV']);
     }
 

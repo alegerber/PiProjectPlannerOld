@@ -29,12 +29,18 @@ Encore
         './node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
         './assets/js/tab-form.js'
     ])
+    .addEntry('js/media', [
+        './assets/js/media.js'
+    ])
     .addStyleEntry('css/app', [
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './assets/scss/app.scss',
     ])
     .addStyleEntry('css/tab-form', [
         './assets/scss/tab-form.scss'
+    ])
+    .addStyleEntry('css/media', [
+        './assets/scss/media.scss'
     ])
 
     // will require an extra script tag for runtime.js

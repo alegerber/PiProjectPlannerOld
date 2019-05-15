@@ -6,8 +6,43 @@
 {% endblock %}
 {% block title %}Media{% endblock %}
 {% block content %}
-    <div class="media">
+<form>
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="media-upload-field">
+                <div class="media-upload-textfield">
+                    <div>Ziehen Sie die Datei auf Das Feld oder wählen Sie aus.</div>
+                    <div class="btn btn-success">
+                        Datei Auswählen
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div id="media-form">
+                <div style="display: none;">
+                    <input type="file" id="media_uploadedfile" name="media[uploadedfile]">
+                    <input type="file" id="media_thumbnail" name="media[thumbnail]">
+                </div>
+                <div class="form-group">
+                    <label for="media_name" class="required">Name</label>
+                    <input type="text" id="media_name" name="media[name]" required="required" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="media_description" class="required">Description</label>
+                    <textarea cols="20" rows="10" id="media_description" name="media[description]" required="required" class="form-control">
+                    </textarea>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="media-view">
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

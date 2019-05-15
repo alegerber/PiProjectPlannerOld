@@ -21,7 +21,7 @@ class MediaType extends AbstractType
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('thumbnail', Image::class)
+            ->add('thumbnail', ImageType::class)
             // ->add('projects', ChoiceType::class, [
             //     'required' => false,
             // ])
