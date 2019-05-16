@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('css/dropzone') }}
     {{ encore_entry_link_tags('css/media') }}
 {% endblock %}
 {% block title %}Media{% endblock %}
@@ -30,8 +31,11 @@
                 </div>
                 <div class="form-group">
                     <label for="media_description" class="required">Description</label>
-                    <textarea cols="20" rows="10" id="media_description" name="media[description]" required="required" class="form-control">
+                    <textarea cols="18" rows="8" id="media_description" name="media[description]" required="required" class="form-control">
                     </textarea>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success" type="button" value="Speichern">
                 </div>
             </div>
         </div>
@@ -46,5 +50,6 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('js/dropzone') }}
     {{ encore_entry_script_tags('js/media') }}
 {% endblock %}
