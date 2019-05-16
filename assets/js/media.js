@@ -1,0 +1,1 @@
+$("div#media-upload-field").dropzone({ url: "/media/fileupload"});

@@ -29,6 +29,9 @@ Encore
         './node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
         './assets/js/tab-form.js'
     ])
+    .addEntry('js/dropzone', [
+        './node_modules/dropzone/dist/dropzone.js'
+    ])
     .addEntry('js/media', [
         './assets/js/media.js'
     ])
@@ -38,6 +41,9 @@ Encore
     ])
     .addStyleEntry('css/tab-form', [
         './assets/scss/tab-form.scss'
+    ])
+    .addEntry('css/dropzone', [
+        './node_modules/dropzone/dist/dropzone.css'
     ])
     .addStyleEntry('css/media', [
         './assets/scss/media.scss'
